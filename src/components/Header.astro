@@ -1,0 +1,74 @@
+---
+import Lockup from './Lockup.astro';
+import { link } from '../lib/links';
+import { SITE } from '../config';
+import { getCollection } from 'astro:content';
+const { path = '/' } = Astro.props as { path?: string };
+const posts = (await getCollection('jurnal')).filter((p) => !p.data.draft);
+const showJournal = posts.length >= SITE.journalMinPublished;
+const nav = [
+  { href: '/#drumuri', label: 'Drumuri' },
+  { href: '/radiografia', label: 'Radiografia' },
+  { href: '/cine', label: 'Cine' },
+  ...(showJournal ? [{ href: '/jurnal', label: 'Jurnal' }] : []),
+  { href: '/contact', label: 'Scrie-mi' },
+];
+const current = (href: string) => !href.includes('#') && href === path ? 'page' : undefined;
+---
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="logo" href={link('/', path)} aria-label="Room for People, pagina principală">
+      <Lockup variant="plum" width={200} />
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <ul>
+        {nav.map((n) => <li><a href={link(n.href, path)} aria-current={current(n.href)}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <a class="btn btn-ink hdr-cta" href={link('/harta', path)}>Harta cabinetului <span aria-hidden="true">→</span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="meniu" aria-label="Deschide meniul">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="menu" id="meniu" hidden>
+    <ul>
+      {nav.map((n) => <li><a href={link(n.href, path)}>{n.label}</a></li>)}
+      <li><a href={link('/harta', path)} class="menu-cta">Harta cabinetului · gratuită, 4 minute</a></li>
+    </ul>
+  </div>
+</header>
+<style>
+  .hdr { position: sticky; top: 0; z-index: 50; background: rgba(242, 238, 232, .92); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(20, 18, 22, .12); }
+  .hdr-in { display: flex; align-items: center; gap: 24px; min-height: 76px; }
+  .logo { display: inline-flex; align-items: center; flex: none; min-height: 44px; }
+  .nav { margin-left: auto; }
+  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; }
+  .nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; text-decoration: none; font-weight: 500; font-size: 15px; position: relative; border-radius: var(--r); }
+  .nav a[aria-current="page"], .nav a:hover { background: rgba(53, 34, 79, .08); }
+  .hdr-cta { min-height: 46px; padding: 0 20px; font-size: 15px; }
+  .burger { display: none; width: 48px; height: 48px; border: 1.5px solid var(--ink); border-radius: var(--r); background: transparent; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; margin-left: auto; }
+  .burger span { display: block; width: 20px; height: 2px; background: var(--ink); }
+  .menu { border-top: 1px solid rgba(20, 18, 22, .12); background: var(--paper); }
+  .menu ul { list-style: none; margin: 0; padding: 8px var(--gutter) 16px; display: flex; flex-direction: column; }
+  .menu a { display: block; padding: 14px 4px; font-family: var(--display); font-weight: 700; font-size: 20px; text-decoration: none; border-bottom: 1px dotted rgba(20, 18, 22, .3); }
+  .menu-cta { color: var(--plum); }
+  @media (max-width: 960px) {
+    .nav, .hdr-cta { display: none; }
+    .burger { display: flex; }
+    .hdr-in { min-height: 68px; }
+    .logo :global(.lockup) { width: 164px !important; }
+  }
+  @media (min-width: 961px) { .menu { display: none !important; } }
+</style>
+<script>
+  const b = document.querySelector('.burger');
+  const m = document.getElementById('meniu');
+  if (b && m) {
+    b.addEventListener('click', () => {
+      const open = b.getAttribute('aria-expanded') === 'true';
+      b.setAttribute('aria-expanded', String(!open));
+      b.setAttribute('aria-label', open ? 'Deschide meniul' : 'Închide meniul');
+      m.hidden = open;
+    });
+  }
+</script>

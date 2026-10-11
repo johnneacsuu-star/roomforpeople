@@ -1,0 +1,18 @@
+import { chromium } from 'playwright';
+import { createServer } from 'node:http';
+import { readFile, stat } from 'node:fs/promises';
+import { join, extname } from 'node:path';
+const dist='dist';
+const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2' };
+const srv = createServer(async (req, res) => { let p = decodeURIComponent(req.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html'; let f = join(dist, p + '.html'); try { const st = await stat(f); if (!st.isFile()) throw 0; } catch { f = join(dist, p); } try { const b = await readFile(f); res.writeHead(200, { 'Content-Type': types[extname(f)] || 'application/octet-stream' }); res.end(b); } catch { res.writeHead(404); res.end('404'); } });
+await new Promise((r) => srv.listen(4322, r));
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+const pg = await b.newPage({ viewport: { width: 1400, height: 900 } });
+const reqs = [];
+pg.on('response', (r) => { if (r.url().includes('ionut')) reqs.push([r.url(), r.status(), r.headers()['content-type']]); });
+await pg.goto('http://localhost:4322/', { waitUntil: 'networkidle' });
+await pg.locator('#cine').scrollIntoViewIfNeeded(); await pg.waitForTimeout(2500);
+const info = await pg.evaluate(() => [...document.querySelectorAll('img')].map((i) => ({ src: i.getAttribute('src'), complete: i.complete, nw: i.naturalWidth, cs: getComputedStyle(i).display })));
+console.log(JSON.stringify({ reqs, info }, null, 1));
+await pg.locator('.portrait').first().screenshot({ path: 'tests/shots/dbg_portrait.png' });
+await b.close(); srv.close();

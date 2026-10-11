@@ -1,0 +1,14 @@
+---
+// Logoul vectorial, exact fișierele de producție. Canatul primește clasa .leaf ca să se deschidă la hover.
+import plum from '../assets/lockup-plum.svg?raw';
+import paper from '../assets/lockup-paper.svg?raw';
+interface Props { variant?: 'plum' | 'paper'; width?: number; class?: string }
+const { variant = 'plum', width = 216, class: cls = '' } = Astro.props;
+let svg = (variant === 'paper' ? paper : plum)
+  .replace(/ width="\d+" height="\d+"/, '')
+  .replace(/<rect x="0\.000" y="-85\.212"[^>]*\/>/, '')
+  .replace('<svg ', `<svg class="door-mark lockup ${cls}" style="width:${width}px;height:auto" `)
+  .replace('<path d="M9 5 L22 11 L22 49 L9 55 Z"', '<path class="leaf" d="M9 5 L22 11 L22 49 L9 55 Z"')
+  .replace('aria-label="Room for People"', 'aria-label="Room for People · oameni în față, sistem în spate"');
+---
+<Fragment set:html={svg} />

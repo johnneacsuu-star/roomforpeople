@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ContactForm from '../components/ContactForm.astro';
+import ServiceFaq from '../components/ServiceFaq.astro';
+import { SITE } from '../config';
+import { link } from '../lib/links';
+const path = '/radiografia'; const L = (p: string) => link(p, path);
+const lei = (n: number) => n.toLocaleString('ro-RO');
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Service', name: 'Radiografia cabinetului', provider: { '@type': 'ProfessionalService', name: SITE.name, url: SITE.url }, areaServed: 'RO', description: 'O săptămână de observație pe cabinetul unui practician, o sesiune de 90 de minute și un raport scris cu primele trei automatizări, Filtrul deontologic și un plan de 30 de zile.', offers: { '@type': 'Offer', priceCurrency: 'RON', price: SITE.prices.radiografia } };
+---
+<Base title="Radiografia · ziua ta, radiografiată într-o săptămână" description={`O săptămână de observație pe cabinetul tău, o sesiune de 90 de minute și un raport scris cu primele trei automatizări, Filtrul deontologic și planul de 30 de zile. ${lei(SITE.prices.radiografia)} lei, primele 10 cabinete.`} path={path} jsonLd={jsonLd}>
+  <PageHead label="Radiografia · după Hartă, înainte de orice drum" lede="Harta îți arată direcția, gratuit. Radiografia îți spune, pe cabinetul tău și cu cifre măsurate, unde pierzi timp și oameni, ce poate pleca singur în siguranță și care drum e primul. O citește Ionuț, nu un chestionar.">
+    <Fragment slot="title">Ziua ta, <span class="mk">radiografiată</span> într-o săptămână.</Fragment>
+    <div class="actions">
+      <a class="btn btn-signal" href="#contact">Cer Radiografia</a>
+      <p class="small muted"><strong>{lei(SITE.prices.radiografia)} lei</strong>, preț de lansare pentru primele 10 cabinete, apoi {lei(SITE.prices.radiografiaDupa)} lei · se scade integral din primul drum, dacă începem în 30 de zile</p>
+    </div>
+  </PageHead>
+
+  <section class="section on-white">
+    <div class="wrap">
+      <h2 style="margin-bottom:28px">Cum se desfășoară</h2>
+      <ol class="steps g-2">
+        <li><span class="wp">1</span><div><strong>Zilele 1–5 · jurnalul ghidat.</strong><p class="small muted">Două minute în fiecare seară, într-un formular simplu: ce ai făcut azi în jurul ședințelor și cât a durat. Fără nume, fără date despre clienți. Doar timpul tău.</p></div></li>
+        <li><span class="wp">2</span><div><strong>Ziua 6 · sesiunea de 90 de minute, online.</strong><p class="small muted">Desenăm harta zilei tale: unde se pierd orele, unde se pierd oamenii care îți scriu. Punem la lucru un câștig rapid, pe loc; de obicei răspunsul la primul contact.</p></div></li>
+        <li><span class="wp">3</span><div><strong>În 3 zile lucrătoare · raportul scris.</strong><p class="small muted">Primele trei automatizări, ordonate după orele câștigate și efortul cerut. Care drum e primul și de ce. Ce nu se automatizează la tine.</p></div></li>
+        <li><span class="wp">4</span><div><strong>Planul de 30 de zile.</strong><p class="small muted">Trei pași pe care îi poți face singur, cu sau fără noi. Dacă alegi un drum cu noi în 30 de zile, Radiografia se scade integral.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:22px">
+        <h2>Pentru cine e</h2>
+        <ul class="list">
+          <li>Pentru cine a făcut Harta și vrea să știe ce e adevărat din ea, pe cifre.</li>
+          <li>Pentru cine vrea o părere din afară, de la cineva din breaslă, înainte să cumpere orice unealtă.</li>
+          <li>Pentru cine știe că pierde timp și nu știe unde.</li>
+        </ul>
+        <h2 style="margin-top:12px">Ce nu e</h2>
+        <p>Nu e o discuție de vânzare. E un diagnostic plătit, cu un raport pe care îl poți duce la oricine altcineva. Dacă raportul spune că nu ai nevoie de nimic de la noi, asta scrie în el.</p>
+      </div>
+      <div class="card">
+        <p class="label muted">Ce primești, în scris</p>
+        <ul class="list small">
+          <li><strong>Harta zilei tale</strong>, desenată, cu orele măsurate din jurnal, nu estimate.</li>
+          <li><strong>Primele trei automatizări</strong>, cu orele câștigate pe săptămână pentru fiecare, cum le-am calculat, și efortul cerut.</li>
+          <li><strong>Filtrul deontologic</strong> aplicat pe textele tale publice: site, profil, răspunsuri automate. Ce e roșu, ce e verde, și de ce, cu articolul din codul profesiei tale.</li>
+          <li><strong>Oglinda AI</strong>: aceeași întrebare pusă la trei asistenți AI despre cabinetul tău, cu capturile. Cum te vede un om care întreabă la 22:00.</li>
+          <li><strong>Protocolul semafor</strong>, adaptat la cabinetul tău: ce intră în ce instrument, ce nu intră niciodată.</li>
+          <li><strong>Planul de 30 de zile</strong>: trei pași, în ordine, pe care îi poți face singur.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-white">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:16px">
+        <h2>Filtrul deontologic, pe un exemplu</h2>
+        <p class="muted">Textul de mai jos e fictiv. Așa arată verificarea pe care o facem pe fiecare text public al tău: roșu pentru așteptări nejustificate, metodă „exclusivă” și specularea fricii; verde pentru formulări care respectă codul.</p>
+        <div class="card card-paper">
+          <p class="small" style="line-height:1.8">„<span class="bad">Scapă definitiv de anxietate în doar 5 ședințe.</span> Folosesc <span class="bad">singura metodă care funcționează cu adevărat</span>. <span class="bad">Nu mai amâna: fiecare zi de așteptare îți agravează problema.</span>”</p>
+          <p class="small" style="line-height:1.8">„<span class="good">Lucrăm împreună, în ritmul tău, cu obiective clare de la început.</span> <span class="good">Lucrez în principal cu [abordarea ta], pe care ți-o explic la prima întâlnire.</span> <span class="good">Când simți că e momentul, îmi poți scrie.</span>”</p>
+          <p class="note muted">Pentru psihologi, criteriile vin din Codul deontologic CPR (art. 118 și 119); pentru asistenți sociali, din codul CNASR; pentru coachi, din codul asociației lor. E un instrument de verificare a formulărilor, nu consultanță juridică.</p>
+        </div>
+      </div>
+      <div class="stack" style="gap:16px">
+        <h2>Garanția și prețul</h2>
+        <p><strong>Trei recomandări sau banii înapoi.</strong> Dacă raportul nu conține cel puțin trei recomandări concrete, pe care le poți aplica singur sau cu noi, primești banii înapoi. Condițiile exacte, în contract, înainte să plătești.</p>
+        <p><strong>{lei(SITE.prices.radiografia)} lei</strong> pentru primele 10 cabinete, apoi {lei(SITE.prices.radiografiaDupa)} lei. Se plătește după ce am stabilit săptămâna, pe factură, nu pe site. Se scade integral din primul drum, dacă începem în 30 de zile.</p>
+        <ServiceFaq items={[
+          { q: 'Trebuie să-ți dau acces la ceva?', a: 'Nu. Jurnalul îl completezi tu, cu timpul tău. La sesiune îmi arăți ce vrei pe ecranul tău. Nu primim acces la calendar, mesaje sau fișe de clienți, și nu le cerem.' },
+          { q: 'Ce se întâmplă cu jurnalul după?', a: 'Rămâne la tine. Noi păstrăm raportul pe care ți l-am scris, fără date despre nimeni, și îl ștergem la cererea ta.' },
+          { q: 'Pot cere Radiografia fără să fi făcut Harta?', a: 'Da. Harta e gratuită și durează patru minute, deci merită făcută oricum, dar nu e o condiție.' },
+        ]} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-dark" id="contact">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:16px">
+        <h2>Cer Radiografia</h2>
+        <p class="lede muted">Lasă emailul și, dacă vrei, două rânduri despre cabinet. Îți răspund personal, {SITE.responseTime}, cu două săptămâni posibile. Nimic nu se plătește acum; trimiterea formularului nu e o comandă.</p>
+        <p class="small muted">Dacă nu ai făcut Harta, <a class="textlink" href={L('/harta')}>o poți face întâi</a>, gratuit.</p>
+      </div>
+      <div class="card card-paper" style="color:var(--ink)"><ContactForm tip="radiografia" path={path} submitLabel="Trimite cererea" id="f-radiografia" /></div>
+    </div>
+  </section>
+</Base>
+<style>
+  .bad { background: rgba(228, 71, 43, .18); text-decoration: underline wavy var(--alert); text-underline-offset: 3px; }
+  .good { background: rgba(214, 255, 85, .6); }
+</style>

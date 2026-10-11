@@ -1,0 +1,107 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ContactForm from '../components/ContactForm.astro';
+import ServiceFaq from '../components/ServiceFaq.astro';
+import FirstContact from '../components/illustrations/FirstContact.astro';
+import { SITE } from '../config';
+import { link } from '../lib/links';
+const path = '/sistem'; const L = (p: string) => link(p, path);
+const price = SITE.prices.sistem.toLocaleString('ro-RO');
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Service', name: 'Sistem', provider: { '@type': 'ProfessionalService', name: SITE.name, url: SITE.url }, areaServed: 'RO', description: 'Primul contact, programări, confirmări și legătura cu factura, puse la lucru în cabinetul unui psiholog, psihoterapeut, asistent social sau coach, pe uneltele lui, cu regulile lui.', offers: { '@type': 'Offer', priceCurrency: 'RON', price: SITE.prices.sistem, priceSpecification: { '@type': 'PriceSpecification', minPrice: SITE.prices.sistem, priceCurrency: 'RON' } } };
+---
+<Base title="Sistem · primul contact, programări, administrare" description={`Răspunsul la primul contact în tonul tău, programări cu confirmare automată, fișa de primire și legătura cu factura. Pe uneltele tale, cu regulile tale. De la ${price} lei.`} path={path} jsonLd={jsonLd}>
+  <PageHead label="Drumul 2 · Sistem" lede="Totul trece prin tine: confirmări, reprogramări, „cât costă?”, factura. Mutăm ce nu cere un om într-un flux pe care îl pornești și îl oprești tu, pe uneltele tale, în cuvintele tale.">
+    <Fragment slot="title">Ce nu cere un om <span class="mk">pleacă singur</span>. Tu aprobi excepțiile.</Fragment>
+    <div class="actions">
+      <a class="btn btn-signal" href="#contact">Scrie-mi despre Sistem</a>
+      <p class="small muted">de la <strong>{price} lei</strong> · preț de lansare, primele 10 cabinete · cheile sunt ale tale la predare</p>
+    </div>
+  </PageHead>
+
+  <section class="section on-white">
+    <div class="wrap stack" style="gap:28px">
+      <div class="split" style="align-items:end">
+        <h2>Ce se întâmplă când cineva îți scrie la 22:40</h2>
+        <p class="muted">Un exemplu concret, cu un cabinet fictiv. Așa arată primul contact după ce Sistemul e pus la lucru. Niciun AI nu citește mesajul omului; răspunsul e scris de tine, o singură dată.</p>
+      </div>
+      <figure class="fc-fig fig-scroll"><FirstContact id="fc-sistem" /></figure>
+      <div class="g-3">
+        <div class="card card-paper"><p class="label muted">Confirmarea</p><p class="small">Omul își alege ora din calendarul tău. Confirmarea pleacă imediat, cu adresa, cu ce să aducă și cu regulile tale de anulare. Cu o zi înainte, reamintirea. Fără mesaje dus-întors.</p></div>
+        <div class="card card-paper"><p class="label muted">Programările</p><p class="small">Tu stabilești intervalele, pauzele și cât de repede se poate programa cineva. Reprogramarea o face omul singur, din linkul lui, în limitele pe care le-ai pus tu. Tu vezi doar rezultatul.</p></div>
+        <div class="card card-paper"><p class="label muted">Ce rămâne la tine</p><p class="small">Decizia dacă îl primești. Primul răspuns scris de tine. Orice mesaj care nu e logistică. Notele de ședință, care nu intră în niciun instrument. Butonul de oprit: tot sistemul se închide din două clickuri.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:22px">
+        <h2>Pentru cine e</h2>
+        <ul class="list">
+          <li>Pentru cine are cabinetul plin și serile pline de administrativ.</li>
+          <li>Pentru cine răspunde la același mesaj de zece ori pe săptămână și începe să răspundă mai scurt, sau mai târziu.</li>
+          <li>Pentru cine a încercat un calendar online și tot el confirmă fiecare programare, de mână.</li>
+        </ul>
+        <h2 style="margin-top:12px">Ce nu e</h2>
+        <p>Nu e un robot care vorbește cu clienții tăi. Nu e un instrument care citește mesajele lor. Nu e un software nou pe care trebuie să-l înveți. E felul în care uneltele pe care le ai deja, sau unele simple, alese împreună, ajung să lucreze una cu alta, după regulile tale.</p>
+      </div>
+      <div class="card">
+        <p class="label muted">Ce primești, concret</p>
+        <ul class="list small">
+          <li><strong>Răspunsul la primul contact</strong>, scris de tine o singură dată: preț, program, cum arată prima întâlnire, pașii următori, numărul 112. Pleacă automat, în tonul tău.</li>
+          <li><strong>Programări cu confirmare și reamintire automată</strong>, după intervalele și regulile tale de anulare, pe un calendar care rămâne al tău.</li>
+          <li><strong>O fișă de primire</strong> pe care omul o completează înainte de prima întâlnire: ce ai nevoie să știi, nimic în plus. Datele rămân la tine, nu într-un instrument AI.</li>
+          <li><strong>Legătura cu factura</strong>: ședința confirmată apare în tabelul tău, factura se emite din două clickuri, nu de la zero.</li>
+          <li><strong>Un desen al fluxului</strong>, ca cel de mai sus, dar al tău, cu fiecare punct în care decizi tu.</li>
+          <li><strong>Cheile la predare</strong>: conturile, accesele, explicațiile. Cum se pornește, cum se oprește, pe cine suni.</li>
+        </ul>
+        <p class="note muted">Uneltele: de regulă, ce ai deja (Google Calendar, WhatsApp, un formular, programul de facturare). Unde lipsește ceva, alegem împreună, cu preferință pentru unelte simple, cu date ținute în UE. Costul lor, dacă există, e separat și la vedere.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-white">
+    <div class="wrap">
+      <h2 style="margin-bottom:28px">Cum lucrăm, în patru etape</h2>
+      <ol class="steps g-2">
+        <li><span class="wp">1</span><div><strong>Radiografia sau Harta, apoi 30 de minute.</strong><p class="small muted">Vedem unde se pierde timpul, concret, pe cabinetul tău. Alegem ce se mută primul.</p></div></li>
+        <li><span class="wp">2</span><div><strong>Textele tale, săptămâna 1.</strong><p class="small muted">Scriem împreună răspunsul la primul contact, confirmarea, reamintirea. În cuvintele tale. Le aprobi.</p></div></li>
+        <li><span class="wp">3</span><div><strong>Legarea uneltelor, săptămânile 2 și 3.</strong><p class="small muted">Calendarul, formularul, factura. Testăm pe un cabinet fictiv, cu mesaje de probă, până merge fără tine.</p></div></li>
+        <li><span class="wp">4</span><div><strong>Pornirea și predarea, săptămâna 4.</strong><p class="small muted">Două săptămâni cu sistemul pornit și cu mine la telefon. Apoi cheile și o oră de explicații.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:16px">
+        <h2>Prețul și ce se întâmplă după</h2>
+        <p>De la <strong>{price} lei</strong>, preț de lansare pentru primele 10 cabinete. Prețul final, în scris, după discuție, cu livrabilele enumerate. Nu se plătește nimic pe site. Jumătate la început, jumătate la predare.</p>
+        <p class="muted">Dacă ai făcut Radiografia în ultimele 30 de zile, cei {SITE.prices.radiografia} lei se scad integral. După predare, sistemul e al tău; nu ai nicio obligație față de noi.</p>
+      </div>
+      <div class="stack" style="gap:16px">
+        <h2>Întrebări frecvente</h2>
+        <ServiceFaq items={[
+          { q: 'Clienții mei vorbesc cu un AI?', a: 'Nu. Primul răspuns e un text scris de tine, trimis automat. Niciun model nu citește mesajul omului și nu scrie în numele tău. Dacă într-o zi vei vrea un asistent care răspunde la întrebări logistice, e un alt drum, cu alte reguli, și îl discutăm separat.' },
+          { q: 'Unde stau datele din fișa de primire?', a: 'În contul tău, pe unealta ta, nu la noi și nu într-un instrument AI. Alegem unelte cu date ținute în UE unde e posibil. Ce spune omul în cameră nu intră nicăieri.' },
+          { q: 'Dacă nu mai vreau sistemul?', a: 'Îl oprești. Totul e construit ca să se poată închide din două clickuri, și la predare îți arăt exact care sunt ele.' },
+          { q: 'Lucrați și pentru asistenți sociali și coachi?', a: 'Da. Fluxul e același: cine scrie, ce primește, cum se programează. Se schimbă textele și regulile, după codul profesiei tale.' },
+        ]} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-dark" id="contact">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:16px">
+        <h2>Scrie-mi despre serile tale</h2>
+        <p class="lede muted">Ce faci acum între 20:00 și 23:00, în două rânduri. Îți răspund personal, {SITE.responseTime}. Dacă n-ai făcut Harta, <a class="textlink" href={L('/harta')}>începe cu ea</a>; direcția „Administrare” îți spune dacă Sistemul e primul drum.</p>
+      </div>
+      <div class="card card-paper" style="color:var(--ink)"><ContactForm tip="sistem" path={path} submitLabel="Trimite" id="f-sistem" /></div>
+    </div>
+  </section>
+</Base>
+<style>
+  .fc-fig { margin: 0 auto; width: 100%; max-width: 820px; }
+</style>

@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import PostImage from '../../components/PostImage.astro';
+import { publishedPosts, fmtDate } from '../../lib/jurnal';
+import { link } from '../../lib/links';
+import { SITE } from '../../config';
+const path = '/jurnal'; const L = (p: string) => link(p, path);
+const posts = await publishedPosts();
+const pillars = [...new Set(posts.map((p) => p.data.pillar))];
+---
+<Base title="Jurnal" description="Articole scrise pentru cabinetul tău: un detaliu, un exemplu, un pas pe care îl poți face singur. Fără jargon, fără date despre nimeni." path={path} noindex={posts.length === 0}>
+  <PageHead label="Jurnal · educație, nu promovare" lede="Un articol de fond pe săptămână și o notă scurtă, din înregistrările lui Ionuț. Fiecare lasă cititorul cu un lucru pe care îl face mâine dimineață. Fără jargon, fără date despre nimeni.">
+    <Fragment slot="title">Idei pe care le poți folosi <span class="mk">mâine dimineață</span>.</Fragment>
+  </PageHead>
+  <section class="section on-white">
+    <div class="wrap">
+      {posts.length === 0 ? (
+        <div class="stack" style="gap:16px;max-width:60ch">
+          <h2>Primele articole se publică în curând.</h2>
+          <p class="muted">Jurnalul se deschide cu trei articole, nu cu unul. Până atunci, poți primi ideile pe email, la două săptămâni, sau poți citi ce scrie Ionuț pe <a class="textlink" href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a>.</p>
+          <p><a class="btn btn-ink" href={L('/contact')}>Vreau emailul la două săptămâni</a></p>
+        </div>
+      ) : (
+        <div class="stack" style="gap:28px">
+          {pillars.length > 1 && <p class="small muted">Teme: {pillars.join(' · ')}</p>}
+          <ul class="posts">
+            {posts.map((p) => (
+              <li>
+                <a href={L(`/jurnal/${p.id}`)} class="post">
+                  <div class="post-art"><PostImage post={p} path={path} /></div>
+                  <div class="post-text">
+                    <span class="label muted">{p.data.pillar} · {fmtDate(p.data.date)}</span>
+                    <h2>{p.data.title}</h2>
+                    <p class="muted">{p.data.description}</p>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  </section>
+</Base>
+<style>
+  .posts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .posts li { border-top: 1px solid var(--ink); }
+  .post { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 24px; padding: 26px 0; text-decoration: none; align-items: start; }
+  .post-text { display: flex; flex-direction: column; gap: 8px; }
+  .post-art { border: 1px solid var(--mist); border-radius: var(--r); overflow: hidden; }
+  @media (max-width: 720px) { .post { grid-template-columns: 1fr; } }
+  .post h2 { font-size: clamp(24px, 3vw, 34px); }
+  .post:hover h2 { text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 4px; }
+</style>

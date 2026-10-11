@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { SITE } from '../config';
+import { link } from '../lib/links';
+const path = '/confidentialitate'; const L = (p: string) => link(p, path);
+// Pagina e scrisă pe infrastructura reală (Vercel, Resend, un formular, fără cookie-uri proprii).
+// Ce e marcat DE CONFIRMAT se completează de Ionuț înainte de lansare. Până atunci: noindex și banner.
+const confirmat = false;
+---
+<Base title="Confidențialitate" description="Ce date colectează roomforpeople.ro, de ce, unde ajung, cât timp sunt păstrate și ce drepturi ai." path={path} noindex={!confirmat}>
+  <PageHead label="Confidențialitate" lede="Pe scurt: formularele trimit un email lui Ionuț și nimic altceva. Nu punem cookie-uri proprii, nu facem profiluri, nu vindem și nu dăm mai departe nimic. Mai jos, pe lung.">
+    <Fragment slot="title">Ce facem cu <span class="mk">emailul tău</span>.</Fragment>
+    {!confirmat && <p class="form-msg" data-kind="error" style="max-width:62ch"><strong>Versiune de lucru, în verificare.</strong> Punctele marcate „de confirmat” se completează înainte de lansare. Pagina nu e încă indexată de motoarele de căutare.</p>}
+  </PageHead>
+  <section class="section on-white">
+    <div class="wrap prose">
+      <h2 style="margin-top:0">Cine răspunde de date</h2>
+      <p>Operatorul este Room for People, condus de {SITE.founder}. <mark>De confirmat: forma juridică, denumirea exactă, sediul și codul de identificare fiscală.</mark> Întrebări despre date: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+
+      <h2>Ce colectăm și de ce</h2>
+      <p><strong>Formularele de pe site</strong> (Primul pas, Scrie-mi, paginile de serviciu, trimiterea Hărții). Colectăm adresa de email, profesia pe care o alegi dintr-o listă, și, dacă le completezi, numele și mesajul. Dacă trimiți Harta, colectăm și răspunsurile tale la cele opt întrebări. Scopul: să îți răspundem la ce ai cerut. Temeiul: pașii făcuți la cererea ta înainte de un eventual contract (GDPR art. 6 alin. 1 lit. b) și, pentru emailul la două săptămâni, consimțământul tău (art. 6 alin. 1 lit. a), dat separat, printr-o bifă nebifată implicit.</p>
+      <p><strong>Harta cabinetului</strong> se calculează în browserul tău. Răspunsurile rămân în memoria browserului tău (localStorage) ca să nu le pierzi la o reîncărcare. Nu ajung la noi decât dacă apeși „Trimite-i harta lui Ionuț”.</p>
+      <p><strong>Jurnalul serverului.</strong> Site-ul e găzduit de Vercel Inc. (SUA). Ca orice server, înregistrează adresa IP, tipul de browser și pagina cerută, pentru funcționare și securitate. Temeiul: interesul legitim de a ține site-ul în funcțiune (art. 6 alin. 1 lit. f). <mark>De confirmat: durata de păstrare a jurnalelor la Vercel, conform politicii lor la data lansării.</mark></p>
+      <p><strong>Statistici de trafic.</strong> Folosim statisticile Vercel Web Analytics, care numără vizitele fără cookie-uri și fără să identifice persoane. <mark>De confirmat: dacă rămân activate la lansare.</mark></p>
+      <p><strong>Ce nu colectăm.</strong> Nu punem cookie-uri proprii. Nu folosim pixeli de urmărire, nu facem publicitate țintită, nu construim profiluri. Fonturile sunt găzduite pe site, nu la Google. Nu cerem și nu vrem informații despre clienții tăi: dacă totuși ajung la noi într-un mesaj, le ștergem și îți spunem.</p>
+
+      <h2>Unde ajung datele</h2>
+      <p>Mesajele din formulare sunt trimise printr-un serviciu de email tranzacțional, Resend, Inc. (SUA; <mark>de confirmat: regiunea serverelor folosită pentru roomforpeople.ro, pe care o putem seta în Uniunea Europeană</mark>), și ajung în căsuța de email a lui {SITE.founder} (<mark>de confirmat: furnizorul căsuței de email</mark>). Nu le stocăm pe site, nu le punem într-un CRM și nu intră în niciun instrument AI. Nu transmitem datele niciunui alt terț, decât dacă legea ne obligă.</p>
+
+      <h2>Cât timp le păstrăm</h2>
+      <p>Emailurile din formulare: până îți răspundem și cât ține discuția, apoi <mark>de confirmat: propunere 12 luni</mark>, după care se șterg. Dacă devii client, datele contractuale se păstrează cât cere legea contabilă. Consimțământul pentru emailul la două săptămâni: până te dezabonezi, cu un reply.</p>
+
+      <h2>Drepturile tale</h2>
+      <p>Poți cere oricând accesul la datele tale, corectarea, ștergerea, restricționarea sau portarea lor, și te poți opune prelucrării bazate pe interes legitim. Scrie la <a href={`mailto:${SITE.email}`}>{SITE.email}</a>; răspundem în cel mult o lună. Dacă nu ești mulțumit, te poți adresa Autorității Naționale de Supraveghere a Prelucrării Datelor cu Caracter Personal, <a href="https://www.dataprotection.ro" target="_blank" rel="noopener">dataprotection.ro</a>.</p>
+
+      <h2>Securitate</h2>
+      <p>Site-ul se încarcă doar prin conexiune criptată (HTTPS). Formularele au protecție împotriva roboților fără cookie-uri și fără CAPTCHA. Nu afirmăm că suntem „complet conformi GDPR”; afirmăm ce facem și ce nu facem, și le ținem la zi aici.</p>
+
+      <h2>Modificări</h2>
+      <p>Când schimbăm ceva în felul în care folosim datele, schimbăm pagina asta și data de mai jos. Ultima actualizare: <mark>de confirmat la lansare</mark>.</p>
+      <p class="small"><a href={L('/')}>Înapoi la pagina principală</a></p>
+    </div>
+  </section>
+</Base>
+<style>
+  mark { background: rgba(214, 255, 85, .55); padding: 0 .2em; }
+</style>

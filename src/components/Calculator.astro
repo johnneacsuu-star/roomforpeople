@@ -1,0 +1,56 @@
+---
+// Calculatorul „A doua tură”: cât timp pleacă pe lucruri care nu cer un om, cu ipotezele la vedere. Nu promite economii.
+import { link } from '../lib/links';
+const { path = '/' } = Astro.props as { path?: string };
+---
+<div class="calc" id="calc">
+  <form class="calc-form" novalidate>
+    <div class="field"><label for="c-sed">Ședințe pe săptămână</label><input id="c-sed" name="sed" type="number" inputmode="numeric" min="1" max="80" value="20" /></div>
+    <div class="field"><label for="c-tarif">Tariful tău pe ședință, lei</label><input id="c-tarif" name="tarif" type="number" inputmode="numeric" min="0" max="5000" step="10" value="250" /></div>
+    <div class="field"><label for="c-min">Minute de administrativ pe ședință</label><input id="c-min" name="min" type="number" inputmode="numeric" min="0" max="120" value="12" /><span class="hint">Confirmarea, reprogramarea, mesajele dus-întors, factura. Media ta, nu ziua cea mai rea.</span></div>
+    <div class="field"><label for="c-ore">Ore pe săptămână pe restul</label><input id="c-ore" name="ore" type="number" inputmode="decimal" min="0" max="40" step="0.5" value="3" /><span class="hint">Site, postări, materiale, răspunsuri la primul contact, contabilitate.</span></div>
+    <div class="field"><label for="c-sapt">Săptămâni lucrate pe an</label><input id="c-sapt" name="sapt" type="number" inputmode="numeric" min="1" max="52" value="46" /></div>
+  </form>
+  <div class="calc-out" aria-live="polite">
+    <p class="label muted">A doua tură, la cifrele tale</p>
+    <div class="calc-big"><span id="c-ore-sapt">7</span><span class="calc-unit">ore pe săptămână</span></div>
+    <p class="calc-line">Pe an: <strong id="c-ore-an">322</strong> de ore, adică <strong id="c-zile">40</strong> de zile de câte 8 ore.</p>
+    <p class="calc-line">La tariful tău, aceleași ore ar fi valorat <strong id="c-val">80.500</strong> lei, dacă ar fi fost ședințe.</p>
+    <p class="note muted" id="c-formula">Calcul: 20 ședințe × 12 minute ÷ 60 + 3 ore = 7 ore pe săptămână; × 46 de săptămâni = 322 de ore; × 250 lei = 80.500 lei.</p>
+    <div class="calc-caveat">
+      <p class="small"><strong>Ce nu spune calculatorul.</strong> Nu toate orele astea pleacă. Unele cer un om, unele se reduc la jumătate, unele dispar. Cifra nu e un timp economisit, e un timp numit. Până acum nu îl număra nimeni, și de aceea nu îl reducea nimeni.</p>
+      <p class="small">Cum afli ce se poate muta cu adevărat: <a class="textlink" href={link('/harta', path)}>Harta cabinetului</a>, gratuit, sau <a class="textlink" href={link('/radiografia', path)}>Radiografia</a>, pe cabinetul tău, cu cifre măsurate.</p>
+    </div>
+  </div>
+</div>
+<style>
+  .calc { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
+  .calc-form { display: flex; flex-direction: column; gap: 16px; }
+  .calc-out { border: 1px solid var(--ink); border-radius: var(--r); background: var(--white); padding: clamp(20px, 3vw, 32px); display: flex; flex-direction: column; gap: 14px; position: sticky; top: 92px; }
+  .calc-big { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .calc-big > span:first-child { font-family: var(--display); font-weight: 800; font-size: clamp(56px, 8vw, 88px); line-height: .9; letter-spacing: -0.04em; }
+  .calc-unit { font-family: var(--display); font-weight: 700; font-size: 20px; }
+  .calc-line { font-size: 17px; }
+  .calc-caveat { border-top: 1px dotted var(--ink); padding-top: 14px; display: flex; flex-direction: column; gap: 10px; }
+  @media (max-width: 860px) { .calc { grid-template-columns: 1fr; } .calc-out { position: static; } }
+</style>
+<script>
+  const c = document.getElementById('calc');
+  if (c) {
+    const f = c.querySelector('form');
+    const n = (name) => { const v = Number(f.elements[name].value); return Number.isFinite(v) && v >= 0 ? v : 0; };
+    const fmt = (v) => Math.round(v).toLocaleString('ro-RO');
+    const one = (v) => (Math.round(v * 10) / 10).toLocaleString('ro-RO');
+    const upd = () => {
+      const sed = n('sed'), tarif = n('tarif'), min = n('min'), ore = n('ore'), sapt = n('sapt');
+      const oreSapt = sed * min / 60 + ore;
+      const oreAn = oreSapt * sapt;
+      document.getElementById('c-ore-sapt').textContent = one(oreSapt);
+      document.getElementById('c-ore-an').textContent = fmt(oreAn);
+      document.getElementById('c-zile').textContent = fmt(oreAn / 8);
+      document.getElementById('c-val').textContent = fmt(oreAn * tarif);
+      document.getElementById('c-formula').textContent = `Calcul: ${sed} ședințe × ${min} minute ÷ 60 + ${one(ore)} ore = ${one(oreSapt)} ore pe săptămână; × ${sapt} de săptămâni = ${fmt(oreAn)} de ore; × ${fmt(tarif)} lei = ${fmt(oreAn * tarif)} lei.`;
+    };
+    f.addEventListener('input', upd); upd();
+  }
+</script>

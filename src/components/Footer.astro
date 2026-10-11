@@ -1,0 +1,65 @@
+---
+import Lockup from './Lockup.astro';
+import { link } from '../lib/links';
+import { SITE } from '../config';
+const { path = '/' } = Astro.props as { path?: string };
+const year = new Date().getFullYear();
+---
+<footer class="ftr on-night">
+  <div class="wrap">
+    <div class="ftr-top">
+      <div class="stack" style="gap:14px;max-width:420px">
+        <a class="logo" href={link('/', path)} aria-label="Room for People, pagina principală"><Lockup variant="paper" width={220} /></a>
+        <p class="small muted">Site, primul contact, programări și materiale puse la lucru în cabinetele celor care lucrează cu oameni. Un atelier mic, condus de {SITE.founder}, cu Andrei N. pe partea tehnică.</p>
+      </div>
+      <div class="ftr-cols">
+        <div>
+          <p class="label muted">Drumuri</p>
+          <ul>
+            <li><a href={link('/prezenta', path)}>Prezență</a></li>
+            <li><a href={link('/sistem', path)}>Sistem</a></li>
+            <li><a href={link('/voce', path)}>Voce</a></li>
+            <li><a href={link('/radiografia', path)}>Radiografia</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="label muted">Gratuit</p>
+          <ul>
+            <li><a href={link('/harta', path)}>Harta cabinetului</a></li>
+            <li><a href={link('/calculator', path)}>Calculatorul „A doua tură”</a></li>
+            <li><a href={link('/resurse', path)}>Resurse</a></li>
+            <li><a href={link('/jurnal', path)}>Jurnal</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="label muted">Atelierul</p>
+          <ul>
+            <li><a href={link('/cine', path)}>Cine construiește</a></li>
+            <li><a href={link('/contact', path)}>Scrie-mi</a></li>
+            <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+            <li><a href={SITE.linkedin} rel="me noopener" target="_blank">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="ftr-rule"></div>
+    <div class="ftr-bottom">
+      <p class="note muted">Regula casei: nicio informație despre un client nu intră într-un instrument AI. Nici la noi, nici la tine.</p>
+      <p class="note muted"><a href={link('/confidentialitate', path)}>Confidențialitate</a> · © {year} Room for People · {SITE.founder}</p>
+    </div>
+  </div>
+</footer>
+<style>
+  .ftr { padding-block: clamp(56px, 7vw, 80px) 28px; }
+  .ftr-top { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; }
+  .ftr-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .ftr ul { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; }
+  .ftr li a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; text-decoration: none; font-size: 15px; }
+  .ftr .logo { display: inline-flex; align-items: center; min-height: 44px; }
+  .ftr li a:hover { text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 3px; }
+  .ftr-rule { height: 1px; background: rgba(242, 238, 232, .2); margin: 40px 0 20px; }
+  .ftr-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .ftr-bottom a { color: inherit; }
+  @media (max-width: 900px) { .ftr-top { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .ftr-cols { grid-template-columns: 1fr 1fr; } }
+</style>

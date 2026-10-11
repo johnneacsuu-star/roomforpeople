@@ -1,0 +1,64 @@
+---
+// Desenul 1: planul unei zile. Timpul cu oamenii stă neatins; în jur, ce pleacă singur. 22:40 e încercuit cu markerul.
+import HandFilter from './HandFilter.astro';
+import People from './People.astro';
+interface Props { class?: string; id?: string }
+const { class: cls = '', id = 'dp' } = Astro.props;
+---
+<svg class={`dayplan ${cls}`} viewBox="20 84 640 212" role="img" aria-labelledby={`${id}-t`}>
+  <title id={`${id}-t`}>Planul unei zile: dimineața confirmările pleacă singure, între 9 și 18 timpul cu oamenii rămâne neatins, seara mesajul de la 22:40 primește răspuns la logistică fără tine</title>
+  <HandFilter id={`${id}-hand`} />
+  <g filter={`url(#${id}-hand)`} class="hand-ink draw">
+    <path d="M40 212 C 140 206, 240 216, 340 210 C 440 204, 540 214, 640 208" />
+    <path d="M70 212 V196 M290 212 V196 M500 212 V196 M570 212 V196 M630 212 V196" />
+    <path class="band" d="M128 224 H252 M330 224 H454" stroke-width="6" stroke-opacity=".35" />
+    <People kind="listener" x={160} y={120} scale={0.56} />
+    <People kind="speaker" x={222} y={120} scale={0.56} />
+    <path class="talk" d="M170 112 C 180 100, 204 100, 214 112" stroke-dasharray="2 5" />
+    <People kind="listener" x={362} y={120} scale={0.56} />
+    <People kind="parent" x={414} y={118} scale={0.5} />
+    <path class="talk" d="M372 112 C 382 100, 404 100, 414 112" stroke-dasharray="2 5" />
+    <rect x="556" y="136" width="28" height="48" rx="4" />
+    <path d="M560 148 H580 M560 156 H576 M560 164 H580" stroke-width="1.4" />
+    <path d="M560 128 C 566 118, 578 118, 584 128" />
+    <path d="M52 150 H92 M52 160 H84 M52 170 H92" stroke-width="1.4" />
+    <path d="M44 142 H100 V180 H44 Z" />
+    <path d="M60 142 L72 150 L84 142" stroke-width="1.4" />
+    <path d="M486 150 H520 V176 H486 Z" />
+    <path d="M492 158 H514 M492 166 H508" stroke-width="1.4" />
+    <path d="M618 148 H646 V182 H618 Z M624 158 H640 M624 166 H640 M624 174 H634" stroke-width="1.4" />
+  </g>
+  <path class="marker" d="M546 120 C 560 100, 604 102, 606 128 C 608 154, 566 166, 548 152 C 534 142, 538 128, 552 120" fill="none" stroke="#D6FF55" stroke-width="6" stroke-linecap="round" opacity=".95" />
+  <g class="lab">
+    <text x="70" y="248" text-anchor="middle">07:40</text>
+    <text x="190" y="248" text-anchor="middle">09 · 13</text>
+    <text x="290" y="248" text-anchor="middle">13:10</text>
+    <text x="392" y="248" text-anchor="middle">14 · 18</text>
+    <text x="500" y="248" text-anchor="middle">20:30</text>
+    <text x="570" y="248" text-anchor="middle" class="strong">22:40</text>
+    <text x="630" y="248" text-anchor="middle">23:10</text>
+  </g>
+  <text class="foot" x="40" y="286">Marți. Ce e cu oameni rămâne al tău. Restul merge singur.</text>
+</svg>
+<ol class="day-legend" aria-label="Momentele zilei">
+  <li><b>07:40</b> confirmările au plecat singure</li>
+  <li><b>09 · 13</b> timpul cu oamenii, neatins</li>
+  <li><b>13:10</b> reprogramarea și-a ales-o omul singur</li>
+  <li><b>14 · 18</b> timpul cu oamenii, tot neatins</li>
+  <li><b>20:30</b> postarea te așteaptă pentru aprobare</li>
+  <li class="key"><b>22:40</b> „cât costă prima ședință?” primește răspuns la logistică, fără tine</li>
+  <li><b>23:10</b> factura a plecat</li>
+</ol>
+<style>
+  .day-legend { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 18px; font-size: var(--fs-note); color: var(--muted); }
+  .day-legend b { font-family: var(--mono); font-weight: 500; color: var(--ink); margin-right: 6px; font-size: 12px; }
+  .day-legend .key { grid-column: 1 / -1; color: var(--ink); }
+  .on-dark .day-legend { color: var(--muted-light); } .on-dark .day-legend b, .on-dark .day-legend .key { color: var(--paper); }
+  .dayplan { width: 100%; height: auto; color: var(--ink); overflow: visible; }
+  .dayplan .lab text { font-family: var(--mono); font-size: 13px; fill: currentColor; letter-spacing: .04em; }
+  .dayplan .lab .strong { font-weight: 500; }
+  .dayplan .foot { font-family: var(--text); font-size: 13px; fill: var(--muted); font-style: italic; }
+  .on-dark .dayplan { color: var(--paper); }
+  .on-dark .dayplan .foot { fill: var(--muted-light); }
+  @media (max-width: 640px) { .dayplan .lab, .dayplan .foot { display: none; } .day-legend { grid-template-columns: 1fr; } }
+</style>

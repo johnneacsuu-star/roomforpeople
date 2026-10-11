@@ -1,0 +1,14 @@
+---
+// Imaginea unui articol: fotografia din frontmatter dacă există, altfel desenul casei.
+import JournalArt from './illustrations/JournalArt.astro';
+import { asset } from '../lib/links';
+import type { Post } from '../lib/jurnal';
+interface Props { post: Post; path: string; id?: string; eager?: boolean }
+const { post, path, id = 'ja-' + post.id, eager = false } = Astro.props;
+---
+{post.data.image
+  ? <img class="post-img" src={asset(post.data.image, path)} alt={post.data.imageAlt || ''} loading={eager ? 'eager' : 'lazy'} width="1360" height="680" />
+  : <JournalArt art={post.data.art} id={id} title={post.data.imageAlt} />}
+<style>
+  .post-img { width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; border-radius: var(--r); }
+</style>

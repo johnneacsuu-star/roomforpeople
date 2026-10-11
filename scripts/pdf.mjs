@@ -1,0 +1,10 @@
+import { chromium } from 'playwright';
+import { resolve } from 'node:path';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+const pg = await b.newPage();
+await pg.goto('file://' + resolve('scripts/regula-casei.html'), { waitUntil: 'networkidle' });
+await pg.evaluate(() => document.fonts.ready);
+await pg.pdf({ path: 'public/fisiere/regula-casei.pdf', format: 'A4', printBackground: true, preferCSSPageSize: true });
+await pg.screenshot({ path: 'tests/shots/regula-casei.png', fullPage: true });
+await b.close();
+console.log('pdf ok');

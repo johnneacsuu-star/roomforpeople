@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+import { createServer } from 'node:http';
+import { readFile, stat } from 'node:fs/promises';
+import { join, extname } from 'node:path';
+const dist='dist', types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2' };
+const srv = createServer(async (req, res) => { let p = decodeURIComponent(req.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html'; let f = join(dist, p + '.html'); try { const st = await stat(f); if (!st.isFile()) throw 0; } catch { f = join(dist, p); } try { const b = await readFile(f); res.writeHead(200, { 'Content-Type': types[extname(f)] || 'application/octet-stream' }); res.end(b); } catch { res.writeHead(404); res.end('404'); } });
+await new Promise((r) => srv.listen(4325, r));
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+const mp = await b.newPage({ viewport: { width: 390, height: 844 } });
+await mp.goto('http://localhost:4325/', { waitUntil: 'networkidle' }); await mp.click('.burger');
+const taps = await mp.evaluate(() => [...document.querySelectorAll('a,button,input,select,textarea,summary')].filter((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && e.offsetParent !== null && (r.height < 40 || r.width < 40) && !e.closest('.ftr-bottom') && !e.closest('.prose') && !e.classList.contains('textlink') && !e.classList.contains('sr') && !e.classList.contains('skip') && !e.closest('.hp') && !(e.tagName === 'INPUT' && e.closest('label')) && !(e.tagName === 'A' && e.closest('p')); }).map((e) => ({ tag: e.tagName, cls: e.className, txt: (e.textContent || '').trim().slice(0, 30), h: Math.round(e.getBoundingClientRect().height), w: Math.round(e.getBoundingClientRect().width), parent: e.parentElement.className })));
+console.log(JSON.stringify(taps, null, 1));
+await b.close(); srv.close();

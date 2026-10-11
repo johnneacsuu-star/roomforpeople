@@ -1,0 +1,17 @@
+---
+// Capul paginilor interioare: etichetă, titlu, lede, și opțional un rând de acțiuni.
+interface Props { label?: string; lede?: string; dark?: boolean }
+const { label, lede, dark = false } = Astro.props;
+---
+<section class={`phead section-tight ${dark ? 'on-dark' : ''}`}>
+  <div class="wrap stack" style="gap:18px">
+    {label && <p class="label muted">{label}</p>}
+    <h1><slot name="title" /></h1>
+    {lede && <p class="lede muted" style="max-width:62ch">{lede}</p>}
+    <slot />
+  </div>
+</section>
+<style>
+  .phead { padding-top: clamp(40px, 6vw, 72px); }
+  .phead h1 { max-width: 20ch; font-size: clamp(34px, 5vw, 60px); }
+</style>

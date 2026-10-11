@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Calculator from '../components/Calculator.astro';
+const path = '/calculator';
+---
+<Base title="Calculatorul „A doua tură”" description="Cât timp pleacă pe an pe lucruri care nu cer un om: confirmări, reprogramări, facturi, materiale. La cifrele tale, cu calculul la vedere. Nu promite economii; numește timpul." path={path}>
+  <PageHead label="A doua tură · calculator" lede="Munca de după ultimul om nu o măsoară nimeni, și de aceea nu o reduce nimeni. Pune cifrele tale și vezi cât e, pe săptămână și pe an. Calculul e la vedere. Nu e o promisiune de economie; e un timp numit.">
+    <Fragment slot="title">Câte ore pleacă <span class="mk">pe an</span> pe ce nu cere un om?</Fragment>
+  </PageHead>
+  <section class="section-tight on-white"><div class="wrap"><Calculator path={path} /></div></section>
+</Base>

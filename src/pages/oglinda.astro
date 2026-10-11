@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { link } from '../lib/links';
+import { SITE } from '../config';
+const path = '/oglinda'; const L = (p: string) => link(p, path);
+---
+<Base title="Oglinda AI · cum te descrie un asistent AI" description="Aceeași întrebare pe care o pune un om la 22:00, pusă la trei asistenți AI despre cabinetul tău, cu capturile. Un serviciu manual, făcut de Ionuț, nu de un robot. Deocamdată inclus doar în Radiografie." path={path} noindex>
+  <PageHead label="Oglinda AI · deocamdată doar în Radiografie" lede="Tot mai mulți oameni nu mai caută un psiholog pe Google. Întreabă un asistent AI. Ce răspunde el despre tine vine din ce scrie public despre tine, nu din cât ești de bun. Oglinda AI îți arată exact ce vede.">
+    <Fragment slot="title">Cum te descrie un asistent AI când întreabă <span class="mk">un străin</span>?</Fragment>
+  </PageHead>
+  <section class="section on-white">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:18px">
+        <h2>Cum se face</h2>
+        <ol class="steps">
+          <li><span class="wp">1</span><div><strong>Îmi spui numele cabinetului și orașul.</strong><p class="small muted">Doar date publice. Nimic despre clienți, nimic din interior.</p></div></li>
+          <li><span class="wp">2</span><div><strong>Pun aceeași întrebare la trei asistenți AI.</strong><p class="small muted">Întrebarea pe care ar pune-o un om: „recomandă-mi un [profesia ta] pentru [situație] în [orașul tău]”. Eu, manual, nu un script.</p></div></li>
+          <li><span class="wp">3</span><div><strong>Primești capturile și o pagină de citire.</strong><p class="small muted">Ce a găsit, ce n-a găsit, ce lipsește de pe site-ul tău și de pe profilul Google, și primul lucru de schimbat.</p></div></li>
+        </ol>
+        <div class="card card-paper">
+          <p class="label muted">Exemplu · cabinet fictiv</p>
+          <p class="small" style="font-family:var(--mono)">› Recomandă-mi un psihoterapeut pentru anxietate în Cluj.</p>
+          <p class="small">„Nu am găsit informații clare despre Cabinetul A.: site-ul nu menționează specializarea și nici orașul în text.” Așa arată invizibilitatea. Nu e o problemă de calitate, e o problemă de claritate.</p>
+        </div>
+      </div>
+      <div class="card">
+        <p class="label" style="color:var(--alert)">Nu e activ ca serviciu separat</p>
+        <p>Oglinda AI e deocamdată inclusă doar în <a class="textlink" href={L('/radiografia')}>Radiografie</a> și în drumul <a class="textlink" href={L('/prezenta')}>Prezență</a>, unde o facem înainte și după. Ca serviciu de sine stătător, cu termen de livrare, nu există încă un proces pus la punct, și nu promitem ce nu putem ține.</p>
+        <p class="small muted">Vrei să o faci singur? Deschide un asistent AI și întreabă-l ce ar întreba un client despre tine. Citește răspunsul ca și cum nu ai fi tu. Ce lipsește acolo lipsește și de pe site.</p>
+        <a class="btn btn-line" href={L('/contact') + '?tip=oglinda'}>Întreabă-l pe Ionuț despre Oglindă</a>
+      </div>
+    </div>
+  </section>
+</Base>

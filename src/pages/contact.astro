@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { SITE } from '../config';
+import { link } from '../lib/links';
+const path = '/contact'; const L = (p: string) => link(p, path);
+---
+<Base title="Scrie-mi" description="Scrie-i lui Ionuț Neacșu despre cabinetul tău. Un om, nu un sistem: îți răspunde personal, de pe adresa lui." path={path}>
+  <PageHead label="Scrie-mi" lede="Room for People e un om. Îi scrii lui Ionuț, îți răspunde Ionuț, de pe adresa lui. Fără echipă de vânzări, fără robot.">
+    <Fragment slot="title">Un om, <span class="mk">nu un sistem</span>.</Fragment>
+  </PageHead>
+  <section class="section on-white">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:22px">
+        <div class="card card-paper">
+          <p class="label muted">Direct</p>
+          <p><a class="textlink" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+          <p class="small muted">Răspunde {SITE.responseTime}. Dacă vrei să vorbiți 30 de minute, scrie-i două intervale care îți convin și îți confirmă unul. Un calendar de programare va apărea aici când va exista unul real.</p>
+          <p><a class="textlink" href={SITE.linkedin} target="_blank" rel="me noopener">LinkedIn</a></p>
+        </div>
+        <div class="stack" style="gap:8px">
+          <p class="label muted">Ce se întâmplă după ce trimiți</p>
+          <p class="small">Mesajul ajunge în căsuța lui de email și nicăieri altundeva: nu într-un CRM, nu într-o listă, nu într-un instrument AI. Îți răspunde el. Dacă ai bifat Radiografia, discutați întâi dacă are sens. Nimic nu se plătește pe site.</p>
+          <p class="small">Te rugăm să nu scrii nimic despre clienții tăi, nici anonimizat. Vorbim despre cabinet, nu despre ei.</p>
+          <p class="small"><a class="textlink" href={L('/confidentialitate')}>Cum folosim emailul tău</a></p>
+        </div>
+      </div>
+      <div class="card">
+        <ContactForm tip="contact" path={path} showRadiografia showNewsletter submitLabel="Trimite" id="f-contact" />
+      </div>
+    </div>
+  </section>
+</Base>
+<script>
+  // ?tip=radiografia preselectează tipul mesajului și bifa Radiografia.
+  const tip = new URLSearchParams(location.search).get('tip');
+  const f = document.getElementById('f-contact');
+  if (f && tip) {
+    if (['radiografia', 'oglinda', 'prezenta', 'sistem', 'voce'].includes(tip)) f.dataset.tip = tip;
+    if (tip === 'radiografia') { const c = f.querySelector('input[name="radiografia"]'); if (c) c.checked = true; }
+  }
+</script>

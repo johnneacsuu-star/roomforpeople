@@ -1,0 +1,93 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config';
+import { asset } from '../lib/links';
+import fBricLat from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url';
+import fBricExt from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-ext-wght-normal.woff2?url';
+import fHankLat from '@fontsource/hanken-grotesk/files/hanken-grotesk-latin-400-normal.woff2?url';
+import fHankExt from '@fontsource/hanken-grotesk/files/hanken-grotesk-latin-ext-400-normal.woff2?url';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;            // calea curată, ex. "/prezenta"
+  ogImage?: string;        // cale absolută pe site, ex. "/og.png"
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+  bodyClass?: string;
+}
+const { title, description, path, ogImage = '/og.png', jsonLd, noindex = false, bodyClass = '' } = Astro.props;
+const fullTitle = path === '/' ? `${SITE.name} · ${SITE.tagline}` : `${title} · ${SITE.name}`;
+const canonical = new URL(path, SITE.url).toString();
+const ogAbs = new URL(ogImage, SITE.url).toString();
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: SITE.name,
+  url: SITE.url,
+  description: 'Site, primul contact, programări și materiale puse la lucru în cabinetele psihologilor, psihoterapeuților, asistenților sociali și coachilor din România.',
+  founder: { '@type': 'Person', name: SITE.founder, sameAs: [SITE.linkedin] },
+  member: SITE.team.map((m) => ({ '@type': 'Person', name: m.name, jobTitle: m.role })),
+  areaServed: 'RO',
+  inLanguage: 'ro',
+  slogan: SITE.tagline,
+};
+const ld = [org, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
+const isProd = !!process.env.VERCEL && process.env.LINK_MODE !== 'relative';
+---
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogAbs} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content="ro_RO" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#35224F" />
+  {[fBricLat, fBricExt, fHankLat, fHankExt].map((f) => <link rel="preload" as="font" type="font/woff2" href={asset(f, path)} crossorigin />)}
+  <link rel="icon" href={asset('/favicon.ico', path)} sizes="any" />
+  <link rel="icon" href={asset('/img/favicon-32.png', path)} type="image/png" sizes="32x32" />
+  <link rel="icon" href={asset('/img/favicon-512.png', path)} type="image/png" sizes="512x512" />
+  <link rel="apple-touch-icon" href={asset('/img/favicon-180.png', path)} />
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <slot name="head" />
+</head>
+<body class={bodyClass}>
+  <a class="skip" href="#continut">Sari la conținut</a>
+  <Header path={path} />
+  <main id="continut">
+    <slot />
+  </main>
+  <Footer path={path} />
+  {isProd && <script defer src="/_vercel/insights/script.js"></script>}
+  <script>
+    // Desenele se completează când intră în ecran; cu reduced-motion sunt gata de la început.
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const draws = document.querySelectorAll('.draw');
+    if (reduce || !('IntersectionObserver' in window)) {
+      draws.forEach((d) => { d.classList.remove('pending'); d.classList.add('drawn'); });
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add('drawn'); e.target.classList.remove('pending'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.25 });
+      draws.forEach((d) => { d.classList.add('pending'); io.observe(d); });
+      setTimeout(() => draws.forEach((d) => { d.classList.add('drawn'); d.classList.remove('pending'); }), 3000);
+    }
+  </script>
+</body>
+</html>

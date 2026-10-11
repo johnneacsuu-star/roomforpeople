@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { link, asset } from '../lib/links';
+import { SITE } from '../config';
+const path = '/resurse'; const L = (p: string) => link(p, path);
+---
+<Base title="Resurse · Regula casei, calculatorul, Harta" description="Resurse gratuite pentru cabinetul tău: Regula casei și Protocolul semafor ca afiș pentru perete, calculatorul „A doua tură”, Harta cabinetului." path={path}>
+  <PageHead label="Resurse · gratuite, fără email" lede="Lucruri pe care le poți folosi mâine, fără să ne scrii. Ce e în lucru e marcat ca atare; nu promitem ce nu există încă.">
+    <Fragment slot="title">De luat <span class="mk">acasă</span>.</Fragment>
+  </PageHead>
+  <section class="section on-white">
+    <div class="wrap g-3">
+      <article class="card">
+        <p class="label muted">Afiș A4 · PDF</p>
+        <h3>Regula casei și Protocolul semafor</h3>
+        <p class="small muted">Pentru peretele de lângă birou, cu loc pentru semnătura cabinetului. Verde, galben, roșu: ce intră în ce instrument și ce nu intră niciodată. E regula noastră de lucru, nu o clasificare juridică; obligațiile tale vin din codul profesiei tale.</p>
+        <a class="btn btn-ink" href={asset('/fisiere/regula-casei.pdf', path)} download>Descarcă afișul (PDF)</a>
+      </article>
+      <article class="card">
+        <p class="label muted">Instrument · pe site</p>
+        <h3>Calculatorul „A doua tură”</h3>
+        <p class="small muted">Cât timp pleacă pe an pe lucruri care nu cer un om, la cifrele tale, cu calculul la vedere. Nu promite economii; numește timpul.</p>
+        <a class="btn btn-ink" href={L('/calculator')}>Deschide calculatorul</a>
+      </article>
+      <article class="card">
+        <p class="label muted">Instrument · pe site</p>
+        <h3>Harta cabinetului</h3>
+        <p class="small muted">Opt întrebări, patru direcții, rezultatul pe loc, cu un prim pas pe fiecare direcție. Se descarcă ca PDF. Fără email.</p>
+        <a class="btn btn-ink" href={L('/harta')}>Fă Harta</a>
+      </article>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:14px">
+        <p class="label muted">În verificare · nu e încă publicat</p>
+        <h2>Consimțământul pentru instrumente digitale</h2>
+        <p class="muted">Un model de text pe care un practician îl poate da omului din fața lui când introduce un sistem de programări, un formular de primire sau un răspuns automat: ce se colectează, de ce, unde stă, cât timp. Câte o variantă pentru psihologi, asistenți sociali și coachi, pentru că obligațiile diferă.</p>
+        <p class="small muted">Textul e scris și e în verificare. Nu îl publicăm până nu e citit de cineva cu pregătire juridică, pentru că un model greșit face mai mult rău decât lipsa lui. Când apare aici, va fi marcat clar ca model educațional, nu ca document juridic definitiv.</p>
+      </div>
+      <div class="card card-paper">
+        <p class="label muted">Vrei să afli când apare?</p>
+        <p class="small">Scrie-i lui Ionuț și îți trimite el, personal, când e gata. Fără listă, fără automatizare.</p>
+        <a class="btn btn-line" href={L('/contact')}>Scrie-mi</a>
+      </div>
+    </div>
+  </section>
+</Base>

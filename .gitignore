@@ -1,0 +1,9 @@
+node_modules
+dist
+dist-preview
+.astro
+.env
+.env.*
+!.env.example
+tests/shots
+tests/lh-*.json

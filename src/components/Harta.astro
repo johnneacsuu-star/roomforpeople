@@ -1,0 +1,205 @@
+---
+// Harta cabinetului: opt întrebări, două pe ecran, patru pași, înainte și înapoi, rezultat pe loc, fără email.
+import { DIRECTII, INTREBARI, PASI } from '../lib/harta';
+import ContactForm from './ContactForm.astro';
+import { link } from '../lib/links';
+import { SITE } from '../config';
+interface Props { path?: string; standalone?: boolean }
+const { path = '/', standalone = false } = Astro.props;
+const H = standalone ? 'h2' : 'h3';
+const data = { d: DIRECTII.map((d) => ({ name: d.name, stages: d.stages, tips: d.tips, drum: link(d.drum, path) })), q: INTREBARI, p: PASI };
+---
+<div class="harta" id="harta" data-harta={JSON.stringify(data)}>
+  <div class="harta-head no-print">
+    <p class="label muted">Harta cabinetului · gratuită · 4 minute · rezultatul pe loc</p>
+    <div class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <p class="small muted" id="harta-pas" aria-live="polite">Pasul 1 din 4 · Cum te găsește omul</p>
+  </div>
+
+  <form class="harta-form no-print" id="harta-form" novalidate>
+    {PASI.map((p, si) => (
+      <fieldset class="pas" data-pas={si} hidden={si !== 0}>
+        <legend class="sr">Pasul {si + 1} din 4: {p.title}</legend>
+        <H class="pas-title">{p.title}</H>
+        {INTREBARI.map((q, qi) => q.d === p.dir && (
+          <div class="q">
+            <p class="q-text">{qi + 1}. {q.q}</p>
+            <div class="q-opts" role="radiogroup" aria-label={q.q}>
+              {q.opts.map((o, oi) => (
+                <label class="opt">
+                  <input class="sr" type="radio" name={`q${qi}`} value={oi} />
+                  <span class="dot" aria-hidden="true"></span>
+                  <span>{o[0]}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        ))}
+      </fieldset>
+    ))}
+    <div class="pas-nav">
+      <button type="button" class="btn btn-line" id="harta-back" hidden>← Înapoi</button>
+      <p class="note muted" id="harta-hint">Alege un răspuns la fiecare întrebare. Nu există răspuns greșit.</p>
+      <button type="button" class="btn btn-ink" id="harta-next">Mai departe →</button>
+    </div>
+  </form>
+
+  <div class="harta-rezultat" id="harta-rezultat" hidden>
+    <div class="rez-grid">
+      <div class="rez-left">
+        <p class="label print-only">Room for People · Harta cabinetului · <span id="rez-data"></span></p>
+        <H class="rez-title">Harta ta, pe patru direcții.</H>
+        <p class="rez-lead" id="rez-lead"></p>
+        <ol class="rez-list" id="rez-list"></ol>
+      </div>
+      <div class="rez-right">
+        <svg class="compass" id="compass" viewBox="0 0 240 240" aria-hidden="true">
+          <g class="grid"><circle cx="120" cy="120" r="30" /><circle cx="120" cy="120" r="60" /><circle cx="120" cy="120" r="90" /></g>
+          <g class="spoke"><line x1="120" y1="30" x2="120" y2="210" /><line x1="30" y1="120" x2="210" y2="120" /></g>
+          <polygon class="shape" id="compass-shape" points="120,120 120,120 120,120 120,120" />
+          <g class="pts" id="compass-pts"></g>
+          <text x="120" y="20" text-anchor="middle">Prezență</text>
+          <text x="226" y="124" text-anchor="end">Contact</text>
+          <text x="120" y="230" text-anchor="middle">Administrare</text>
+          <text x="14" y="124" text-anchor="start">AI</text>
+        </svg>
+        <p class="note muted" style="text-align:center">Cu cât forma e mai largă, cu atât mai mult merge singur.</p>
+      </div>
+    </div>
+    <div class="rez-actions no-print">
+      <button type="button" class="btn btn-signal" id="harta-print">Descarcă harta (PDF)</button>
+      <button type="button" class="btn btn-line" id="harta-send-toggle" aria-expanded="false" aria-controls="harta-send">Trimite-i harta lui Ionuț</button>
+      <button type="button" class="textlink" id="harta-reset" style="background:none;border:0;cursor:pointer;padding:0">Reia de la început</button>
+    </div>
+    <div class="rez-send no-print" id="harta-send" hidden>
+      <p class="small">Dacă vrei un răspuns personal pe harta asta, lasă emailul. Harta pleacă la {SITE.founder} împreună cu răspunsurile tale; nimic altceva. Nu e obligatoriu: rezultatul de mai sus e al tău oricum.</p>
+      <ContactForm tip="harta" path={path} showMessage={false} showName={true} submitLabel="Trimite harta" compact id="f-harta" />
+    </div>
+    <p class="note muted">Harta de aici nu se salvează pe niciun server. Rămâne în browserul tău până o reiei. Rezultatul e o orientare, nu o evaluare profesională.</p>
+  </div>
+</div>
+<style>
+  .harta { display: flex; flex-direction: column; gap: 22px; }
+  .harta-head { display: flex; flex-direction: column; gap: 10px; }
+  .progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .progress span { height: 6px; background: var(--mist); border-radius: 1px; }
+  .progress span.done { background: var(--ink); }
+  .progress span.now { background: var(--signal); outline: 1px solid var(--ink); }
+  .pas { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 22px; }
+  .pas-title { font-size: clamp(22px, 2.6vw, 30px); }
+  .q { display: flex; flex-direction: column; gap: 10px; }
+  .q-text { font-family: var(--display); font-weight: 700; font-size: 17px; line-height: 1.35; }
+  .q-opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .opt:has(input:checked) { border-color: var(--ink); background: var(--tint); }
+  .opt:has(input:checked) .dot { background: var(--ink); }
+  .opt:has(input:focus-visible) { outline: 3px solid var(--signal); outline-offset: 2px; }
+  .pas-nav { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; padding-top: 8px; border-top: 1px dotted var(--ink); }
+  .pas-nav .note { flex: 1 1 200px; }
+  .harta-rezultat { display: flex; flex-direction: column; gap: 22px; border: 1px solid var(--ink); border-radius: var(--r); padding: clamp(20px, 3vw, 32px); background: var(--white); }
+  .rez-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 28px; align-items: start; }
+  .rez-left { display: flex; flex-direction: column; gap: 14px; }
+  .rez-title { font-size: clamp(24px, 3vw, 34px); }
+  .rez-lead { font-size: 17px; }
+  .rez-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .rez-list li { padding: 14px 0; border-top: 1px solid var(--mist); display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .rez-list .r-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .rez-list .r-name { font-family: var(--display); font-weight: 700; font-size: 17px; }
+  .rez-list .r-stage { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  .rez-list .r-bar { height: 6px; background: var(--mist); border-radius: 1px; overflow: hidden; }
+  .rez-list .r-bar i { display: block; height: 100%; background: var(--plum); }
+  .rez-list .r-tip { font-size: 15px; }
+  .rez-list .r-link { font-size: 14px; }
+  .rez-list li.weak .r-name::after { content: " · începe de aici"; font-family: var(--mono); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; background: var(--signal); padding: 2px 6px; margin-left: 6px; }
+  .compass { width: 100%; max-width: 260px; height: auto; margin: 0 auto; }
+  .compass .grid circle { fill: none; stroke: var(--mist); }
+  .compass .spoke line { stroke: var(--mist); }
+  .compass .shape { fill: rgba(214, 255, 85, .5); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; transition: all .3s; }
+  .compass .pts circle { fill: var(--ink); }
+  .compass text { font-family: var(--mono); font-size: 11px; fill: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+  .rez-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .rez-send { display: flex; flex-direction: column; gap: 14px; padding-top: 18px; border-top: 1px dotted var(--ink); }
+  @media (max-width: 760px) { .q-opts { grid-template-columns: 1fr; } .rez-grid { grid-template-columns: 1fr; } .pas-nav .btn { flex: 1 1 100%; } }
+  @media print {
+    body.printing-harta main > :not(.harta-host) { display: none !important; }
+    body.printing-harta .harta-host > :not(.harta) { display: none !important; }
+    .harta-rezultat { border: 0; padding: 0; }
+    .rez-grid { grid-template-columns: 1fr 1fr; }
+    .rez-list .r-bar i { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .compass .shape { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+<script>
+  const root = document.getElementById('harta');
+  if (root) {
+    const data = JSON.parse(root.dataset.harta);
+    const form = document.getElementById('harta-form');
+    const pasi = [...root.querySelectorAll('.pas')];
+    const back = document.getElementById('harta-back');
+    const next = document.getElementById('harta-next');
+    const hint = document.getElementById('harta-hint');
+    const pasLabel = document.getElementById('harta-pas');
+    const prog = [...root.querySelectorAll('.progress span')];
+    const rez = document.getElementById('harta-rezultat');
+    const KEY = 'rfp-harta-v2';
+    let step = 0;
+
+    const answers = () => data.q.map((_, i) => { const c = form.querySelector(`input[name="q${i}"]:checked`); return c ? Number(c.value) : -1; });
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify({ a: answers(), step })); } catch {} };
+    const load = () => { try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s && Array.isArray(s.a)) { s.a.forEach((v, i) => { if (v >= 0) { const el = form.querySelector(`input[name="q${i}"][value="${v}"]`); if (el) el.checked = true; } }); return s; } } catch {} return null; };
+
+    function render() {
+      pasi.forEach((p, i) => { p.hidden = i !== step; });
+      back.hidden = step === 0;
+      next.textContent = step === 3 ? 'Vezi harta →' : 'Mai departe →';
+      pasLabel.textContent = `Pasul ${step + 1} din 4 · ${data.p[step].title}`;
+      prog.forEach((s, i) => { s.className = i < step ? 'done' : i === step ? 'now' : ''; });
+      hint.textContent = 'Alege un răspuns la fiecare întrebare. Nu există răspuns greșit.';
+      rez.hidden = true; form.hidden = false; root.querySelector('.harta-head').hidden = false;
+      pasi[step].querySelector('.pas-title').setAttribute('tabindex', '-1');
+    }
+    function stepComplete() { const a = answers(); const qs = data.q.map((q, i) => i).filter((i) => data.q[i].d === data.p[step].dir); return qs.every((i) => a[i] >= 0); }
+
+    next.addEventListener('click', () => {
+      if (!stepComplete()) { hint.textContent = 'Mai e o întrebare fără răspuns pe pasul ăsta.'; const firstEmpty = pasi[step].querySelector('.q:not(:has(input:checked)) input'); if (firstEmpty) firstEmpty.focus(); return; }
+      if (step < 3) { step++; save(); render(); pasi[step].querySelector('.pas-title').focus({ preventScroll: true }); root.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+      else { save(); showResult(); }
+    });
+    back.addEventListener('click', () => { if (step > 0) { step--; save(); render(); } });
+    form.addEventListener('change', save);
+
+    function showResult() {
+      const a = answers();
+      const scores = data.d.map(() => 0);
+      const picked = [];
+      data.q.forEach((q, i) => { const o = q.opts[a[i]]; scores[q.d] += o[1]; picked.push(o[0]); });
+      const stage = scores.map((s) => (s < 10 ? 0 : s < 20 ? 1 : 2));
+      const weakest = scores.indexOf(Math.min(...scores));
+      const list = document.getElementById('rez-list'); list.innerHTML = '';
+      data.d.forEach((d, i) => {
+        const li = document.createElement('li'); if (i === weakest) li.className = 'weak';
+        li.innerHTML = `<div class="r-head"><span class="r-name">${d.name}</span><span class="r-stage">${d.stages[stage[i]]} · ${scores[i]}/25</span></div><div class="r-bar"><i style="width:${Math.round(scores[i] / 25 * 100)}%"></i></div><p class="r-tip">${d.tips[stage[i]]}</p><a class="r-link textlink no-print" href="${d.drum}">Drumul pentru direcția asta</a>`;
+        list.appendChild(li);
+      });
+      const total = scores.reduce((s, v) => s + v, 0);
+      document.getElementById('rez-lead').textContent = `${total} din 100. Direcția cea mai slabă e ${data.d[weakest].name.toLowerCase()}: de acolo câștigi cel mai mult cu cel mai mic efort. Mai jos, un prim pas pe fiecare direcție, pe care îl poți face singur.`;
+      document.getElementById('rez-data').textContent = new Date().toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' });
+      const pts = scores.map((s, i) => { const r = 30 + (s / 25) * 90; const ang = [-90, 0, 90, 180][i] * Math.PI / 180; return [120 + r * Math.cos(ang), 120 + r * Math.sin(ang)]; });
+      document.getElementById('compass-shape').setAttribute('points', pts.map((p) => p.join(',')).join(' '));
+      document.getElementById('compass-pts').innerHTML = pts.map((p) => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4"/>`).join('');
+      const sendForm = document.getElementById('f-harta');
+      if (sendForm) { const h = { raspunsuri: picked }; data.d.forEach((d, i) => { h[d.name] = { stage: d.stages[stage[i]], score: scores[i] }; }); sendForm.dataset.harta = JSON.stringify(h); }
+      form.hidden = true; root.querySelector('.harta-head').hidden = true; rez.hidden = false;
+      rez.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      document.querySelector('.rez-title').setAttribute('tabindex', '-1'); document.querySelector('.rez-title').focus({ preventScroll: true });
+    }
+
+    document.getElementById('harta-print').addEventListener('click', () => { document.body.classList.add('printing-harta'); window.print(); setTimeout(() => document.body.classList.remove('printing-harta'), 1000); });
+    const tog = document.getElementById('harta-send-toggle'); const send = document.getElementById('harta-send');
+    tog.addEventListener('click', () => { const open = tog.getAttribute('aria-expanded') === 'true'; tog.setAttribute('aria-expanded', String(!open)); send.hidden = open; if (!open) send.querySelector('input[name="email"]').focus(); });
+    document.getElementById('harta-reset').addEventListener('click', () => { form.reset(); step = 0; try { localStorage.removeItem(KEY); } catch {} render(); root.scrollIntoView({ block: 'start' }); });
+
+    const saved = load();
+    if (saved && saved.a.every((v) => v >= 0)) { step = 3; render(); showResult(); }
+    else { step = saved && saved.step >= 0 ? Math.min(saved.step, 3) : 0; render(); }
+  }
+</script>

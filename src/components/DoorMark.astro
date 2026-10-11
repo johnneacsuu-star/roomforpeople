@@ -1,0 +1,10 @@
+---
+// Semnul singur: ușa dreaptă cu canatul întredeschis. Culoarea cadrului vine din currentColor.
+interface Props { size?: number; class?: string; leaf?: string }
+const { size = 26, class: cls = '', leaf = '#D6FF55' } = Astro.props;
+const h = Math.round(size * 60 / 48);
+---
+<svg class={`door-mark ${cls}`} width={size} height={h} viewBox="0 0 48 60" aria-hidden="true">
+  <rect x="3" y="3" width="42" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="3" />
+  <path class="leaf" d="M9 5 L22 11 L22 49 L9 55 Z" fill={leaf} stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+</svg>

@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ContactForm from '../components/ContactForm.astro';
+import ServiceFaq from '../components/ServiceFaq.astro';
+import { SITE } from '../config';
+import { link } from '../lib/links';
+const path = '/voce'; const L = (p: string) => link(p, path);
+const price = SITE.prices.voce.toLocaleString('ro-RO');
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Service', name: 'Voce', provider: { '@type': 'ProfessionalService', name: SITE.name, url: SITE.url }, areaServed: 'RO', description: 'Articole, newsletter și postări din înregistrările unui practician, în vocea lui, aprobate de el, fără date despre clienți.', offers: { '@type': 'Offer', priceCurrency: 'RON', price: SITE.prices.voce, priceSpecification: { '@type': 'PriceSpecification', minPrice: SITE.prices.voce, priceCurrency: 'RON' } } };
+---
+<Base title="Voce · articole, newsletter și postări în vocea ta" description={`Două înregistrări pe lună cu tine; din ele, articole, un newsletter și postări, în vocea ta, aprobate de tine. Nimic despre clienți. De la ${price} lei.`} path={path} jsonLd={jsonLd}>
+  <PageHead label="Drumul 3 · Voce" lede="Știi ce ai de spus. Ai spus-o de o sută de ori în cabinet. Seara nu mai ai energie să o scrii. Vorbești 20 de minute de două ori pe lună; restul se face din ce ai spus, și pleacă doar după ce l-ai citit.">
+    <Fragment slot="title">Ești citit în <span class="mk">vocea ta</span>, nu în vocea unui model.</Fragment>
+    <div class="actions">
+      <a class="btn btn-signal" href="#contact">Scrie-mi despre Voce</a>
+      <p class="small muted">de la <strong>{price} lei</strong> pentru prima lună · preț de lansare · continuarea se stabilește împreună</p>
+    </div>
+  </PageHead>
+
+  <section class="section on-white">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:22px">
+        <h2>Ale cui sunt ideile</h2>
+        <p class="lede">Ale tale. Experiența, judecata profesională, exemplele, poziția: toate vin din înregistrarea cu tine. Sistemul ajută la structură și la redactare. Nu produce idei, nu produce opinii, nu produce „conținut”. Produce ciorne din ce ai spus, și le aduce la tine.</p>
+        <p class="muted">Pentru psihologi contează în mod special: Codul deontologic CPR spune că rămâi responsabil pentru orice material promoțional, chiar dacă l-a scris altcineva. De aceea nimic nu pleacă fără ca tu să-l fi citit, și de aceea fiecare afirmație se poate urmări înapoi la ce ai spus tu.</p>
+        <h2 style="margin-top:12px">Pentru cine e</h2>
+        <ul class="list">
+          <li>Pentru cine are ce spune și nu are când să scrie.</li>
+          <li>Pentru cine a început un newsletter de trei ori și l-a lăsat de trei ori.</li>
+          <li>Pentru cine vrea să fie găsit pentru ce gândește, nu pentru ce promite.</li>
+        </ul>
+      </div>
+      <div class="card card-paper">
+        <p class="label muted">Ce primești, într-o lună</p>
+        <ul class="list small">
+          <li><strong>Două înregistrări de 20 de minute</strong> cu tine, pe o temă aleasă împreună dinainte. Vorbești ca atunci când explici unui coleg.</li>
+          <li><strong>Două articole</strong> pentru site-ul tău, de 600 până la 900 de cuvinte, cu titlu, cu surse unde e cazul, cu un singur lucru de făcut la final.</li>
+          <li><strong>Un newsletter</strong>, scurt, trimis de pe adresa ta către lista ta.</li>
+          <li><strong>Patru postări</strong> pentru LinkedIn sau Facebook, din aceleași idei, în același ton.</li>
+          <li><strong>Un singur loc</strong> unde citești și aprobi tot, cu două butoane: da, nu. Ce nu aprobi se rescrie din aceeași înregistrare.</li>
+          <li><strong>Filtrul deontologic</strong> pe fiecare text: fără promisiuni de rezultat, fără „metoda unică”, fără specularea fricii.</li>
+        </ul>
+        <p class="note muted">Nimic despre clienți, nici anonimizat. Exemplele din texte sunt compuse, și așa sunt marcate când e cazul.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:16px">
+        <h2>Din 20 de minute de vorbit, un articol</h2>
+        <p class="muted">Exemplu ilustrativ, cu o practiciană fictivă. Stânga: un fragment din ce ar spune în înregistrare. Dreapta: cum ajunge în articol. Aceeași idee, aceleași cuvinte, pusă în ordine.</p>
+      </div>
+      <div class="g-2 voce-ex">
+        <div class="card card-paper"><p class="label muted">Ce spune, în înregistrare</p><p class="small" style="font-style:italic">„…și îmi scriu seara, la 11, «cât costă?», și eu stau și mă gândesc: dacă nu răspund acum, mâine nu mai scrie. Că omul care scrie la 11 noaptea nu face comparație de prețuri, el a luat o decizie în momentul ăla și dacă nu-l prinzi atunci… nu că-l «prinzi», dar dacă nu primește nimic, se simte iar singur cu problema lui.”</p></div>
+        <div class="card"><p class="label muted">Cum ajunge în articol</p><p class="small"><strong>Omul care scrie la 23:00 nu compară prețuri.</strong> A luat o decizie în clipa aia. Dacă până dimineață nu primește nimic înapoi, nu „pierzi un client”; el rămâne, încă o dată, singur cu problema lui. Nu trebuie să-i răspunzi tu la 23:00. Trebuie să primească ceva: prețul, programul, cum începe, și numărul la care sună dacă e în pericol. Scrise de tine, o singură dată.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-white">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:16px">
+        <h2>Prețul și cum se oprește</h2>
+        <p>De la <strong>{price} lei</strong> pentru prima lună: două înregistrări, două articole, un newsletter, patru postări. Preț de lansare. Dacă după prima lună vrei să continui, stabilim împreună ritmul și prețul, în scris. Nu există contract pe termen; se oprește cu un email.</p>
+        <p class="muted">Ce rămâne la tine după: toate textele, înregistrările, și structura pe care o poți continua singur.</p>
+      </div>
+      <div class="stack" style="gap:16px">
+        <h2>Întrebări frecvente</h2>
+        <ServiceFaq items={[
+          { q: 'Textele sunt scrise de AI?', a: 'Sunt scrise din înregistrarea ta, cu ajutorul unui model la structură și la redactare, și apoi citite și corectate de un om înainte să ajungă la tine. Tu ești ultimul care le citește, și singurul care le aprobă. Ideile sunt ale tale sau nu pleacă.' },
+          { q: 'Pot vorbi despre cazuri, anonimizat?', a: 'Nu. Regula casei: nimic despre un client nu intră într-un instrument, nici cu numele schimbat. Dacă vrei un exemplu, îl compunem din zero și îl marcăm ca atare.' },
+          { q: 'Cine trimite newsletterul?', a: 'Pleacă de pe adresa ta, din contul tău, către lista ta. Noi pregătim textul; tu apeși pe „trimite”, sau ne dai voie să programăm trimiterea după ce ai aprobat.' },
+        ]} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-dark" id="contact">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack" style="gap:16px">
+        <h2>Scrie-mi despre ce ai de spus</h2>
+        <p class="lede muted">Un subiect pe care îl explici des în cabinet și pe care nu l-ai scris niciodată. Atât. Îți răspund personal, {SITE.responseTime}. Dacă vrei să vezi întâi cum arată, <a class="textlink" href={L('/jurnal')}>Jurnalul</a> de aici e făcut exact așa.</p>
+      </div>
+      <div class="card card-paper" style="color:var(--ink)"><ContactForm tip="voce" path={path} submitLabel="Trimite" id="f-voce" /></div>
+    </div>
+  </section>
+</Base>

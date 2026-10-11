@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import { link } from '../lib/links';
+const path = '/404';
+---
+<Base title="Pagina nu există" description="Pagina pe care o cauți nu există sau s-a mutat." path={path} noindex>
+  <section class="section">
+    <div class="wrap stack" style="gap:18px;max-width:60ch">
+      <p class="label muted">404</p>
+      <h1>Ușa asta nu duce nicăieri.</h1>
+      <p class="lede muted">Pagina nu există sau s-a mutat. Cele care există: <a class="textlink" href={link('/', path)}>pagina principală</a>, <a class="textlink" href={link('/harta', path)}>Harta cabinetului</a>, <a class="textlink" href={link('/contact', path)}>scrie-mi</a>.</p>
+    </div>
+  </section>
+</Base>

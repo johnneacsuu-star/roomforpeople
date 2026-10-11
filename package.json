@@ -1,0 +1,23 @@
+{
+  "name": "room-for-people",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "node tests/run.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource-variable/bricolage-grotesque": "^5.1.0",
+    "@fontsource/hanken-grotesk": "^5.1.0",
+    "@fontsource/ibm-plex-mono": "^5.1.0",
+    "astro": "^5.5.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.50.0"
+  }
+}

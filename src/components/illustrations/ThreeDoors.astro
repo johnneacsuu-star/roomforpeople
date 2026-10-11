@@ -1,0 +1,39 @@
+---
+// Desenul 4: cele trei drumuri. Trei uși, trei cărări; după fiecare, ce se construiește.
+import HandFilter from './HandFilter.astro';
+interface Props { class?: string; id?: string }
+const { class: cls = '', id = 'td' } = Astro.props;
+---
+<svg class={`threedoors ${cls}`} viewBox="0 0 680 300" role="img" aria-labelledby={`${id}-t`}>
+  <title id={`${id}-t`}>Trei uși, trei drumuri: Prezență, spre un site și un profil pe care le înțelege omul; Sistem, spre primul contact și programări care merg singure; Voce, spre articole și un newsletter din notițele tale</title>
+  <HandFilter id={`${id}-hand`} />
+  <g filter={`url(#${id}-hand)`} class="hand-ink draw">
+    <g transform="translate(60,70)"><rect x="0" y="0" width="56" height="70" rx="3" stroke-width="2.6" /><path class="leafp" d="M8 3 L27 10 L27 60 L8 67 Z" /></g>
+    <g transform="translate(300,70)"><rect x="0" y="0" width="56" height="70" rx="3" stroke-width="2.6" /><path class="leafp" d="M8 3 L27 10 L27 60 L8 67 Z" /></g>
+    <g transform="translate(540,70)"><rect x="0" y="0" width="56" height="70" rx="3" stroke-width="2.6" /><path class="leafp" d="M8 3 L27 10 L27 60 L8 67 Z" /></g>
+    <path d="M88 146 C 92 176, 70 196, 88 230" stroke-dasharray="3 5" />
+    <path d="M328 146 C 332 176, 310 196, 328 230" stroke-dasharray="3 5" />
+    <path d="M568 146 C 572 176, 550 196, 568 230" stroke-dasharray="3 5" />
+    <path d="M40 232 H180 V282 H40 Z M52 248 H120 M52 262 H150" stroke-width="1.4" />
+    <path d="M280 232 H420 V282 H280 Z" stroke-width="1.4" />
+    <path d="M296 246 H404 M296 258 H380 M296 270 H404" stroke-width="1.2" />
+    <path d="M520 232 H660 V282 H520 Z" stroke-width="1.4" />
+    <path d="M536 248 C 560 240, 580 256, 600 248 C 620 240, 636 252, 646 246" stroke-width="1.4" />
+    <path d="M536 266 C 560 258, 580 274, 600 266 C 620 258, 636 270, 646 264" stroke-width="1.4" />
+  </g>
+  <text class="name" x="88" y="52" text-anchor="middle">Prezență</text>
+  <text class="name" x="328" y="52" text-anchor="middle">Sistem</text>
+  <text class="name" x="568" y="52" text-anchor="middle">Voce</text>
+  <text class="small" x="40" y="298">site · profil · cum te găsește omul</text>
+  <text class="small" x="280" y="298">primul contact · programări · facturi</text>
+  <text class="small" x="520" y="298">articole · postări · newsletter</text>
+</svg>
+<style>
+  .threedoors { width: 100%; height: auto; color: var(--ink); }
+  .threedoors .leafp { fill: var(--signal) !important; stroke: currentColor !important; stroke-width: 1.5 !important; }
+  .threedoors .name { font-family: var(--display); font-weight: 800; font-size: 20px; fill: currentColor; letter-spacing: -0.02em; }
+  .threedoors .small { font-family: var(--text); font-size: 12.5px; fill: var(--muted); }
+  .on-dark .threedoors { color: var(--paper); }
+  .on-dark .threedoors .small { fill: var(--muted-light); }
+  @media (max-width: 640px) { .threedoors .small { display: none; } }
+</style>

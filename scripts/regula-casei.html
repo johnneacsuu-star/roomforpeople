@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ro"><head><meta charset="utf-8"><title>Regula casei</title>
+<style>
+  @page { size: A4; margin: 0; }
+  @font-face { font-family: 'Bricolage'; src: url('../node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-ext-wght-normal.woff2') format('woff2-variations'); font-weight: 200 800; unicode-range: U+0100-024F; }
+  @font-face { font-family: 'Bricolage'; src: url('../node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 200 800; }
+  @font-face { font-family: 'Hanken'; src: url('../node_modules/@fontsource/hanken-grotesk/files/hanken-grotesk-latin-ext-400-normal.woff2') format('woff2'); font-weight: 400; unicode-range: U+0100-024F; }
+  @font-face { font-family: 'Hanken'; src: url('../node_modules/@fontsource/hanken-grotesk/files/hanken-grotesk-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Hanken'; src: url('../node_modules/@fontsource/hanken-grotesk/files/hanken-grotesk-latin-ext-600-normal.woff2') format('woff2'); font-weight: 600; unicode-range: U+0100-024F; }
+  @font-face { font-family: 'Hanken'; src: url('../node_modules/@fontsource/hanken-grotesk/files/hanken-grotesk-latin-600-normal.woff2') format('woff2'); font-weight: 600; }
+  @font-face { font-family: 'Plex'; src: url('../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-ext-500-normal.woff2') format('woff2'); font-weight: 500; unicode-range: U+0100-024F; }
+  @font-face { font-family: 'Plex'; src: url('../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 210mm; height: 297mm; background: #F2EEE8; color: #141216; font-family: 'Hanken', sans-serif; padding: 18mm 18mm 14mm; display: flex; flex-direction: column; gap: 9mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .label { font-family: 'Plex', monospace; font-size: 9.5pt; letter-spacing: .08em; text-transform: uppercase; color: #5C5664; }
+  h1 { font-family: 'Bricolage', sans-serif; font-weight: 800; font-size: 34pt; line-height: 1; letter-spacing: -0.025em; margin: 0; }
+  .mk { position: relative; display: inline-block; z-index: 0; white-space: nowrap; }
+  .mk::after { content: ""; position: absolute; left: -.06em; right: -.04em; bottom: -.02em; height: .5em; z-index: -1; background: #D6FF55; transform: rotate(-.8deg); }
+  .rule { font-size: 15pt; line-height: 1.4; max-width: 160mm; }
+  .sem { display: flex; flex-direction: column; gap: 5mm; }
+  .row { display: grid; grid-template-columns: 12mm 1fr; gap: 5mm; align-items: start; border-top: 1px solid #141216; padding-top: 4mm; }
+  .dot { width: 10mm; height: 10mm; border-radius: 50%; margin-top: 1mm; }
+  .row h2 { font-family: 'Bricolage', sans-serif; font-weight: 800; font-size: 16pt; margin: 0 0 1.5mm; }
+  .row p { margin: 0; font-size: 11.5pt; line-height: 1.45; }
+  .sign { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; }
+  .sign div { border-top: 1px solid #141216; padding-top: 3mm; font-family: 'Plex', monospace; font-size: 9pt; letter-spacing: .06em; text-transform: uppercase; color: #5C5664; height: 16mm; }
+  .foot { display: flex; justify-content: space-between; font-size: 8.5pt; color: #5C5664; border-top: 1px dotted #141216; padding-top: 3mm; }
+</style></head>
+<body>
+  <div class="top">
+    <img src="../src/assets/lockup-plum.svg" width="190" alt="Room for People">
+    <span class="label">Regula casei · afiș pentru perete</span>
+  </div>
+  <h1>Nicio informație despre un client nu intră într-un instrument AI. <span class="mk">Niciodată.</span></h1>
+  <p class="rule">Nu e o promisiune de marketing. E limita care decide ce construim și ce refuzăm. Lucrăm cu materialele publice și cu procesele cabinetului. Niciodată cu ce se spune în cameră. Și nimic nu pleacă în numele profesionistului fără să-l fi citit el.</p>
+  <div class="sem">
+    <span class="label">Protocolul semafor · ce intră unde</span>
+    <div class="row"><span class="dot" style="background:#1D7A3A"></span><div><h2>Verde. Intră în instrumentele aprobate.</h2><p>Materiale publice, texte proprii, idei de postări, pagina de prezentare, răspunsul la primul contact. Nimic identificabil despre o persoană.</p></div></div>
+    <div class="row"><span class="dot" style="background:#C98A12"></span><div><h2>Galben. Organizare, fără date identificabile.</h2><p>Program, șabloane de mesaje, întrebări frecvente, structura unui raport fără conținut de caz. Dacă apare un nume, devine roșu.</p></div></div>
+    <div class="row"><span class="dot" style="background:#E4472B"></span><div><h2>Roșu. Nu intră în niciun instrument AI. Niciodată.</h2><p>Orice dată de caz sau de sănătate: nume, note de ședință, înregistrări, mesaje de la clienți, trimiteri, rapoarte cu conținut. Nici anonimizat „puțin”.</p></div></div>
+  </div>
+  <div class="sign"><div>Cabinetul</div><div>Semnătura · data</div></div>
+  <p class="foot"><span>Semaforul e o regulă de lucru, nu o clasificare juridică. Obligațiile vin din codul profesiei: CPR pentru psihologi, CNASR pentru asistenți sociali, codul asociației pentru coachi.</span><span>roomforpeople.ro</span></p>
+</body></html>
