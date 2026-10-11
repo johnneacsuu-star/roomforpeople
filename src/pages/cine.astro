@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import MapRoom from '../components/illustrations/MapRoom.astro';
+import Art from '../components/Art.astro';
+import Portrait from '../components/Portrait.astro';
 import { SITE } from '../config';
 import { link, asset } from '../lib/links';
 const path = '/cine'; const L = (p: string) => link(p, path);
@@ -15,14 +16,13 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: SITE
   <section class="section on-white">
     <div class="wrap split split-rev" style="align-items:start">
       <div class="stack" style="gap:14px">
-        <div class="portrait"><img src={asset('/img/ionut.webp', path)} width="1120" height="1400" loading="lazy" alt="Ionuț Neacșu, portret" /></div>
-        <p class="note muted">Fotografie reală. O înlocuim cu una din atelier, în lumină naturală, când e gata.</p>
+        <Portrait src={asset('/img/ionut.webp', path)} alt="Ionuț Neacșu, în sacou bleumarin și cămașă albă, privind spre cameră" name="Ionuț Neacșu" role="Oamenii, meseria și regulile" eager />
         <ul class="facts small" style="margin-top:8px">
           <li><strong>Asistent social de 23 de ani</strong>: 12 în România, din 2015 în Marea Britanie, în protecția copilului.</li>
           <li><strong>Absolvent de psihologie</strong> în Marea Britanie, 2025.</li>
-          <li><strong>Social Worker of the Year 2014</strong>, gala CNASR, România.</li>
+          <li><strong>2014:</strong> premiul pentru asistentul social din domeniul persoanelor fără adăpost, Gala Națională a Excelenței în Asistență Socială, CNASR. <a class="textlink" href="https://epitesti.ro/stiri/social/jos-palaria-cel-mai-bun-asistent-social-din-tara-este-un-pitestean" target="_blank" rel="noopener">ePitești</a></li>
           <li><strong>Finalist, National Children &amp; Young People Awards 2026</strong>, categoria Children and Families Social Worker.</li>
-          <li><strong>A condus Asociația Sprijin pentru Viață</strong>; a deschis primul centru de zi pentru copii romi din Argeș și un adăpost pentru oamenii străzii.</li>
+          <li><strong>A condus Asociația „Sprijin pentru Viață”</strong>; în 2013 a deschis la Călinești „PLATO School”, primul centru de zi pentru copiii romi din județul Argeș, și un adăpost pentru oamenii străzii. <a class="textlink" href="https://adevarul.ro/stiri-locale/pitesti/la-calinesti-se-va-infiinta-primul-centru-de-1458978.html" target="_blank" rel="noopener">Adevărul</a></li>
           <li><strong>Fondator FamiliaInUK</strong>, primul portal de sprijin pentru familiile românești care trec prin sistemul britanic de protecție a copilului.</li>
         </ul>
       </div>
@@ -41,7 +41,7 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: SITE
         <div class="team-cards">
           {SITE.team.map((m) => (
             <div class="tcard">
-              <img src={asset(m.img, path)} width="800" height="1000" loading="lazy" alt={`${m.name}, portret`} />
+              <Portrait class="small" src={asset(m.img, path)} alt={`${m.name}, portret`} />
               <div class="stack" style="gap:6px">
                 <strong>{m.name}</strong>
                 <span class="label muted">{m.role}</span>
@@ -62,7 +62,7 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: SITE
       </div>
     </div>
     <div class="wrap" style="margin-top:28px">
-      <figure class="map-fig on-dark"><div class="fig-scroll"><MapRoom id="map-cine" /></div><figcaption class="note muted">Doi oameni într-o cameră, o ușă, și ce se construiește dincolo de ea. Camera rămâne a ta.</figcaption></figure>
+      <figure class="map-fig"><Art name="harta" /><figcaption class="note muted">Harta cabinetului, desenată ca un plan de casă: afară, prezența; la ușă, primul contact; înăuntru, programările și vocea. Cabinetul rămâne doar al oamenilor.</figcaption></figure>
     </div>
   </section>
 
@@ -79,13 +79,11 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: SITE
   </section>
 </Base>
 <style>
-  .portrait { aspect-ratio: 4 / 5; max-width: 360px; background: var(--ink); overflow: hidden; border-radius: var(--r); }
-  .portrait img { width: 100%; height: 100%; object-fit: cover; }
+  :global(.portrait) { max-width: 360px; }
   .facts { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
-  .map-fig { margin: 0; padding: clamp(20px, 3vw, 36px); border-radius: var(--r); display: flex; flex-direction: column; gap: 14px; align-items: center; }
+  .map-fig { margin: 0 auto; max-width: 520px; display: flex; flex-direction: column; gap: 14px; align-items: center; }
   .big-num { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 1; }
   .team-cards { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 1em 0; }
-  .tcard { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: start; border: 1px solid var(--ink); border-radius: var(--r); padding: 16px; background: var(--paper); }
-  .tcard img { width: 96px; height: 120px; object-fit: cover; border-radius: var(--r); background: var(--ink); }
+  .tcard { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 20px; align-items: start; border: 1px solid var(--ink); border-radius: var(--r); padding: 18px; background: var(--paper); }
   .tcard strong { font-family: var(--display); font-size: 18px; }
 </style>

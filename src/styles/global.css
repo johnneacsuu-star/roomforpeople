@@ -133,12 +133,48 @@ button { font: inherit; color: inherit; }
 .opt[aria-checked="true"] { border-color: var(--ink); background: var(--tint); }
 .opt[aria-checked="true"] .dot { background: var(--ink); }
 
-/* Desenele de mână: aceeași mână peste tot */
-.hand-ink path, .hand-ink circle, .hand-ink rect, .hand-ink line, .hand-ink polyline { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.draw path, .draw circle, .draw line, .draw polyline, .draw rect { stroke-dasharray: 1; stroke-dashoffset: 0; }
-.draw.pending path, .draw.pending circle, .draw.pending line, .draw.pending polyline, .draw.pending rect { stroke-dasharray: 1200; stroke-dashoffset: 1200; }
-.draw.drawn path, .draw.drawn circle, .draw.drawn line, .draw.drawn polyline, .draw.drawn rect { stroke-dashoffset: 0; transition: stroke-dashoffset 1.6s ease-out; }
-@media (prefers-reduced-motion: reduce) { .draw.pending path, .draw.pending circle, .draw.pending line, .draw.pending polyline, .draw.pending rect { stroke-dasharray: none; stroke-dashoffset: 0; } }
+/* Desenele: cerneală prună cu grosime constantă la orice mărime, marker galben peste cerneală, text în fontul paginii.
+   Se desenează pe rând (html.draw + .on, puse de script); cu reduced-motion sunt gata de la început. */
+.art { width: 100%; height: auto; overflow: visible; display: block; }
+.art .ink { fill: none; stroke: var(--plum); stroke-width: 2.2px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.art .mkr { fill: none; stroke: var(--signal); stroke-linecap: round; stroke-linejoin: round; mix-blend-mode: multiply; vector-effect: non-scaling-stroke; }
+.art .hw { fill: var(--plum); font-family: var(--text); }
+.art .leaf-fill { fill: var(--signal); }
+.art .halo { paint-order: stroke; stroke: var(--paper); stroke-width: 6px; stroke-linejoin: round; }
+.art .leaf { transform-box: fill-box; transform-origin: 0% 50%; transition: transform .45s cubic-bezier(.3, .7, .2, 1); }
+.door:hover .art .leaf, .door:focus-within .art .leaf { transform: perspective(400px) rotateY(52deg); }
+html.draw .art .ink, html.draw .art .mkr { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+html.draw .art .hw { opacity: 0; }
+html.draw .art.on .ink, html.draw .art.on .mkr { stroke-dashoffset: 0; transition: stroke-dashoffset .8s cubic-bezier(.5, 0, .25, 1); transition-delay: calc(var(--d) * .32); }
+html.draw .art.on .hw { opacity: 1; transition: opacity .5s ease; transition-delay: calc(var(--d) * .32); }
+.on-dark .art .ink, .on-night .art .ink { stroke: var(--paper); }
+.on-dark .art .hw, .on-night .art .hw { fill: var(--paper); }
+.on-dark .art .halo, .on-night .art .halo { stroke: var(--plum); }
+@media (prefers-reduced-motion: reduce) {
+  html.draw .art .ink, html.draw .art .mkr { stroke-dasharray: none; stroke-dashoffset: 0; }
+  html.draw .art .hw { opacity: 1; }
+  .art .leaf { transition: none; }
+}
+
+/* Fotografiile: ramă de cerneală fără latura de jos, cu o dâră de marker sub ea. */
+.portrait { margin: 0; }
+.portrait .frame { position: relative; border: 2px solid var(--plum); border-bottom: 0; border-radius: var(--r) var(--r) 0 0; padding: 10px 10px 0; background: #EBE6DF; }
+.portrait .frame::after { content: ""; position: absolute; left: -14px; right: 22%; bottom: -7px; height: 9px; background: var(--signal); border-radius: var(--r); transform: rotate(-1.2deg); mix-blend-mode: multiply; }
+.portrait img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r); display: block; }
+.portrait figcaption { margin-top: 20px; display: grid; gap: 2px; }
+.portrait figcaption b { font: 800 21px/1.2 var(--display); color: var(--plum); letter-spacing: -.02em; }
+.portrait figcaption span { font: 500 13px/1.4 var(--mono); color: var(--muted); }
+.portrait.small { max-width: 220px; }
+.portrait.small .frame { padding: 8px 8px 0; }
+.on-dark .portrait .frame, .on-night .portrait .frame { border-color: var(--paper); background: var(--night); }
+.on-dark .portrait figcaption b { color: var(--paper); }
+.on-dark .portrait figcaption span { color: var(--muted-light); }
+
+/* Bife desenate */
+.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.ticks li { position: relative; padding-left: 30px; }
+.ticks li::before { content: ""; position: absolute; left: 2px; top: .5em; width: 14px; height: 8px; border-left: 2.2px solid var(--plum); border-bottom: 2.2px solid var(--plum); transform: rotate(-48deg); }
+.on-dark .ticks li::before { border-color: var(--signal); }
 
 /* Prose pentru articole și pagini de text */
 .prose { max-width: 68ch; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.65; }

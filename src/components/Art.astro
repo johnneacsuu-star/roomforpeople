@@ -1,0 +1,16 @@
+---
+// Desenele casei: planul zilei, fluxul primului contact, cele trei uși, harta cabinetului.
+// Linii de cerneală prună cu grosime constantă, marker galben în multiply, text în fontul paginii;
+// se desenează pe rând când intră în ecran (vezi .art în global.css și scriptul din Base).
+import plan from '../assets/art/plan.svg?raw';
+import flux from '../assets/art/flux.svg?raw';
+import harta from '../assets/art/harta.svg?raw';
+import usa1 from '../assets/art/usa-1.svg?raw';
+import usa2 from '../assets/art/usa-2.svg?raw';
+import usa3 from '../assets/art/usa-3.svg?raw';
+interface Props { name: 'plan' | 'flux' | 'harta' | 'usa-1' | 'usa-2' | 'usa-3'; class?: string }
+const { name, class: cls = '' } = Astro.props;
+const map: Record<string, string> = { plan, flux, harta, 'usa-1': usa1, 'usa-2': usa2, 'usa-3': usa3 };
+const svg = map[name].replace('<svg class="art', `<svg class="art ${cls}`);
+---
+<Fragment set:html={svg} />

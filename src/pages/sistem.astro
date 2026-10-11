@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import ContactForm from '../components/ContactForm.astro';
 import ServiceFaq from '../components/ServiceFaq.astro';
-import FirstContact from '../components/illustrations/FirstContact.astro';
+import Art from '../components/Art.astro';
 import { SITE } from '../config';
 import { link } from '../lib/links';
 const path = '/sistem'; const L = (p: string) => link(p, path);
@@ -25,7 +25,7 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'Service', name: 'Si
         <h2>Ce se întâmplă când cineva îți scrie la 22:40</h2>
         <p class="muted">Un exemplu concret, cu un cabinet fictiv. Așa arată primul contact după ce Sistemul e pus la lucru. Niciun AI nu citește mesajul omului; răspunsul e scris de tine, o singură dată.</p>
       </div>
-      <figure class="fc-fig fig-scroll"><FirstContact id="fc-sistem" /></figure>
+      <figure class="fc-fig"><Art name="flux" /></figure>
       <div class="g-3">
         <div class="card card-paper"><p class="label muted">Confirmarea</p><p class="small">Omul își alege ora din calendarul tău. Confirmarea pleacă imediat, cu adresa, cu ce să aducă și cu regulile tale de anulare. Cu o zi înainte, reamintirea. Fără mesaje dus-întors.</p></div>
         <div class="card card-paper"><p class="label muted">Programările</p><p class="small">Tu stabilești intervalele, pauzele și cât de repede se poate programa cineva. Reprogramarea o face omul singur, din linkul lui, în limitele pe care le-ai pus tu. Tu vezi doar rezultatul.</p></div>
@@ -103,5 +103,5 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'Service', name: 'Si
   </section>
 </Base>
 <style>
-  .fc-fig { margin: 0 auto; width: 100%; max-width: 820px; }
+  .fc-fig { margin: 0 auto; width: 100%; max-width: 480px; }
 </style>

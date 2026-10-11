@@ -1,9 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import DayPlan from '../components/illustrations/DayPlan.astro';
-import MapRoom from '../components/illustrations/MapRoom.astro';
-import ThreeDoors from '../components/illustrations/ThreeDoors.astro';
-import DoorMark from '../components/DoorMark.astro';
+import Art from '../components/Art.astro';
+import Portrait from '../components/Portrait.astro';
 import Harta from '../components/Harta.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { SITE, PROFESII } from '../config';
@@ -33,11 +31,12 @@ const description = 'Site, primul contact, programări și materiale puse la luc
           <a class="btn btn-signal" href={L('/harta')}>Îmi fac Harta cabinetului</a>
           <p class="small muted">Gratuită · 4 minute · rezultatul pe loc, fără email</p>
         </div>
+        <ul class="hero-facts small muted">
+          <li>Prețuri la vedere</li><li>Nicio dată de client într-un AI</li><li>Răspunde Ionuț, personal</li>
+        </ul>
         <p class="small"><a class="textlink" href="#drumuri">Vezi cele trei drumuri și prețurile</a></p>
       </div>
-      <figure class="hero-fig">
-        <DayPlan id="dp-hero" />
-      </figure>
+      <figure class="hero-fig"><Art name="plan" /></figure>
     </div>
   </section>
 
@@ -118,18 +117,19 @@ const description = 'Site, primul contact, programări și materiale puse la luc
         <h2 id="h-drumuri">Trei drumuri. Alegi unul, nu toate.</h2>
         <p class="muted">Fiecare drum are livrabile scrise, un preț de pornire și o ușă pe care o deschizi singur. Prețurile sunt de lansare, pentru primele 10 cabinete, și se pot schimba după.</p>
       </div>
-      <figure class="doors-fig fig-scroll"><ThreeDoors id="td-home" /></figure>
       <div class="g-3 drumuri">
-        {DRUMURI.map((d) => (
-          <article class="drum card">
-            <div class="drum-head"><DoorMark size={24} /><span class="label muted">Drumul {d.nr}</span></div>
-            <h3>{d.name}</h3>
+        {DRUMURI.map((d, i) => (
+          <article class="drum door">
+            <div class="door-art"><Art name={`usa-${i + 1}`} /></div>
+            <span class="label muted">Drumul {d.nr}</span>
+            <h3><a href={L(d.path)}>{d.name}</a></h3>
             <p class="small muted">{d.pentru}</p>
             <p class="small"><strong>Problema.</strong> {d.problema}</p>
-            <ul class="small drum-list">{d.livrabile.map((l) => <li>{l}</li>)}</ul>
+            <p class="label muted" style="margin-top:6px">Ce primești, concret</p>
+            <ul class="ticks small">{d.livrabile.map((l) => <li>{l}</li>)}</ul>
             <p class="small"><strong>Rezultatul.</strong> {d.rezultat}</p>
-            <p class="drum-price">de la {lei(d.price)} lei</p>
-            <a class="btn btn-ink" href={L(d.path)}>Deschide ușa {d.name}</a>
+            <p class="drum-price"><span class="small muted">de la</span> {lei(d.price)} lei</p>
+            <a class="textlink" href={L(d.path)}>Vezi drumul {d.name} →</a>
           </article>
         ))}
       </div>
@@ -141,39 +141,31 @@ const description = 'Site, primul contact, programări și materiale puse la luc
   <section class="section on-paper" id="cine" aria-labelledby="h-cine">
     <div class="wrap">
       <div class="sec-head"><span class="wp">05</span><span class="label">Cine construiește</span></div>
-      <div class="split split-rev" style="align-items:start">
-        <div class="stack" style="gap:16px">
-          <div class="portrait"><img src={asset('/img/ionut.webp', path)} width="1120" height="1400" loading="lazy" alt="Ionuț Neacșu, portret" /></div>
-          <p class="note muted">Fotografie reală. O înlocuim cu una din atelier, în lumină naturală, când e gata.</p>
-        </div>
-        <div class="stack" style="gap:20px">
-          <h2 id="h-cine">Nu o agenție care a descoperit psihologii. Un om din <span class="mk">aceeași lume</span>.</h2>
-          <p class="lede">Ionuț Neacșu e asistent social de 23 de ani: 12 în România, din 2015 în Marea Britanie, în protecția copilului. A stat în cameră cu copii, familii în criză și adulți care nu mai aveau pe nimeni. Absolvent de psihologie în Marea Britanie, 2025. Din 2022, zilnic în atelierul cu AI, pe propriul lui lucru înainte de al altora.</p>
-          <p class="muted">De aceea construiește doar ce nu atinge relația, în limbajul și după regulile profesiei tale. Nu vine din tehnologie spre voi. Vine dintre voi spre tehnologie.</p>
-          <ul class="facts small">
-            <li><strong>Social Worker of the Year 2014</strong>, gala CNASR, România.</li>
-            <li><strong>Finalist, National Children &amp; Young People Awards 2026</strong>, categoria Children and Families Social Worker, Marea Britanie.</li>
-            <li><strong>Fondator FamiliaInUK</strong>, primul portal de sprijin pentru familiile românești care trec prin sistemul britanic de protecție a copilului.</li>
-          </ul>
-          <div class="team">
-            <p class="label muted">O echipă mică, dedicată cu totul</p>
-            <div class="team-grid">
-              {SITE.team.map((m) => (
-                <div class="member">
-                  <img src={asset(m.img, path)} width="800" height="1000" loading="lazy" alt={`${m.name}, portret`} />
-                  <div><strong>{m.name}</strong><span class="small muted">{m.role}</span></div>
-                </div>
-              ))}
-            </div>
-            <p class="small muted">Ionuț duce partea cu oamenii: discuția, harta, raportul, textele. Andrei N. duce partea tehnică: sistemele care rămân în spate și merg singure. Doi oameni, fără departament de vânzări.</p>
+      <div class="split" style="align-items:end;margin-bottom:40px">
+        <h2 id="h-cine">O echipă mică, dar <span class="mk">dedicată</span> cu totul.</h2>
+        <p class="muted">Doi oameni. Unul vine din aceeași lume ca tine și a stat 23 de ani în aceeași cameră. Celălalt construiește sistemul din spate și se asigură că merge singur.</p>
+      </div>
+      <div class="team-grid">
+        <div class="member">
+          <Portrait src={asset('/img/ionut.webp', path)} alt="Ionuț Neacșu, în sacou bleumarin și cămașă albă, privind spre cameră" name="Ionuț Neacșu" role="Oamenii, meseria și regulile" />
+          <div class="stack" style="gap:16px">
+            <p>Ionuț Neacșu lucrează de 23 de ani în asistență socială: pe stradă și într-un adăpost, la DGASPC Argeș, la conducerea Asociației „Sprijin pentru Viață” din Pitești, apoi, din 2015, în protecția copilului, în Anglia. E absolvent de psihologie în Marea Britanie, 2025, și folosește zilnic AI din 2022, întâi pe propria lui muncă. Ține partea de oameni: discuția, harta, textele, Regula casei. Și el îți răspunde.</p>
+            <dl class="facts">
+              <div><dt>2014</dt><dd>Premiul pentru asistentul social din domeniul persoanelor fără adăpost, la Gala Națională a Excelenței în Asistență Socială (CNASR). <a href="https://epitesti.ro/stiri/social/jos-palaria-cel-mai-bun-asistent-social-din-tara-este-un-pitestean" target="_blank" rel="noopener">ePitești</a></dd></div>
+              <div><dt>2013</dt><dd>Centrul de zi „PLATO School” din Călinești, primul de acest fel pentru copiii romi din județul Argeș. <a href="https://adevarul.ro/stiri-locale/pitesti/la-calinesti-se-va-infiinta-primul-centru-de-1458978.html" target="_blank" rel="noopener">Adevărul</a></dd></div>
+              <div><dt>2026</dt><dd>Finalist la National Children &amp; Young People Awards, categoria Children and Families Social Worker, Marea Britanie.</dd></div>
+            </dl>
           </div>
-          <p class="small"><a class="textlink" href={L('/cine')}>Povestea întreagă, valorile și limitele asumate</a></p>
+        </div>
+        <div class="member">
+          <Portrait src={asset('/img/andrei.webp', path)} alt="Andrei N., cu ochelari și sacou negru, cu mâna sub bărbie, privind în lateral" name="Andrei N." role="Partea tehnică și AI" />
+          <div class="stack" style="gap:16px">
+            <p>Andrei N. ține partea tehnică a AI-ului: sistemele, automatizările și legăturile dintre ele, de la formularul de pe site la confirmarea din calendar. E creatorul și omul din spatele <a class="textlink" href="https://blackstonerepair.co.uk" target="_blank" rel="noopener">Blackstone Repair</a>, un atelier din Marea Britanie care repară plăci video la nivel de componentă, cu programare și urmărire online a fiecărei reparații.</p>
+            <p class="small muted">Lucrează după aceeași regulă a casei: nicio dată despre clienții tăi în instrumente. Nu există departament de vânzări și nu există robot care răspunde în locul lor.</p>
+          </div>
         </div>
       </div>
-      <figure class="map-fig">
-        <div class="fig-scroll"><MapRoom id="map-home" /></div>
-        <figcaption class="note muted">Harta pe care o desenează la fiecare Radiografie: doi oameni într-o cameră, o ușă, și ce se construiește dincolo de ea.</figcaption>
-      </figure>
+      <p class="small" style="margin-top:28px"><a class="textlink" href={L('/cine')}>Tot parcursul, valorile și limitele asumate →</a></p>
     </div>
   </section>
 
@@ -207,9 +199,14 @@ const description = 'Site, primul contact, programări și materiale puse la luc
   <section class="section harta-host" id="harta-sec" aria-labelledby="h-harta">
     <div class="wrap">
       <div class="sec-head no-print"><span class="wp">07</span><span class="label">Harta cabinetului · gratuit · fără email</span></div>
-      <div class="split" style="align-items:end;margin-bottom:32px" >
-        <h2 id="h-harta" class="no-print">Patru direcții. <span class="mk">O hartă</span> a cabinetului tău.</h2>
-        <p class="muted no-print">Opt întrebări, două pe ecran, despre cum arată drumul unui om până la tine și restul zilei tale. Rezultatul se vede pe loc. Îl poți descărca. Nu îți cerem emailul pentru el.</p>
+      <div class="harta-intro no-print">
+        <figure class="harta-art"><Art name="harta" /></figure>
+        <div class="stack" style="gap:18px">
+          <h2 id="h-harta">Patru direcții. <span class="mk">O hartă</span> a cabinetului tău.</h2>
+          <p class="muted">Opt întrebări, două pe ecran, despre ce se întâmplă în jurul ședințelor. Vezi pe loc unde pierzi timp și oameni, pe patru direcții: prezența, primul contact, programările și vocea.</p>
+          <ul class="ticks small"><li>Patru minute, două întrebări pe ecran</li><li>Nicio întrebare despre clienții tăi</li><li>Rezultatul îl vezi imediat; emailul e opțional</li></ul>
+          <p><a class="btn btn-ink" href="#harta">Încep harta <span class="small" style="font-family:var(--mono);font-weight:500;margin-left:6px">4 min · 0 lei</span></a></p>
+        </div>
       </div>
       <Harta path={path} />
     </div>
@@ -254,7 +251,7 @@ const description = 'Site, primul contact, programări și materiale puse la luc
         <div class="g-3">
           {posts.slice(0, 3).map((p) => (
             <a class="card post-card" href={L(`/jurnal/${p.id}`)}>
-              <div class="post-card-art"><PostImage post={p} path={path} id={'ja-home-' + p.id} /></div>
+              <div class="post-card-art"><PostImage post={p} path={path} /></div>
               <span class="label muted">{p.data.pillar} · {fmtDate(p.data.date)}</span>
               <h3>{p.data.title}</h3>
               <p class="small muted">{p.data.description}</p>
@@ -269,10 +266,10 @@ const description = 'Site, primul contact, programări și materiale puse la luc
   <!-- 10 UN OM, NU UN SISTEM -->
   <section class="section-tight on-paper" id="om" aria-labelledby="h-om">
     <div class="wrap om-grid">
-      <div class="om-photo"><img src={asset('/img/ionut.webp', path)} width="1120" height="1400" loading="lazy" alt="" /></div>
+      <Portrait class="small" src={asset('/img/ionut.webp', path)} alt="Ionuț Neacșu" />
       <div class="stack" style="gap:14px">
         <div class="sec-head" style="margin-bottom:6px"><span class="wp">10</span><span class="label">Un om, nu un sistem</span></div>
-        <h2 id="h-om" style="font-size:clamp(26px,3.4vw,40px)">Room for People sunt doi oameni. Îi scrii lui Ionuț, îți răspunde Ionuț.</h2>
+        <h2 id="h-om" style="font-size:clamp(26px,3.4vw,40px)">Răspunde Ionuț, <span class="mk">personal</span>.</h2>
         <p class="muted">Ionuț și Andrei N., o echipă mică și dedicată cu totul. Nu există departament de vânzări, nu există robot care răspunde în locul lor. Îi poți scrie direct lui Ionuț; {SITE.responseTime} primești un răspuns de pe adresa lui. Dacă vrei să vorbiți 30 de minute, spune-i în mesaj și îți propune două intervale.</p>
         <p><a class="textlink" href={`mailto:${SITE.email}`}>{SITE.email}</a> · <a class="textlink" href={SITE.linkedin} target="_blank" rel="me noopener">LinkedIn</a> · <a class="textlink" href={L('/contact')}>Formularul de contact</a></p>
       </div>
@@ -304,7 +301,9 @@ const description = 'Site, primul contact, programări și materiale puse la luc
   .hero-text h1 { max-width: 12ch; }
   .hero-cta { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
   .hero-cta .btn { min-height: 60px; padding: 0 32px; font-size: 18px; }
-  .hero-fig { margin: 0; }
+  .hero-fig { margin: 0; max-width: 520px; justify-self: center; width: 100%; }
+  .hero-facts { list-style: none; margin: 0; padding: 14px 0 0; border-top: 1px solid rgba(20, 18, 22, .15); display: flex; gap: 8px 22px; flex-wrap: wrap; }
+  .hero-facts li::before { content: "•"; margin-right: 8px; color: var(--plum); }
   @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .hero-text h1 { max-width: none; } }
 
   .promises .promise { display: flex; flex-direction: column; gap: 12px; padding-top: 18px; border-top: 2px solid var(--ink); }
@@ -349,25 +348,25 @@ const description = 'Site, primul contact, programări și materiale puse la luc
     .d-ora { justify-content: flex-start; padding-top: 6px; }
   }
 
-  .doors-fig { margin: 0 auto 28px; width: 100%; max-width: 760px; }
-  .drum { gap: 12px; }
-  .drum-head { display: flex; align-items: center; gap: 10px; }
-  .drum-list { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
-  .drum-price { font-family: var(--display); font-weight: 800; font-size: 24px; margin-top: auto; padding-top: 8px; }
-  .drum .btn { margin-top: 4px; }
-
-  .portrait { aspect-ratio: 4 / 5; max-width: 360px; background: var(--ink); overflow: hidden; border-radius: var(--r); }
-  .portrait img { width: 100%; height: 100%; object-fit: cover; }
-  .facts { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
-  .team { display: flex; flex-direction: column; gap: 12px; padding-top: 16px; border-top: 1px dotted var(--ink); }
-  .team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-  .member { display: flex; gap: 12px; align-items: center; }
-  .member img { width: 64px; height: 80px; object-fit: cover; border-radius: var(--r); background: var(--ink); flex: none; }
-  .member div { display: flex; flex-direction: column; gap: 2px; }
-  .member strong { font-family: var(--display); font-size: 17px; }
-  @media (max-width: 480px) { .team-grid { grid-template-columns: 1fr; } }
-  .map-fig { margin: clamp(32px, 5vw, 56px) 0 0; background: var(--plum); color: var(--paper); padding: clamp(20px, 3vw, 36px); border-radius: var(--r); display: flex; flex-direction: column; gap: 14px; align-items: center; }
-  .map-fig figcaption { color: var(--muted-light); text-align: center; }
+  .drum { display: flex; flex-direction: column; gap: 10px; border: 1.5px solid var(--plum); border-radius: var(--r); padding: 28px 28px 22px; background: #F7F4EF; min-width: 0; }
+  .door-art { max-width: 200px; margin: -6px auto 14px; width: 100%; }
+  .drum h3 { font-size: clamp(26px, 2.6vw, 32px); }
+  .drum h3 a { text-decoration: none; color: inherit; display: inline-block; padding: 6px 0; margin: -6px 0; }
+  .drum h3 a:hover { text-decoration: underline; text-decoration-color: var(--signal); text-decoration-thickness: 5px; }
+  .drum-price { font-family: var(--display); font-weight: 800; font-size: 26px; margin-top: auto; padding-top: 12px; display: flex; align-items: baseline; gap: 8px; }
+  .drum .textlink { align-self: flex-start; }
+  .team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px); }
+  .member { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 22px; align-items: start; }
+  .facts { margin: 0; display: grid; gap: 10px; }
+  .facts div { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; border-top: 1px solid var(--mist); padding-top: 10px; font-size: var(--fs-small); }
+  .facts dt { font-family: var(--mono); font-weight: 500; color: var(--plum); }
+  .facts dd { margin: 0; color: var(--muted); }
+  .facts dd a { color: var(--ink); display: inline-block; padding: 12px 2px; margin: -12px -2px; }
+  @media (max-width: 960px) { .team-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .member { grid-template-columns: 1fr; } .member :global(.portrait) { max-width: 240px; } }
+  .harta-intro { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 5vw, 64px); align-items: center; margin-bottom: clamp(32px, 5vw, 56px); }
+  .harta-art { margin: 0; max-width: 440px; width: 100%; }
+  @media (max-width: 900px) { .harta-intro { grid-template-columns: 1fr; } .harta-art { max-width: 360px; } }
 
   .semafor li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; }
   .semafor li i { width: 12px; height: 12px; border-radius: 50%; flex: none; margin-top: 6px; }
@@ -377,13 +376,11 @@ const description = 'Site, primul contact, programări și materiale puse la luc
   .rad-price { display: flex; align-items: baseline; gap: 8px; font-family: var(--display); font-weight: 700; font-size: 22px; }
   .rad-price span { font-size: 72px; font-weight: 800; line-height: .9; letter-spacing: -0.04em; }
   .post-card { text-decoration: none; }
-  .post-card-art { margin: -4px 0 6px; border: 1px solid var(--mist); border-radius: var(--r); overflow: hidden; }
+  .post-card-art { margin: -4px 0 6px; border-radius: var(--r); overflow: hidden; }
   .post-card:hover h3 { text-decoration: underline; text-decoration-color: var(--signal); }
 
-  .om-grid { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 32px; align-items: center; }
-  .om-photo { width: 180px; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--ink); }
-  .om-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-  @media (max-width: 640px) { .om-grid { grid-template-columns: 1fr; } .om-photo { width: 120px; } }
+  .om-grid { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px; align-items: center; }
+  @media (max-width: 640px) { .om-grid { grid-template-columns: 1fr; } }
 </style>
 <script>
   // Scenariul pe profesie: trei variante pre-randate; butoanele doar le arată și le ascund.

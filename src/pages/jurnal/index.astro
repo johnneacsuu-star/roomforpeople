@@ -48,7 +48,7 @@ const pillars = [...new Set(posts.map((p) => p.data.pillar))];
   .posts li { border-top: 1px solid var(--ink); }
   .post { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 24px; padding: 26px 0; text-decoration: none; align-items: start; }
   .post-text { display: flex; flex-direction: column; gap: 8px; }
-  .post-art { border: 1px solid var(--mist); border-radius: var(--r); overflow: hidden; }
+  .post-art { border-radius: var(--r); overflow: hidden; }
   @media (max-width: 720px) { .post { grid-template-columns: 1fr; } }
   .post h2 { font-size: clamp(24px, 3vw, 34px); }
   .post:hover h2 { text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 4px; }

@@ -1,14 +1,23 @@
 ---
-// Imaginea unui articol: fotografia din frontmatter dacă există, altfel desenul casei.
-import JournalArt from './illustrations/JournalArt.astro';
+// Imaginea unui articol: fotografia din frontmatter (cu creditul ei) sau, în lipsă, unul din desenele casei.
+import Art from './Art.astro';
 import { asset } from '../lib/links';
 import type { Post } from '../lib/jurnal';
-interface Props { post: Post; path: string; id?: string; eager?: boolean }
-const { post, path, id = 'ja-' + post.id, eager = false } = Astro.props;
+interface Props { post: Post; path: string; eager?: boolean; showCredit?: boolean }
+const { post, path, eager = false, showCredit = false } = Astro.props;
+const d = post.data;
 ---
-{post.data.image
-  ? <img class="post-img" src={asset(post.data.image, path)} alt={post.data.imageAlt || ''} loading={eager ? 'eager' : 'lazy'} width="1360" height="680" />
-  : <JournalArt art={post.data.art} id={id} title={post.data.imageAlt} />}
+{d.image
+  ? <figure class="post-photo">
+      <img src={asset(d.image, path)} alt={d.imageAlt || ''} loading={eager ? 'eager' : 'lazy'} width="1600" height="900" />
+      {showCredit && d.credit && <figcaption class="note muted">Fotografie: {d.creditUrl ? <a href={d.creditUrl} target="_blank" rel="noopener">{d.credit}</a> : d.credit}</figcaption>}
+    </figure>
+  : <figure class="post-art"><Art name={d.art} /></figure>}
 <style>
-  .post-img { width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; border-radius: var(--r); }
+  .post-photo, .post-art { margin: 0; }
+  .post-photo img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r); background: var(--night); display: block; }
+  .post-photo figcaption { margin-top: 8px; }
+  .post-photo figcaption a { color: inherit; }
+  .post-art { aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center; background: #F7F4EF; border-radius: var(--r); padding: 12px; overflow: hidden; }
+  .post-art :global(.art) { max-height: 100%; width: auto; max-width: 100%; }
 </style>

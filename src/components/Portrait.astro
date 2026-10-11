@@ -1,0 +1,9 @@
+---
+// Fotografie cu ramă de cerneală și dâră de marker, cu nume și rol dedesubt.
+interface Props { src: string; alt: string; name?: string; role?: string; class?: string; eager?: boolean }
+const { src, alt, name, role, class: cls = '', eager = false } = Astro.props;
+---
+<figure class={`portrait ${cls}`}>
+  <div class="frame"><img src={src} alt={alt} width="800" height="1000" loading={eager ? 'eager' : 'lazy'} /></div>
+  {name && <figcaption><b>{name}</b>{role && <span>{role}</span>}</figcaption>}
+</figure>

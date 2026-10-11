@@ -11,7 +11,7 @@ for (const f of files) {
     s = s.replace(/(href|src)="\/(?!\/)/g, `$1="${up}`).replace(/content="\/(?!\/)/g, `content="${up}`);
     s = s.replace(/data-api="\/api\/contact"/g, 'data-api="./api/contact"');
     if (rel === 'index.html') {
-      const head = s.match(/<head>([\s\S]*?)<\/head>/)[1].replace(/<meta charset="utf-8" \/>\s*/, '').replace(/<meta name="viewport"[^>]*>\s*/, '');
+      const head = s.match(/<head>([\s\S]*?)<\/head>/)[1];
       const body = s.match(/<body[^>]*>([\s\S]*)<\/body>/)[1];
       s = head.trim() + '\n' + body.trim() + '\n';
     }

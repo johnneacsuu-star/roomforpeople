@@ -5,7 +5,11 @@ date: 2026-10-11
 pillar: "A doua tură"
 profesii: ["psi", "as", "co"]
 draft: false
-art: "phone"
+art: "usa-2"
+image: "/img/jurnal/telefon-noapte.webp"
+imageAlt: "Un telefon cu ecranul aprins, lângă o veioză mică, pe o noptieră, seara"
+credit: "Jerry Wang, Unsplash"
+creditUrl: "https://unsplash.com/photos/black-smartphone-beside-a-lamp-EFAJ-1yzZMc"
 order: 1
 sources:
   - { title: "HBR, The Short Life of Online Sales Leads, 2011", url: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads" }

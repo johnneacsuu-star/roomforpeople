@@ -26,7 +26,7 @@ for (const [name, w, h] of [['desk', 1400, 900], ['mob', 390, 844]]) {
     const r = await pg.goto('http://localhost:4321' + p, { waitUntil: 'networkidle' });
     const slug = p === '/' ? 'index' : p.replace(/\//g, '_').replace(/^_/, '');
     await pg.evaluate(async () => { const h = document.documentElement.scrollHeight; for (let y = 0; y < h; y += 500) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 60)); } window.scrollTo(0, 0); });
-    await pg.evaluate(async () => { const imgs = [...document.querySelectorAll('img')]; imgs.forEach((i) => { i.loading = 'eager'; }); await Promise.all(imgs.map((i) => i.decode().catch(() => {}))); document.querySelectorAll('.draw').forEach((d) => { d.classList.add('drawn'); d.classList.remove('pending'); }); });
+    await pg.evaluate(async () => { const imgs = [...document.querySelectorAll('img')]; imgs.forEach((i) => { i.loading = 'eager'; }); await Promise.all(imgs.map((i) => i.decode().catch(() => {}))); document.querySelectorAll('.art').forEach((d) => d.classList.add('on')); });
     await pg.waitForTimeout(2000);
     const hgt = await pg.evaluate(() => document.documentElement.scrollHeight);
     await pg.screenshot({ path: `${out}/${name}_${slug}.png`, fullPage: true });

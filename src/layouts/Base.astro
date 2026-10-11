@@ -74,19 +74,16 @@ const isProd = !!process.env.VERCEL && process.env.LINK_MODE !== 'relative';
   <Footer path={path} />
   {isProd && <script defer src="/_vercel/insights/script.js"></script>}
   <script>
-    // Desenele se completează când intră în ecran; cu reduced-motion sunt gata de la început.
+    // Desenele se desenează pe rând când intră în ecran. Fără JavaScript sau cu reduced-motion sunt gata de la început.
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const draws = document.querySelectorAll('.draw');
-    if (reduce || !('IntersectionObserver' in window)) {
-      draws.forEach((d) => { d.classList.remove('pending'); d.classList.add('drawn'); });
-    } else {
+    const arts = document.querySelectorAll('.art');
+    if (!reduce && 'IntersectionObserver' in window && arts.length) {
+      document.documentElement.classList.add('draw');
       const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) { e.target.classList.add('drawn'); e.target.classList.remove('pending'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.25 });
-      draws.forEach((d) => { d.classList.add('pending'); io.observe(d); });
-      setTimeout(() => draws.forEach((d) => { d.classList.add('drawn'); d.classList.remove('pending'); }), 3000);
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+      }, { threshold: 0.18 });
+      arts.forEach((a) => io.observe(a));
+      setTimeout(() => arts.forEach((a) => a.classList.add('on')), 4000);
     }
   </script>
 </body>

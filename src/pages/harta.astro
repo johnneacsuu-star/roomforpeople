@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Harta from '../components/Harta.astro';
+import Art from '../components/Art.astro';
 const path = '/harta';
 ---
 <Base title="Harta cabinetului · gratuită, 4 minute" description="Opt întrebări, patru direcții, rezultatul pe loc. Afli unde pierzi timp și oameni în jurul cabinetului și care e primul pas pe fiecare direcție. Fără email, fără date despre clienți." path={path} bodyClass="harta-page">
@@ -9,6 +10,14 @@ const path = '/harta';
     <Fragment slot="title">Patru direcții. <span class="mk">O hartă</span> a cabinetului tău.</Fragment>
   </PageHead>
   <section class="section-tight harta-host">
-    <div class="wrap"><Harta path={path} standalone /></div>
+    <div class="wrap harta-grid">
+      <aside class="harta-side no-print"><Art name="harta" /><p class="note muted">Harta cabinetului, desenată ca un plan de casă: afară, prezența; la ușă, primul contact; înăuntru, programările și vocea. Cabinetul rămâne doar al oamenilor.</p></aside>
+      <div><Harta path={path} standalone /></div>
+    </div>
   </section>
+  <style>
+    .harta-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
+    .harta-side { position: sticky; top: 92px; display: flex; flex-direction: column; gap: 12px; }
+    @media (max-width: 900px) { .harta-grid { grid-template-columns: 1fr; } .harta-side { position: static; max-width: 360px; } }
+  </style>
 </Base>
