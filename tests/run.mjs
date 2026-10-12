@@ -95,7 +95,7 @@ const barH = await page.evaluate(() => Math.round(document.querySelector('#rez-l
 ok('Harta: lista rezultatului are stil (barele au înălțime)', barH >= 4, String(barH));
 ok('Harta: cifrele stau în „vezi detaliile”', /din 100/.test(await page.textContent('#rez-cifre')));
 ok('Harta: locul cel mai slab e marcat (Programări)', (await page.locator('#rez-list li.weak .r-name').textContent()).includes('Programări'));
-const pts = await page.getAttribute('#compass-shape', 'points'); ok('Harta: busola se desenează', pts && !pts.includes('160,131 160,131 160,131 160,131'));
+const pts = await page.getAttribute('#compass-shape', 'points'); ok('Harta: busola se desenează', pts && !pts.includes('180,131 180,131 180,131 180,131'));
 await page.click('#harta-send-toggle'); ok('Harta: formularul de trimitere apare și poartă harta', !(await page.isHidden('#harta-send')) && (await page.getAttribute('#f-harta', 'data-harta')).includes('Programări'));
 ok('Harta: butonul de PDF există', (await page.locator('#harta-print').count()) === 1);
 await page.reload({ waitUntil: 'networkidle' }); await page.waitForSelector('#harta-rezultat:not([hidden])');
