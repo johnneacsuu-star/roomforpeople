@@ -36,6 +36,9 @@ const org = {
 };
 const ld = [org, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
 const isProd = !!process.env.VERCEL && process.env.LINK_MODE !== 'relative';
+// Previzualizare publică (ex. roomforpeople.vercel.app): nu intră în Google până nu e pe domeniul real.
+const onRealDomain = /(^|\.)roomforpeople\.ro$/.test(process.env.VERCEL_PROJECT_PRODUCTION_URL || '');
+const previewNoindex = !!process.env.VERCEL && !onRealDomain;
 ---
 <!doctype html>
 <html lang="ro">
@@ -45,7 +48,7 @@ const isProd = !!process.env.VERCEL && process.env.LINK_MODE !== 'relative';
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
-  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  {(noindex || previewNoindex) && <meta name="robots" content="noindex, nofollow" />}
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content={SITE.name} />
   <meta property="og:title" content={fullTitle} />
