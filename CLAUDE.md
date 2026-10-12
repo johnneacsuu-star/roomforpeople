@@ -46,7 +46,7 @@ Română directă, propoziții scurte, fără cratimă sau linie de dialog în i
 - `src/content/jurnal/*.md`: articolele; `draft: false` publică; vezi `src/content/JURNAL-cum-publici.md`.
 - `src/assets/art/*.svg`: desenele (sistemul „Atelierul”: linie prună, marker verde, desenare secvențială la intrarea în ecran).
 - `api/contact.js`: formularul (Resend). Variabile: `RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM`, `ALLOWED_ORIGIN`.
-- `drafts/`: materiale nepublicate (consimțământul). `BACKLOG.md`: ce rămâne pentru site. `docs/`: cunoașterea proiectului.
+- `drafts/`: materiale nepublicate (consimțământul). `BACKLOG.md`: ce rămâne pentru site. `docs/`: cunoașterea proiectului (text, mic). `arhiva/`: documentele originale (PDF, HTML), cu data în nume.
 - `README.md`: operare (local, Vercel, preview pentru artifact).
 
 ## Ce nu face Claude singur

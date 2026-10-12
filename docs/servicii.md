@@ -1,6 +1,6 @@
 # Catalogul de servicii · ce e pe site, ce e pe listă, ce nu facem
 
-Surse: `surse/2026-10-11-catalog-servicii-grok.pdf` (65 de servicii în 11 niveluri, prețuri propuse pentru România, fără TVA) și `surse/2026-10-12-atlas-servicii-international.pdf` (89 de servicii, repere UK). Analiza din 12 octombrie, făcută de Claude pentru Ionuț. Prețurile sunt propunerile din cataloage, nevalidate cu clienți: punct de plecare, nu decizie. Codurile (de exemplu Grok 1.1, Atlas 28) trimit la fișele din surse.
+Surse: `../arhiva/2026-10-11-catalog-servicii-grok.pdf` (65 de servicii în 11 niveluri, prețuri propuse pentru România, fără TVA) și `../arhiva/2026-10-12-atlas-servicii-international.pdf` (89 de servicii, repere UK). Analiza din 12 octombrie, făcută de Claude pentru Ionuț. Prețurile sunt propunerile din cataloage, nevalidate cu clienți: punct de plecare, nu decizie. Codurile (de exemplu Grok 1.1, Atlas 28) trimit la fișele din surse.
 
 Regula de selecție: AI la ușă, nu în cameră; nicio dată de client în vreun instrument; livrabil în două săptămâni sau mai puțin; Ionuț singur sau cu Andrei; avantaj clar față de o agenție.
 

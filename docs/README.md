@@ -14,13 +14,13 @@ Tot ce trebuie să știe cineva (Ionuț, Andrei, un colaborator, Claude într-o 
 | `proiect-claude-instructiuni.md` | Textul de pus în instrucțiunile unui Project Claude.ai | O dată, la crearea proiectului |
 | `../BACKLOG.md` | Ce rămâne de construit pe site, cu condiția de pornire | Când se planifică |
 | `../README.md` | Operare: local, Vercel, preview | Când se publică |
-| `surse/` | Documentele originale, cu data în nume: directiva, auditurile, cataloagele, conceptele, istoricul | Când ai nevoie de textul exact |
+| `../arhiva/` | Documentele originale, cu data în nume: directiva, auditurile, cataloagele, conceptele, istoricul | Când ai nevoie de textul exact |
 
 ## Cum se ține la zi
 
 - O decizie luată în chat sau în ședință → un rând în `decizii.md`, cu data.
 - O întrebare pentru Ionuț → un rând în `de-confirmat.md`; când primește răspuns, se mută în `decizii.md`.
-- Un document nou primit (audit, catalog, prompt, concept) → copie în `surse/` cu data în nume, plus un rând în `istoric.md`.
+- Un document nou primit (audit, catalog, prompt, concept) → copie în `../arhiva/` cu data în nume, plus un rând în `istoric.md`.
 - O idee pentru site → `BACKLOG.md`, cu condiția la care se construiește.
 - O idee de serviciu → `servicii.md`, în lista potrivită.
 
@@ -29,4 +29,4 @@ Tot ce trebuie să știe cineva (Ionuț, Andrei, un colaborator, Claude într-o 
 - Depozitul GitHub `johnneacsuu-star/roomforpeople` (privat): codul și acest folder. E sursa adevărului.
 - Site-ul live: https://roomforpeople.vercel.app (previzualizare, noindex). Domeniul roomforpeople.ro nu e încă legat.
 - Vercel: proiectul `roomforpeople` în echipa „john's projects”. Publicare automată din `main`.
-- Documentele Claude din conversațiile anterioare (planul de conținut, auditul strategic din 11 octombrie) au copii PDF sau text în `surse/`.
+- Documentele Claude din conversațiile anterioare (planul de conținut, auditul strategic din 11 octombrie) au copii PDF sau text în `../arhiva/`.
