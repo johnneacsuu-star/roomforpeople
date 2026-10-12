@@ -1,19 +1,19 @@
 ---
 // Harta cabinetului: opt întrebări, două pe ecran, patru pași, înainte și înapoi, rezultat pe loc, fără email.
-import { DIRECTII, INTREBARI, PASI } from '../lib/harta';
+import { DIRECTII, INTREBARI, PASI, TOTUL_MERGE } from '../lib/harta';
 import ContactForm from './ContactForm.astro';
 import { link } from '../lib/links';
 import { SITE } from '../config';
 interface Props { path?: string; standalone?: boolean }
 const { path = '/', standalone = false } = Astro.props;
 const H = standalone ? 'h2' : 'h3';
-const data = { d: DIRECTII.map((d) => ({ name: d.name, stages: d.stages, tips: d.tips, drum: link(d.drum, path) })), q: INTREBARI, p: PASI };
+const data = { d: DIRECTII.map((d) => ({ name: d.name, loc: d.loc, stages: d.stages, opreste: d.opreste, tips: d.tips, drum: link(d.drum, path) })), q: INTREBARI, p: PASI, totul: TOTUL_MERGE };
 ---
 <div class="harta" id="harta" data-harta={JSON.stringify(data)}>
   <div class="harta-head no-print">
     <p class="label muted">Harta cabinetului · gratuită · 4 minute · rezultatul pe loc</p>
     <div class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-    <p class="small muted" id="harta-pas" aria-live="polite">Pasul 1 din 4 · Cum te găsește omul</p>
+    <p class="small muted" id="harta-pas" aria-live="polite">Pasul 1 din 4 · Afară: cum te găsește omul</p>
   </div>
 
   <form class="harta-form no-print" id="harta-form" novalidate>
@@ -48,20 +48,25 @@ const data = { d: DIRECTII.map((d) => ({ name: d.name, stages: d.stages, tips: d
     <div class="rez-grid">
       <div class="rez-left">
         <p class="label print-only">Room for People · Harta cabinetului · <span id="rez-data"></span></p>
-        <H class="rez-title">Harta ta, pe patru direcții.</H>
+        <H class="rez-title" id="rez-title">Harta ta, pe patru locuri.</H>
         <p class="rez-lead" id="rez-lead"></p>
+        <p class="small muted" id="rez-sub"></p>
         <ol class="rez-list" id="rez-list"></ol>
+        <details class="rez-detalii no-print">
+          <summary class="small">Vezi detaliile</summary>
+          <p class="note muted" id="rez-cifre"></p>
+        </details>
       </div>
       <div class="rez-right">
-        <svg class="compass" id="compass" viewBox="0 0 240 240" aria-hidden="true">
-          <g class="grid"><circle cx="120" cy="120" r="30" /><circle cx="120" cy="120" r="60" /><circle cx="120" cy="120" r="90" /></g>
-          <g class="spoke"><line x1="120" y1="30" x2="120" y2="210" /><line x1="30" y1="120" x2="210" y2="120" /></g>
-          <polygon class="shape" id="compass-shape" points="120,120 120,120 120,120 120,120" />
+        <svg class="compass" id="compass" viewBox="0 0 320 262" aria-hidden="true">
+          <g class="grid"><circle cx="160" cy="131" r="30" /><circle cx="160" cy="131" r="60" /><circle cx="160" cy="131" r="90" /></g>
+          <g class="spoke"><line x1="160" y1="41" x2="160" y2="221" /><line x1="70" y1="131" x2="250" y2="131" /></g>
+          <polygon class="shape" id="compass-shape" points="160,131 160,131 160,131 160,131" />
           <g class="pts" id="compass-pts"></g>
-          <text x="120" y="20" text-anchor="middle">Prezență</text>
-          <text x="226" y="124" text-anchor="end">Contact</text>
-          <text x="120" y="230" text-anchor="middle">Administrare</text>
-          <text x="14" y="124" text-anchor="start">AI</text>
+          <text x="160" y="24" text-anchor="middle">Prezență</text>
+          <text x="258" y="135" text-anchor="start">Contact</text>
+          <text x="160" y="250" text-anchor="middle">Programări</text>
+          <text x="62" y="135" text-anchor="end">Voce</text>
         </svg>
         <p class="note muted" style="text-align:center">Cu cât forma e mai largă, cu atât mai mult merge singur.</p>
       </div>
@@ -78,6 +83,24 @@ const data = { d: DIRECTII.map((d) => ({ name: d.name, stages: d.stages, tips: d
     <p class="note muted">Harta de aici nu se salvează pe niciun server. Rămâne în browserul tău până o reiei. Rezultatul e o orientare, nu o evaluare profesională.</p>
   </div>
 </div>
+<style is:global>
+  /* Rezultatul Hărții e construit din JavaScript, deci regulile lui stau în blocul global, nu în cel legat de componentă. */
+  .harta .rez-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .harta .rez-list li { padding: 14px 0; border-top: 1px solid var(--mist); display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .harta .rez-list .r-head { display: flex; flex-direction: column; gap: 2px; }
+  .harta .rez-list .r-loc { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  .harta .rez-list .r-name { font-family: var(--display); font-weight: 700; font-size: 17px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .harta .rez-list .r-stage { font-size: 16px; color: var(--ink); }
+  .harta .rez-list .r-bar { height: 6px; background: var(--mist); border-radius: 1px; overflow: hidden; margin-top: 4px; }
+  .harta .rez-list .r-bar i { display: block; height: 100%; background: var(--plum); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .harta .rez-list .r-tip { font-size: 15px; color: var(--muted); }
+  .harta .rez-list .r-link { font-size: 14px; }
+  .harta .rez-list li.weak .r-name .tag { font-family: var(--mono); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; background: var(--signal); padding: 2px 6px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .harta .rez-list li.weak .r-stage { font-weight: 600; }
+  .harta .compass .pts circle { fill: var(--ink); }
+  .harta .rez-detalii summary { cursor: pointer; color: var(--muted); }
+  .harta .rez-detalii[open] summary { margin-bottom: 6px; }
+</style>
 <style>
   .harta { display: flex; flex-direction: column; gap: 22px; }
   .harta-head { display: flex; flex-direction: column; gap: 10px; }
@@ -100,21 +123,10 @@ const data = { d: DIRECTII.map((d) => ({ name: d.name, stages: d.stages, tips: d
   .rez-left { display: flex; flex-direction: column; gap: 14px; }
   .rez-title { font-size: clamp(24px, 3vw, 34px); }
   .rez-lead { font-size: 17px; }
-  .rez-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
-  .rez-list li { padding: 14px 0; border-top: 1px solid var(--mist); display: grid; grid-template-columns: 1fr; gap: 6px; }
-  .rez-list .r-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
-  .rez-list .r-name { font-family: var(--display); font-weight: 700; font-size: 17px; }
-  .rez-list .r-stage { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
-  .rez-list .r-bar { height: 6px; background: var(--mist); border-radius: 1px; overflow: hidden; }
-  .rez-list .r-bar i { display: block; height: 100%; background: var(--plum); }
-  .rez-list .r-tip { font-size: 15px; }
-  .rez-list .r-link { font-size: 14px; }
-  .rez-list li.weak .r-name::after { content: " · începe de aici"; font-family: var(--mono); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; background: var(--signal); padding: 2px 6px; margin-left: 6px; }
   .compass { width: 100%; max-width: 260px; height: auto; margin: 0 auto; }
   .compass .grid circle { fill: none; stroke: var(--mist); }
   .compass .spoke line { stroke: var(--mist); }
   .compass .shape { fill: rgba(214, 255, 85, .5); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; transition: all .3s; }
-  .compass .pts circle { fill: var(--ink); }
   .compass text { font-family: var(--mono); font-size: 11px; fill: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
   .rez-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   .rez-send { display: flex; flex-direction: column; gap: 14px; padding-top: 18px; border-top: 1px dotted var(--ink); }
@@ -124,7 +136,6 @@ const data = { d: DIRECTII.map((d) => ({ name: d.name, stages: d.stages, tips: d
     body.printing-harta .harta-host > :not(.harta) { display: none !important; }
     .harta-rezultat { border: 0; padding: 0; }
     .rez-grid { grid-template-columns: 1fr 1fr; }
-    .rez-list .r-bar i { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .compass .shape { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 </style>
@@ -174,16 +185,20 @@ const data = { d: DIRECTII.map((d) => ({ name: d.name, stages: d.stages, tips: d
       data.q.forEach((q, i) => { const o = q.opts[a[i]]; scores[q.d] += o[1]; picked.push(o[0]); });
       const stage = scores.map((s) => (s < 10 ? 0 : s < 20 ? 1 : 2));
       const weakest = scores.indexOf(Math.min(...scores));
+      const allGood = stage.every((st) => st === 2);
       const list = document.getElementById('rez-list'); list.innerHTML = '';
       data.d.forEach((d, i) => {
-        const li = document.createElement('li'); if (i === weakest) li.className = 'weak';
-        li.innerHTML = `<div class="r-head"><span class="r-name">${d.name}</span><span class="r-stage">${d.stages[stage[i]]} · ${scores[i]}/25</span></div><div class="r-bar"><i style="width:${Math.round(scores[i] / 25 * 100)}%"></i></div><p class="r-tip">${d.tips[stage[i]]}</p><a class="r-link textlink no-print" href="${d.drum}">Drumul pentru direcția asta</a>`;
+        const li = document.createElement('li'); if (i === weakest && !allGood) li.className = 'weak';
+        li.innerHTML = `<div class="r-head"><span class="r-loc">${d.loc}</span><span class="r-name">${d.name}${i === weakest && !allGood ? ' <span class="tag">începe de aici</span>' : ''}</span><span class="r-stage">${d.stages[stage[i]]}.</span></div><div class="r-bar" aria-hidden="true"><i style="width:${Math.round(scores[i] / 25 * 100)}%"></i></div><p class="r-tip">${d.tips[stage[i]]}</p><a class="r-link textlink no-print" href="${d.drum}">Drumul pentru locul ăsta</a>`;
         list.appendChild(li);
       });
       const total = scores.reduce((s, v) => s + v, 0);
-      document.getElementById('rez-lead').textContent = `${total} din 100. Direcția cea mai slabă e ${data.d[weakest].name.toLowerCase()}: de acolo câștigi cel mai mult cu cel mai mic efort. Mai jos, un prim pas pe fiecare direcție, pe care îl poți face singur.`;
+      document.getElementById('rez-lead').textContent = allGood ? data.totul : data.d[weakest].opreste;
+      document.getElementById('rez-sub').textContent = allGood ? 'Mai jos, ce ține fiecare loc la zi.' : `Începe de la ${data.d[weakest].name.toLowerCase()}: acolo câștigi cel mai mult cu cel mai mic efort. Mai jos, un prim pas pe fiecare loc, pe care îl poți face singur.`;
+      document.getElementById('rez-cifre').textContent = data.d.map((d, i) => `${d.name} ${scores[i]} din 25`).join(' · ') + ` · în total ${total} din 100. Cifrele sunt o orientare, nu o notă.`;
       document.getElementById('rez-data').textContent = new Date().toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' });
-      const pts = scores.map((s, i) => { const r = 30 + (s / 25) * 90; const ang = [-90, 0, 90, 180][i] * Math.PI / 180; return [120 + r * Math.cos(ang), 120 + r * Math.sin(ang)]; });
+      const C = [160, 131];
+      const pts = scores.map((s, i) => { const r = 30 + (s / 25) * 90; const ang = [-90, 0, 90, 180][i] * Math.PI / 180; return [C[0] + r * Math.cos(ang), C[1] + r * Math.sin(ang)]; });
       document.getElementById('compass-shape').setAttribute('points', pts.map((p) => p.join(',')).join(' '));
       document.getElementById('compass-pts').innerHTML = pts.map((p) => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4"/>`).join('');
       const sendForm = document.getElementById('f-harta');

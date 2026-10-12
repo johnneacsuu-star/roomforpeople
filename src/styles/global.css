@@ -142,8 +142,10 @@ button { font: inherit; color: inherit; }
 .art .leaf-fill { fill: var(--signal); }
 .art .halo { paint-order: stroke; stroke: var(--paper); stroke-width: 6px; stroke-linejoin: round; }
 .art .leaf { transform-box: fill-box; transform-origin: 0% 50%; transition: transform .45s cubic-bezier(.3, .7, .2, 1); }
-.door:hover .art .leaf, .door:focus-within .art .leaf { transform: perspective(400px) rotateY(52deg); }
+.door:hover .art .leaf, .door:focus-within .art .leaf, .door.open .art .leaf { transform: perspective(400px) rotateY(52deg); }
 html.draw .art .ink, html.draw .art .mkr { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+/* Până pornește desenul, liniile sunt invizibile de tot: altfel capetele rotunde ale liniilor nedesenate se văd ca niște puncte. */
+html.draw .art:not(.on) .ink, html.draw .art:not(.on) .mkr { opacity: 0; }
 html.draw .art .hw { opacity: 0; }
 html.draw .art.on .ink, html.draw .art.on .mkr { stroke-dashoffset: 0; transition: stroke-dashoffset .8s cubic-bezier(.5, 0, .25, 1); transition-delay: calc(var(--d) * .32); }
 html.draw .art.on .hw { opacity: 1; transition: opacity .5s ease; transition-delay: calc(var(--d) * .32); }

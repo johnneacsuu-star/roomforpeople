@@ -77,16 +77,23 @@ const previewNoindex = !!process.env.VERCEL && !onRealDomain;
   <Footer path={path} />
   {isProd && onRealDomain && <script defer src="/_vercel/insights/script.js"></script>}
   <script>
-    // Desenele se desenează pe rând când intră în ecran. Fără JavaScript sau cu reduced-motion sunt gata de la început.
+    // Fiecare desen pornește când intră în ecran, nu înainte. Cu reduced-motion sau fără observator, desenele sunt gata de la început.
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const arts = document.querySelectorAll('.art');
-    if (!reduce && 'IntersectionObserver' in window && arts.length) {
+    const doors = document.querySelectorAll('.door');
+    if (!reduce && 'IntersectionObserver' in window && (arts.length || doors.length)) {
       document.documentElement.classList.add('draw');
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
-      }, { threshold: 0.18 });
+      }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
       arts.forEach((a) => io.observe(a));
-      setTimeout(() => arts.forEach((a) => a.classList.add('on')), 4000);
+      // Ușile se deschid singure când ajung în ecran, după ce s-au desenat. Pe desktop se deschid și la hover.
+      const dio = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('open'), 1400); dio.unobserve(e.target); } });
+      }, { threshold: 0.6 });
+      doors.forEach((d) => dio.observe(d));
+      // Dacă pagina e deschisă direct pe o ancoră, desenele deja în ecran pornesc imediat.
+      requestAnimationFrame(() => arts.forEach((a) => { const r = a.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) a.classList.add('on'); }));
     }
   </script>
 </body>
