@@ -1,0 +1,884 @@
+<title>Room for People</title>
+<meta name="description" content="AI cu discernământ pentru psihologi, psihoterapeuți, asistenți sociali independenți și coachi. Scorul gratuit în 4 minute, apoi Radiografia AI a cabinetului. Zero date despre clienți.">
+<meta property="og:title" content="Room for People · Relația e temelia. Nu mai e avantajul.">
+<meta property="og:description" content="Studio de prezență, sisteme și conținut pentru profesioniștii care lucrează cu oamenii. Un proiect de Ionuț Neacșu.">
+<meta property="og:image" content="img/ionut.webp">
+<meta property="og:locale" content="ro_RO">
+<link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="img/favicon-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="img/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: editorial single column, numbered sections like a dossier; ink hero, paper body, one signal colour. Shapes: arches (the doorway) and soft radii, 1px rules; no hard rectangles. Single-theme brand page by choice. */
+:root{
+  --ink:#141216; --plum:#35224F; --paper:#F2EEE8; --mist:#DCD6E6; --signal:#D6FF55; --alert:#E4472B; --ok:#1D7A3A; --warn:#C98A12;
+  --muted:#5C5664; --muted-light:#CFC9D6; --dim:#8F86A0; --white:#FFFFFF;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --text:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:2px; --r-s:2px; --night:#1C1626; --tint:#EEF9C4; --plum-light:#6B4FA0;
+  color-scheme:light;
+}
+html{scroll-behavior:smooth}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none !important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--text);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:var(--display);letter-spacing:-0.025em;margin:0;text-wrap:balance}
+p{margin:0}
+img{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:40px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;text-transform:uppercase}
+.note{font-family:var(--text);font-size:13px;line-height:1.55;letter-spacing:0;text-transform:none}
+/* Signature 0: the door. The leaf is ajar; on hover it opens further. */
+.door-mark{overflow:visible}
+.lockup{display:block;width:216px;height:auto}
+.lockup-ftr{width:232px}
+.door-mark .leaf{transform-box:fill-box;transform-origin:left center;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.logo:hover .door-mark .leaf,.logo:focus-visible .door-mark .leaf,.door[aria-expanded="true"] .dm .leaf{transform:scaleX(1.9) skewY(-6deg)}
+.door .dm{color:var(--ink)}
+.door[aria-expanded="true"] .dm .leaf{fill:var(--ink)}
+.door:hover .dm .leaf{transform:scaleX(1.4) skewY(-4deg)}
+@media (prefers-reduced-motion:reduce){.door-mark .leaf{transition:none}}
+/* Signature 1: the marker. A flat stroke of signal with a hand's irregular edge, crisp, under the one thing that matters on the screen. On dark, the letters get a halo so the stroke reads as behind them. */
+.mk,.ul{position:relative;display:inline-block;white-space:nowrap;z-index:0}
+.mk::after,.ul::after{content:"";position:absolute;left:-.06em;right:-.04em;bottom:-.02em;height:.5em;z-index:-1;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'><path d='M1 5 C 30 2, 70 7, 110 4 C 150 1, 185 5, 199 3 L 198 16 C 170 19, 130 14, 90 17 C 50 20, 15 16, 2 18 Z' fill='%23D6FF55'/></svg>") no-repeat center/100% 100%;transform:rotate(-.8deg);transform-origin:left center}
+.mk-dark{color:var(--paper);text-shadow:-1.5px 0 var(--plum),1.5px 0 var(--plum),0 1.5px var(--plum),0 -1.5px var(--plum),-1px -1px var(--plum),1px 1px var(--plum),-1px 1px var(--plum),1px -1px var(--plum)}
+/* Signature 2: the highlighter. A swipe of signal under a phrase, on paper. */
+.hl{background:linear-gradient(100deg,transparent 1.5%,rgba(214,255,85,.95) 2.5%,rgba(214,255,85,.95) 97%,transparent 98.5%);padding:0 .3em;margin:0 -.1em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+/* Signature 3: the route. Numbered stops on a dotted line, like a map. */
+.wp{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:transparent;color:inherit;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:0;flex:none;border:1.5px solid currentColor}
+.sec-head{position:relative}
+.lead{display:flex;align-items:center;gap:12px}
+.route{position:absolute;left:calc(50% - 668px);top:0;bottom:0;width:0;border-left:1.5px dotted var(--ink);opacity:.18;pointer-events:none}
+@media (min-width:1400px){.sec-head .wp{position:absolute;left:-85px;top:-10px}}
+@media (max-width:1399px){.route{display:none}}
+/* Signature 4: pins. The problems sit on the photo like pins on a map. */
+/* Signature 5: the door, drawn as on a floor plan: a jamb and the swing of the leaf. */
+.swing{width:34px;height:34px;flex:none}
+.swing path{stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round}
+.swing .arc{stroke-dasharray:3 4}
+.door[aria-expanded="true"] .swing .arc{stroke-dasharray:none}
+.door[aria-expanded="true"] .swing .leaf{fill:var(--ink)}
+/* scorecard, friendlier */
+.ax{background:var(--white);border-radius:2px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;box-shadow:0 0 0 1px var(--mist)}
+.ax h3{font-size:16px;line-height:1.3;font-weight:700}
+.ax .opt{padding:9px 12px;font-size:13px}
+.ax .g3{grid-template-columns:1fr !important;gap:6px !important}
+#axes{display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:900px){#axes{grid-template-columns:1fr}}
+.opt{border-color:var(--mist) !important;background:var(--paper) !important}
+.opt:hover{border-color:var(--plum) !important}
+.opt[aria-checked="true"]{background:var(--tint) !important;border-color:var(--ink) !important}
+.map{width:100%;height:auto;display:block;max-width:680px}
+.map .ink path,.map .ink circle,.map .ink rect{fill:none;stroke:#F2EEE8;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.map .ink .person path,.map .ink .person circle{stroke:#F2EEE8;stroke-width:2}
+.map .ink .floor{stroke:#CFC9D6;stroke-width:1.2}
+.map .ink .talk{stroke:#D6FF55;stroke-width:1.6;stroke-dasharray:2 5}
+.map .ink .doorway rect{stroke:#F2EEE8;stroke-width:2.6}
+.map .ink .doorway .leafp{fill:#D6FF55;stroke:#35224F;stroke-width:1.5}
+.map .ink .route{stroke:#CFC9D6;stroke-width:1.2;stroke-dasharray:3 5}
+.map .ink .box{fill:rgba(242,238,232,0.05);stroke:#CFC9D6;stroke-width:1.4}
+.map .lab{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;fill:#CFC9D6}
+.map .prag-txt{fill:#D6FF55;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.map .big{font-family:var(--display);font-weight:800;font-size:30px;fill:#F2EEE8;letter-spacing:-0.02em;paint-order:stroke;stroke:#35224F;stroke-width:2.5px;stroke-linejoin:round}
+.map .small{font-family:var(--text);font-size:12.5px;fill:#F2EEE8}
+.map .small.dim{fill:#CFC9D6;font-style:italic}
+.map .node circle{fill:#D6FF55}
+.map .node text{font-family:var(--display);font-weight:700;font-size:15px;fill:#F2EEE8}
+.map .node .ex{font-family:var(--mono);font-size:9.5px;font-weight:400;fill:#CFC9D6;letter-spacing:.04em}
+.where{display:grid;grid-template-columns:minmax(128px,auto) 1fr;gap:4px 14px;align-items:center}
+.where .mono{white-space:nowrap}
+.where .bar{grid-column:1 / -1;height:4px;background:rgba(242,238,232,0.15);display:block;overflow:hidden}
+.where .bar span{display:block;height:100%;transition:width .3s}
+.compass{width:100%;max-width:220px;height:auto;display:block;margin:0 auto}
+.compass .grid{fill:none;stroke:rgba(242,238,232,0.25);stroke-width:1}
+.compass .spoke{stroke:rgba(242,238,232,0.35);stroke-width:1}
+.compass .shape{fill:rgba(214,255,85,0.25);stroke:var(--signal);stroke-width:2;stroke-linejoin:round;transition:all .3s}
+.compass .pt{fill:var(--signal)}
+.compass text{font-family:var(--mono);font-size:9px;fill:var(--muted-light);letter-spacing:.06em;text-transform:uppercase}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.chip-list{display:none;list-style:none;margin:0;padding:0;flex-direction:column;gap:8px}
+.chip-list li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink);padding:10px 14px;background:var(--white);border:1px solid var(--mist);border-radius:2px}
+.chip-list li i{width:8px;height:8px;border-radius:50%;background:var(--alert);display:inline-block;flex:none}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font-family:var(--display);font-weight:700;font-size:15px}
+.field input,.field select{min-height:52px;padding:0 16px;border:1.5px solid var(--ink);border-radius:2px;background:var(--white);font-family:var(--text);font-size:16px;color:var(--ink);width:100%}
+.check{display:flex;align-items:flex-start;gap:10px;font-size:15px;cursor:pointer}
+.check input{width:20px;height:20px;margin:2px 0 0;flex:none;accent-color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:0 26px;border-radius:999px;font-family:var(--display);font-weight:700;font-size:16px;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.btn:focus-visible,.pill:focus-visible,.opt:focus-visible,.door:focus-visible,a:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
+.btn-signal{background:var(--signal);color:var(--ink);border-color:var(--signal)}
+.btn-signal:hover{background:#C9F53A}
+.btn-ink{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn-ink:hover{background:var(--plum);border-color:var(--plum)}
+.btn-line{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-line:hover{background:var(--mist)}
+.btn-line-light{background:transparent;color:var(--paper);border-color:rgba(242,238,232,0.5)}
+.btn-line-light:hover{border-color:var(--paper)}
+.pill{min-height:46px;padding:0 20px;border-radius:999px;font-family:var(--display);font-weight:700;font-size:15px;cursor:pointer;border:1.5px solid rgba(53,34,79,0.35);background:transparent;color:var(--plum);transition:border-color .15s,background .15s,color .15s}
+.pill:hover{border-color:var(--plum)}
+.pill[aria-pressed="true"]{background:var(--plum);color:var(--paper);border-color:var(--plum)}
+.opt{display:flex;align-items:center;gap:12px;padding:12px 16px;border:1.5px solid var(--mist);border-radius:2px;background:var(--white);cursor:pointer;text-align:left;font-family:var(--text);font-size:14px;line-height:1.4;color:var(--ink);width:100%;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--ink)}
+.opt .dot{width:16px;height:16px;border:1.5px solid var(--ink);border-radius:50%;flex:none;background:transparent}
+.opt[aria-checked="true"]{border-color:var(--ink);background:var(--paper)}
+.opt[aria-checked="true"] .dot{background:var(--ink)}
+.chip{position:absolute;background:var(--white);color:var(--ink);border:none;border-radius:2px;padding:9px 12px;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(20,18,22,0.14);max-width:260px}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--alert);display:inline-block;flex:none}
+.rule{height:1px;background:var(--ink)}
+.sec-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:14px;border-bottom:1px dotted currentColor;flex-wrap:wrap}
+.card-link{text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:14px;min-width:0}
+
+.soc{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0;border-top:1px solid rgba(242,238,232,0.2);text-decoration:none;color:var(--paper)}
+.soc:hover{color:var(--signal)}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.split{display:grid;gap:48px;align-items:center}
+.split-7-5{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+.split-5-7{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.split-4-8{grid-template-columns:minmax(0,4fr) minmax(0,8fr)}
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(242,238,232,0.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--plum);border-bottom:1px solid rgba(53,34,79,0.12)}
+.nav-links{display:flex;gap:34px}
+.nav-links a{text-decoration:none;color:var(--plum);font-family:var(--text);font-weight:500;font-size:15px;position:relative;padding:6px 2px;z-index:0}
+.nav-links a::after{content:"";position:absolute;left:-8px;right:-8px;top:2px;bottom:2px;z-index:-1;background:var(--signal);transform:scaleX(0) rotate(-1deg);transform-origin:left center;transition:transform .18s cubic-bezier(.2,.8,.2,1)}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--ink)}
+.nav-links a:hover::after,.nav-links a:focus-visible::after{transform:scaleX(1) rotate(-1deg)}
+.scene{position:relative;min-height:600px;display:flex;flex-direction:column;gap:12px}
+.scene .scene-frame{position:relative;flex:1;min-height:480px}
+.scene-frame{overflow:hidden;background:var(--mist);border-radius:2px}
+.arch{border-radius:var(--r);overflow:hidden}
+.card{border-radius:var(--r)}
+.card-s{border-radius:var(--r-s)}
+.scene-frame img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.scene-grad{position:absolute;left:0;right:0;bottom:0;height:30%;background:linear-gradient(180deg,rgba(20,18,22,0) 0%,rgba(20,18,22,0.6) 100%)}
+.h1{font-size:clamp(52px,7vw,96px);line-height:0.92;font-weight:800}
+.h2{font-size:clamp(34px,4vw,48px);line-height:1.02;font-weight:800}
+/* the phone: the evening, as it feels. Lock screen, 22:40, fourteen things waiting. */
+.phone-wrap{display:flex;justify-content:center;padding:10px 0}
+.phone{width:320px;max-width:100%;aspect-ratio:9/17.6;background:#0B0A0D;border-radius:48px;padding:12px;box-shadow:0 0 0 2px #2A2630,0 40px 70px rgba(53,34,79,0.3),inset 0 0 0 1px rgba(255,255,255,0.06);transform:rotate(-4deg);position:relative;color:var(--ink)}
+.phone::before{content:"";position:absolute;left:-3px;top:120px;width:3px;height:34px;background:#2A2630;border-radius:2px 0 0 2px;box-shadow:0 52px 0 #2A2630}
+.phone::after{content:"";position:absolute;right:-3px;top:160px;width:3px;height:60px;background:#2A2630;border-radius:0 2px 2px 0}
+.screen{position:absolute;inset:12px;border-radius:38px;overflow:hidden;background:linear-gradient(180deg,#F2EEE8 0%,#E6E0EC 100%);display:flex;flex-direction:column}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:96px;height:28px;background:#0B0A0D;border-radius:14px;z-index:2}
+.statusbar{display:flex;justify-content:space-between;align-items:center;padding:16px 26px 0;font-family:var(--mono);font-size:12px;color:var(--ink)}
+.statusbar .sig{display:flex;align-items:center;gap:5px}
+.statusbar .sig i{display:inline-block;width:3px;background:var(--ink);border-radius:1px}
+.statusbar .bat{width:24px;height:11px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+.statusbar .bat::after{content:"";position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:30%;background:var(--alert);border-radius:1px}
+.lock{display:flex;flex-direction:column;align-items:center;gap:0;padding:22px 0 10px}
+.lock .mono{color:var(--muted)}
+.phone-clock{font-family:var(--display);font-weight:600;font-size:64px;line-height:1;letter-spacing:-0.04em;color:var(--plum)}
+.phone-msgs{padding:4px 10px 0;display:flex;flex-direction:column;gap:7px;flex:1}
+.msg{background:rgba(255,255,255,0.78);backdrop-filter:blur(6px);border-radius:18px;padding:10px 12px 10px 44px;display:flex;flex-direction:column;gap:2px;position:relative;transform:none !important}
+.msg::before{content:"";position:absolute;left:12px;top:11px;width:24px;height:24px;border-radius:6px;background:var(--plum)}
+.msg::after{content:"";position:absolute;left:21px;top:16px;width:6px;height:6px;border-radius:50%;background:var(--paper);box-shadow:3px 2px 0 1px var(--paper)}
+.msg .mono{color:var(--muted);font-size:10px;display:flex;justify-content:space-between;gap:8px}
+.msg .mono i{display:none}
+.msg p{font-size:12.5px;line-height:1.3}
+.msg .app{font-family:var(--text);font-weight:600;text-transform:none;letter-spacing:0;font-size:11px;color:var(--ink)}
+.phone-badge{position:absolute;right:16px;top:50px;background:var(--alert);color:var(--white);font-family:var(--mono);font-size:12px;min-width:26px;height:26px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;padding:0 8px;z-index:3}
+.phone-foot{padding:6px 18px 10px;color:var(--muted);text-align:center;font-size:11.5px}
+.homebar{width:110px;height:5px;background:var(--ink);border-radius:3px;margin:0 auto 10px;opacity:.7}
+@media (max-width:900px){.phone{transform:none;width:280px}}
+/* day timeline */
+.day{display:grid;grid-template-columns:minmax(0,1fr) 92px minmax(0,1fr);gap:12px;align-items:stretch}
+.day .l,.day .r{padding:16px 20px;border:1px solid var(--ink);background:var(--white);display:flex;flex-direction:column;gap:4px;min-width:0;border-radius:2px}
+.day .l{border-color:rgba(20,18,22,0.35);background-color:#F6F2EA;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .13  0 0 0 0 .3  0 0 0 .14 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");box-shadow:1px 1px 0 rgba(20,18,22,0.08)}
+.day .r{box-shadow:none}
+.day .l{text-align:right}
+.day .r{background:var(--plum);color:var(--paper);border-color:var(--plum)}
+.day .r .mono{color:var(--signal)}
+.day .t{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.day .t .mono{font-size:13px;background:var(--paper);padding:4px 0}
+.day .t:after{content:"";width:1px;flex:1;background:var(--ink);opacity:.35}
+.day .t:before{content:"";width:1px;flex:1;background:var(--ink);opacity:.35}
+.band{grid-column:1 / -1;background:var(--mist);padding:14px 22px;border-radius:2px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.band strong{font-family:var(--display);font-size:18px}
+/* doors */
+.door{text-align:left;cursor:pointer;border:1px solid var(--ink);background:var(--white);padding:0;display:flex;flex-direction:column;min-height:300px;border-radius:var(--r);overflow:hidden;transition:background .2s;font-family:var(--text);color:var(--ink);min-width:0}
+.door .head{padding:22px 24px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.door .num{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;color:var(--dim)}
+.door .tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border:1px solid var(--ink);border-radius:2px}
+.door h3{padding:14px 28px 0;font-size:22px;line-height:1.15;font-weight:700}
+.door .body{padding:12px 28px 22px;display:flex;flex-direction:column;gap:10px}
+.door .body p{font-size:14px;color:var(--muted)}
+.door .foot{margin-top:auto;padding:14px 28px;border-top:1px solid var(--ink);font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.door[aria-expanded="false"] .body{display:none}
+.door[aria-expanded="true"]{background:var(--signal)}
+.door[aria-expanded="true"] .num{color:var(--ink)}
+.door[aria-expanded="true"] .body p{color:var(--ink)}
+/* filter */
+.mark-bad{background:rgba(228,71,43,0.18);border-bottom:2px solid var(--alert);padding:0 3px}
+.mark-ok{background:rgba(214,255,85,0.6);padding:0 3px}
+.sticky-aside{position:sticky;top:104px}
+.menu-btn{display:none;width:44px;height:44px;border:1.5px solid var(--ink);border-radius:2px;background:transparent;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.menu-btn span{display:block;width:18px;height:2px;background:var(--ink)}
+.menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-panel{display:flex;flex-direction:column;background:var(--paper);border-top:1px solid rgba(53,34,79,0.15);padding:8px 20px 16px}
+.menu-panel a{font-family:var(--display);font-weight:700;font-size:20px;color:var(--plum);text-decoration:none;padding:14px 0;border-bottom:1px solid rgba(53,34,79,0.15)}
+.menu-panel a:last-child{border-bottom:none}
+.menu-panel a:hover{color:var(--ink)}
+.to-top{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:48px;height:48px;border-radius:2px;background:var(--ink);color:var(--paper);border:1px solid rgba(242,238,232,0.3);display:flex;align-items:center;justify-content:center;text-decoration:none;font-family:var(--mono);font-size:12px;z-index:9;opacity:0;pointer-events:none;transition:opacity .2s}
+.to-top.show{opacity:1;pointer-events:auto}
+@media (min-width:901px){.to-top{display:none}}
+@media (max-width:900px){
+  .menu-btn{display:flex}
+  .hdr .wrap{flex-wrap:nowrap !important;min-height:64px !important;gap:10px !important}
+  .hdr .lockup{width:164px}
+  .lockup-ftr{width:200px}
+  .hdr .btn{min-height:40px !important;padding:0 10px !important;font-size:13px !important;white-space:nowrap}
+  .scene-frame .mono{max-width:70%}
+  .door{min-height:0}
+  .door h3{padding-bottom:14px}
+  .chip-list{display:flex}
+  .cred{gap:10px 18px !important}
+  .wrap{padding-inline:20px}
+  .split{grid-template-columns:1fr !important;gap:32px}
+  .g3,.g2{grid-template-columns:1fr}
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nav-links{display:none}
+  .chips{display:none}
+  .scene{min-height:420px}
+  .day{grid-template-columns:1fr}
+  .day-head{display:none !important}
+  .day .l{text-align:left}
+  .day .t{flex-direction:row;justify-content:flex-start}
+  .day .t:before,.day .t:after{display:none}
+  .sticky-aside{position:static}
+  .path{border-right:none !important;border-bottom:1px solid var(--ink)}
+  .path:last-child{border-bottom:none}
+  #footgrid{grid-template-columns:1fr !important;gap:32px !important}
+}
+</style>
+
+<!-- ===== 00 NAV ===== -->
+<header class="hdr">
+  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:76px;flex-wrap:wrap">
+    <a href="#top" class="logo" style="display:flex;align-items:center;text-decoration:none">
+      <svg class="door-mark lockup" xmlns="http://www.w3.org/2000/svg" viewBox="0.000 -85.212 908.140 148.925" role="img" aria-label="Room for People · oameni în față, sistem în spate"><g transform="translate(0.000 -85.212) scale(2.48208)"><rect x="3" y="3" width="42" height="54" rx="3" fill="none" stroke="#35224F" stroke-width="3"/><path class="leaf" d="M9 5 L22 11 L22 49 L9 55 Z" fill="#D6FF55" stroke="#35224F" stroke-width="1.5" stroke-linejoin="round"/></g><g transform="translate(159.140 0.000)"><path d="M6.2 0V-24.5V-52.8H19.4L19.7 -34.9H21.7Q22.4 -41.9 24.35 -46.05Q26.3 -50.2 29.95 -52.1Q33.6 -54 39 -54Q39.8 -54 40.8 -53.95Q41.8 -53.9 43.1 -53.7L42.5 -36.5Q40.9 -37.3 39.05 -37.55Q37.2 -37.8 35.8 -37.8Q31.9 -37.8 29.05 -36.3Q26.2 -34.8 24.55 -31.7Q22.9 -28.6 22.4 -23.9V0ZM72.1 1.4Q64.1 1.4 57.95 -1.7Q51.8 -4.8 48.3 -11Q44.8 -17.2 44.8 -26.5Q44.8 -35.8 48.3 -41.95Q51.8 -48.1 58 -51.15Q64.2 -54.2 72.2 -54.2Q80.2 -54.2 86.4 -51.1Q92.6 -48 96.1 -41.85Q99.6 -35.7 99.6 -26.4Q99.6 -16.9 96 -10.7Q92.4 -4.5 86.15 -1.55Q79.9 1.4 72.1 1.4ZM72.6 -10.3Q76.2 -10.3 78.6 -11.95Q81 -13.6 82.2 -17Q83.4 -20.4 83.4 -25.4Q83.4 -30.7 82.1 -34.35Q80.8 -38 78.25 -39.95Q75.7 -41.9 71.7 -41.9Q68.3 -41.9 65.85 -40.25Q63.4 -38.6 62.2 -35.2Q61 -31.8 61 -26.7Q61 -18.5 64.05 -14.4Q67.1 -10.3 72.6 -10.3ZM130.3 1.4Q122.3 1.4 116.15 -1.7Q110 -4.8 106.5 -11Q103 -17.2 103 -26.5Q103 -35.8 106.5 -41.95Q110 -48.1 116.2 -51.15Q122.4 -54.2 130.4 -54.2Q138.4 -54.2 144.6 -51.1Q150.8 -48 154.3 -41.85Q157.8 -35.7 157.8 -26.4Q157.8 -16.9 154.2 -10.7Q150.6 -4.5 144.35 -1.55Q138.1 1.4 130.3 1.4ZM130.8 -10.3Q134.4 -10.3 136.8 -11.95Q139.2 -13.6 140.4 -17Q141.6 -20.4 141.6 -25.4Q141.6 -30.7 140.3 -34.35Q139 -38 136.45 -39.95Q133.9 -41.9 129.9 -41.9Q126.5 -41.9 124.05 -40.25Q121.6 -38.6 120.4 -35.2Q119.2 -31.8 119.2 -26.7Q119.2 -18.5 122.25 -14.4Q125.3 -10.3 130.8 -10.3ZM164.2 0V-34.1V-52.8H176.9L177.1 -37.3H179.1Q180.5 -43 182.8 -46.75Q185.1 -50.5 188.4 -52.35Q191.7 -54.2 196.1 -54.2Q200.7 -54.2 203.75 -52.25Q206.8 -50.3 208.6 -46.55Q210.4 -42.8 211 -37.3H212.7Q214.3 -43.2 216.9 -46.95Q219.5 -50.7 223.1 -52.45Q226.7 -54.2 230.9 -54.2Q235.4 -54.2 238.75 -52.45Q242.1 -50.7 244.35 -47.25Q246.6 -43.8 247.7 -38.65Q248.8 -33.5 248.8 -26.7V0H232.6V-24.7Q232.6 -30 231.75 -33.5Q230.9 -37 229.1 -38.75Q227.3 -40.5 224.5 -40.5Q221.3 -40.5 219.05 -38.4Q216.8 -36.3 215.6 -32.55Q214.4 -28.8 214.4 -24.1V0H198.6V-24.4Q198.6 -29.9 197.65 -33.4Q196.7 -36.9 194.85 -38.7Q193 -40.5 190.2 -40.5Q187 -40.5 184.8 -38.4Q182.6 -36.3 181.45 -32.55Q180.3 -28.8 180.3 -24.1V0ZM280.8 0V-32.7H272.7V-44.4L287.1 -43.8V-45.7Q283.3 -46.4 280.85 -48.25Q278.4 -50.1 277.3 -52.6Q276.2 -55.1 276.2 -58Q276.2 -62.4 278.5 -65.55Q280.8 -68.7 285 -70.4Q289.2 -72.1 294.8 -72.1Q299.7 -72.1 303.7 -70.95Q307.7 -69.8 310.1 -68.1L309.2 -53.6Q306.7 -55.3 303.55 -56.4Q300.4 -57.5 297.7 -57.5Q294.9 -57.5 293 -56.05Q291.1 -54.6 291.1 -51.3Q291.1 -48.7 292.25 -47.4Q293.4 -46.1 295.1 -45.65Q296.8 -45.2 298.5 -45.2H310.1V-32.7H296.5V0ZM338.9 1.4Q330.9 1.4 324.75 -1.7Q318.6 -4.8 315.1 -11Q311.6 -17.2 311.6 -26.5Q311.6 -35.8 315.1 -41.95Q318.6 -48.1 324.8 -51.15Q331 -54.2 339 -54.2Q347 -54.2 353.2 -51.1Q359.4 -48 362.9 -41.85Q366.4 -35.7 366.4 -26.4Q366.4 -16.9 362.8 -10.7Q359.2 -4.5 352.95 -1.55Q346.7 1.4 338.9 1.4ZM339.4 -10.3Q343 -10.3 345.4 -11.95Q347.8 -13.6 349 -17Q350.2 -20.4 350.2 -25.4Q350.2 -30.7 348.9 -34.35Q347.6 -38 345.05 -39.95Q342.5 -41.9 338.5 -41.9Q335.1 -41.9 332.65 -40.25Q330.2 -38.6 329 -35.2Q327.8 -31.8 327.8 -26.7Q327.8 -18.5 330.85 -14.4Q333.9 -10.3 339.4 -10.3ZM372.8 0V-24.5V-52.8H386L386.3 -34.9H388.3Q389 -41.9 390.95 -46.05Q392.9 -50.2 396.55 -52.1Q400.2 -54 405.6 -54Q406.4 -54 407.4 -53.95Q408.4 -53.9 409.7 -53.7L409.1 -36.5Q407.5 -37.3 405.65 -37.55Q403.8 -37.8 402.4 -37.8Q398.5 -37.8 395.65 -36.3Q392.8 -34.8 391.15 -31.7Q389.5 -28.6 389 -23.9V0ZM433.7 16.9V-25.8V-52.8H446.9L447.1 -37.8L448.9 -37.6Q449.8 -43.2 452.1 -46.9Q454.4 -50.6 458.05 -52.4Q461.7 -54.2 466.4 -54.2Q473.4 -54.2 478.45 -50.8Q483.5 -47.4 486.2 -41.1Q488.9 -34.8 488.9 -26Q488.9 -18.2 486.55 -12Q484.2 -5.8 479.45 -2.2Q474.7 1.4 467.4 1.4Q462.5 1.4 459.1 -0.35Q455.7 -2.1 453.35 -5.5Q451 -8.9 449.4 -14H447.5Q448.1 -11.3 448.6 -8.5Q449.1 -5.7 449.45 -3.1Q449.8 -0.5 449.8 1.9V16.9ZM461.5 -11.3Q464.8 -11.3 467.15 -13.1Q469.5 -14.9 470.8 -18.2Q472.1 -21.5 472.1 -25.9Q472.1 -30.6 470.75 -33.95Q469.4 -37.3 466.9 -39.15Q464.4 -41 461.1 -41Q458 -41 455.85 -39.65Q453.7 -38.3 452.35 -36.15Q451 -34 450.4 -31.6Q449.8 -29.2 449.8 -27.1V-24.9Q449.8 -23 450.3 -21.1Q450.8 -19.2 451.8 -17.45Q452.8 -15.7 454.2 -14.3Q455.6 -12.9 457.45 -12.1Q459.3 -11.3 461.5 -11.3ZM520.6 1.4Q514 1.4 508.8 -0.35Q503.6 -2.1 499.95 -5.5Q496.3 -8.9 494.4 -13.9Q492.5 -18.9 492.5 -25.4Q492.5 -31.7 494.35 -37Q496.2 -42.3 499.65 -46.15Q503.1 -50 508.15 -52.1Q513.2 -54.2 519.5 -54.2Q525.9 -54.2 530.75 -52.15Q535.6 -50.1 538.75 -46.1Q541.9 -42.1 543.4 -36.35Q544.9 -30.6 544.4 -23.2L503.1 -22.9V-31.3L535.2 -31.6L529.5 -27.7Q530.2 -32.7 528.9 -35.85Q527.6 -39 525.1 -40.45Q522.6 -41.9 519.7 -41.9Q516.2 -41.9 513.55 -40Q510.9 -38.1 509.4 -34.5Q507.9 -30.9 507.9 -25.7Q507.9 -17.5 511.45 -13.8Q515 -10.1 520.5 -10.1Q523.2 -10.1 525 -10.85Q526.8 -11.6 527.95 -12.75Q529.1 -13.9 529.75 -15.3Q530.4 -16.7 530.8 -18L544.8 -15Q544 -11.3 542.25 -8.3Q540.5 -5.3 537.55 -3.1Q534.6 -0.9 530.45 0.25Q526.3 1.4 520.6 1.4ZM575.5 1.4Q567.5 1.4 561.35 -1.7Q555.2 -4.8 551.7 -11Q548.2 -17.2 548.2 -26.5Q548.2 -35.8 551.7 -41.95Q555.2 -48.1 561.4 -51.15Q567.6 -54.2 575.6 -54.2Q583.6 -54.2 589.8 -51.1Q596 -48 599.5 -41.85Q603 -35.7 603 -26.4Q603 -16.9 599.4 -10.7Q595.8 -4.5 589.55 -1.55Q583.3 1.4 575.5 1.4ZM576 -10.3Q579.6 -10.3 582 -11.95Q584.4 -13.6 585.6 -17Q586.8 -20.4 586.8 -25.4Q586.8 -30.7 585.5 -34.35Q584.2 -38 581.65 -39.95Q579.1 -41.9 575.1 -41.9Q571.7 -41.9 569.25 -40.25Q566.8 -38.6 565.6 -35.2Q564.4 -31.8 564.4 -26.7Q564.4 -18.5 567.45 -14.4Q570.5 -10.3 576 -10.3ZM609.4 16.9V-25.8V-52.8H622.6L622.8 -37.8L624.6 -37.6Q625.5 -43.2 627.8 -46.9Q630.1 -50.6 633.75 -52.4Q637.4 -54.2 642.1 -54.2Q649.1 -54.2 654.15 -50.8Q659.2 -47.4 661.9 -41.1Q664.6 -34.8 664.6 -26Q664.6 -18.2 662.25 -12Q659.9 -5.8 655.15 -2.2Q650.4 1.4 643.1 1.4Q638.2 1.4 634.8 -0.35Q631.4 -2.1 629.05 -5.5Q626.7 -8.9 625.1 -14H623.2Q623.8 -11.3 624.3 -8.5Q624.8 -5.7 625.15 -3.1Q625.5 -0.5 625.5 1.9V16.9ZM637.2 -11.3Q640.5 -11.3 642.85 -13.1Q645.2 -14.9 646.5 -18.2Q647.8 -21.5 647.8 -25.9Q647.8 -30.6 646.45 -33.95Q645.1 -37.3 642.6 -39.15Q640.1 -41 636.8 -41Q633.7 -41 631.55 -39.65Q629.4 -38.3 628.05 -36.15Q626.7 -34 626.1 -31.6Q625.5 -29.2 625.5 -27.1V-24.9Q625.5 -23 626 -21.1Q626.5 -19.2 627.5 -17.45Q628.5 -15.7 629.9 -14.3Q631.3 -12.9 633.15 -12.1Q635 -11.3 637.2 -11.3ZM671.2 0V-72H687V0ZM721.6 1.4Q715 1.4 709.8 -0.35Q704.6 -2.1 700.95 -5.5Q697.3 -8.9 695.4 -13.9Q693.5 -18.9 693.5 -25.4Q693.5 -31.7 695.35 -37Q697.2 -42.3 700.65 -46.15Q704.1 -50 709.15 -52.1Q714.2 -54.2 720.5 -54.2Q726.9 -54.2 731.75 -52.15Q736.6 -50.1 739.75 -46.1Q742.9 -42.1 744.4 -36.35Q745.9 -30.6 745.4 -23.2L704.1 -22.9V-31.3L736.2 -31.6L730.5 -27.7Q731.2 -32.7 729.9 -35.85Q728.6 -39 726.1 -40.45Q723.6 -41.9 720.7 -41.9Q717.2 -41.9 714.55 -40Q711.9 -38.1 710.4 -34.5Q708.9 -30.9 708.9 -25.7Q708.9 -17.5 712.45 -13.8Q716 -10.1 721.5 -10.1Q724.2 -10.1 726 -10.85Q727.8 -11.6 728.95 -12.75Q730.1 -13.9 730.75 -15.3Q731.4 -16.7 731.8 -18L745.8 -15Q745 -11.3 743.25 -8.3Q741.5 -5.3 738.55 -3.1Q735.6 -0.9 731.45 0.25Q727.3 1.4 721.6 1.4Z" fill="#35224F"/><path d="M9.06 54.362Q7.067 54.362 5.602 53.622Q4.138 52.883 3.186 51.493Q2.235 50.104 1.782 48.08Q1.329 46.057 1.329 43.46Q1.329 40.892 1.782 38.854Q2.235 36.815 3.186 35.426Q4.138 34.037 5.602 33.297Q7.067 32.557 9.06 32.557Q11.054 32.557 12.519 33.297Q13.983 34.037 14.935 35.426Q15.886 36.815 16.339 38.854Q16.792 40.892 16.792 43.46Q16.792 46.057 16.339 48.08Q15.886 50.104 14.935 51.493Q13.983 52.883 12.519 53.622Q11.054 54.362 9.06 54.362ZM9.06 51.554Q11.326 51.554 12.262 49.847Q13.198 48.141 13.198 45.211V41.678Q13.198 38.778 12.262 37.072Q11.326 35.366 9.06 35.366Q6.795 35.366 5.859 37.072Q4.923 38.778 4.923 41.678V45.242Q4.923 48.141 5.859 49.847Q6.795 51.554 9.06 51.554ZM41.135 54 39.534 48.383H32.829L31.228 54H27.785L33.947 32.919H38.567L44.729 54ZM36.302 36.332H36.061L33.463 45.574H38.9ZM67.803 43.913 67.893 37.57H67.652L63.423 48.413L59.195 37.57H58.954L59.044 43.913V54H56.054V32.919H60.192L63.423 41.285H63.635L66.897 32.919H70.793V54H67.803ZM84.142 54V32.919H97.34V35.758H87.524V41.889H96.977V44.728H87.524V51.161H97.34V54ZM114.132 37.782H113.86V54H110.9V32.919H115.249L121.441 49.138H121.713V32.919H124.672V54H120.323ZM138.323 54V51.433H143.276V35.486H138.323V32.919H151.612V35.486H146.659V51.433H151.612V54Z" fill="#5C5664"/><path d="M174.565 54V51.433H179.518V35.486H174.565V32.919H187.854V35.486H182.901V51.433H187.854V54ZM182.871 25.49 186.495 30.02 184.743 31.288 181.179 27.785 177.585 31.288 175.924 30.02 179.549 25.49ZM204.737 37.782H204.465V54H201.505V32.919H205.854L212.046 49.138H212.317V32.919H215.277V54H210.928Z" fill="#5C5664"/><path d="M238.17 54V32.919H251.73V35.758H241.553V41.889H250.794V44.728H241.553V54ZM276.707 54 275.106 48.383H268.402L266.801 54H263.358L269.519 32.919H274.14L280.301 54ZM271.875 36.332H271.633L269.036 45.574H274.472ZM297.093 55.782H300.989L298.573 61.822H296.368ZM300.687 35.758V54H297.305V35.758H290.691V32.919H307.301V35.758ZM331.07 54 329.469 48.383H322.765L321.164 54H317.721L323.882 32.919H328.503L334.664 54ZM326.238 36.332H325.996L323.399 45.574H328.835ZM326.177 31.198Q324.909 31.198 324.018 30.73Q323.127 30.262 322.508 29.552Q321.889 28.842 321.511 27.996Q321.134 27.151 320.892 26.426L322.855 25.49L323.489 26.486Q323.852 27.03 324.139 27.468Q324.426 27.906 324.713 28.193Q325 28.48 325.347 28.631Q325.694 28.782 326.177 28.782Q327.114 28.782 327.642 28.193Q328.171 27.604 328.865 26.486L329.5 25.49L331.463 26.426Q331.221 27.151 330.828 27.996Q330.436 28.842 329.832 29.552Q329.228 30.262 328.337 30.73Q327.446 31.198 326.177 31.198Z" fill="#5C5664"/><circle cx="360.909" cy="44.940" r="7.550" fill="#D6FF55"/><path d="M395.46 54.362Q392.712 54.362 390.839 53.396Q388.967 52.43 387.759 50.829L389.933 48.745Q391.141 50.195 392.5 50.874Q393.859 51.554 395.581 51.554Q397.574 51.554 398.646 50.648Q399.718 49.742 399.718 48.05Q399.718 46.691 398.933 45.951Q398.148 45.211 396.245 44.879L393.95 44.517Q392.44 44.275 391.413 43.716Q390.386 43.158 389.752 42.387Q389.118 41.617 388.831 40.666Q388.544 39.715 388.544 38.658Q388.544 35.668 390.477 34.112Q392.41 32.557 395.792 32.557Q398.299 32.557 400.066 33.357Q401.832 34.158 402.92 35.607L400.806 37.721Q399.93 36.664 398.737 36.015Q397.544 35.366 395.792 35.366Q393.92 35.366 392.938 36.166Q391.957 36.966 391.957 38.507Q391.957 39.805 392.727 40.545Q393.497 41.285 395.46 41.617L397.695 42.01Q400.534 42.523 401.832 44.079Q403.131 45.634 403.131 47.869Q403.131 49.319 402.633 50.527Q402.134 51.735 401.153 52.581Q400.171 53.426 398.737 53.894Q397.302 54.362 395.46 54.362ZM416.178 54V51.433H421.131V35.486H416.178V32.919H429.467V35.486H424.514V51.433H429.467V54ZM449.823 54.362Q447.074 54.362 445.202 53.396Q443.329 52.43 442.121 50.829L444.296 48.745Q445.504 50.195 446.863 50.874Q448.222 51.554 449.944 51.554Q451.937 51.554 453.009 50.648Q454.081 49.742 454.081 48.05Q454.081 46.691 453.296 45.951Q452.511 45.211 450.608 44.879L448.313 44.517Q446.803 44.275 445.776 43.716Q444.749 43.158 444.115 42.387Q443.48 41.617 443.194 40.666Q442.907 39.715 442.907 38.658Q442.907 35.668 444.84 34.112Q446.772 32.557 450.155 32.557Q452.662 32.557 454.429 33.357Q456.195 34.158 457.283 35.607L455.169 37.721Q454.293 36.664 453.1 36.015Q451.907 35.366 450.155 35.366Q448.283 35.366 447.301 36.166Q446.319 36.966 446.319 38.507Q446.319 39.805 447.09 40.545Q447.86 41.285 449.823 41.617L452.058 42.01Q454.897 42.523 456.195 44.079Q457.494 45.634 457.494 47.869Q457.494 49.319 456.996 50.527Q456.497 51.735 455.516 52.581Q454.534 53.426 453.1 53.894Q451.665 54.362 449.823 54.362ZM478.877 35.758V54H475.494V35.758H468.88V32.919H485.491V35.758ZM497.904 54V32.919H511.102V35.758H501.286V41.889H510.739V44.728H501.286V51.161H511.102V54ZM535.928 43.913 536.018 37.57H535.777L531.548 48.413L527.32 37.57H527.079L527.169 43.913V54H524.179V32.919H528.317L531.548 41.285H531.76L535.022 32.919H538.918V54H535.928Z" fill="#5C5664"/><path d="M561.146 54V51.433H566.099V35.486H561.146V32.919H574.435V35.486H569.482V51.433H574.435V54ZM569.451 25.49 573.076 30.02 571.324 31.288 567.76 27.785 564.166 31.288 562.505 30.02 566.129 25.49ZM591.317 37.782H591.046V54H588.086V32.919H592.435L598.626 49.138H598.898V32.919H601.858V54H597.509Z" fill="#5C5664"/><path d="M631.033 54.362Q628.284 54.362 626.412 53.396Q624.539 52.43 623.331 50.829L625.506 48.745Q626.714 50.195 628.073 50.874Q629.432 51.554 631.153 51.554Q633.147 51.554 634.219 50.648Q635.291 49.742 635.291 48.05Q635.291 46.691 634.506 45.951Q633.72 45.211 631.818 44.879L629.522 44.517Q628.012 44.275 626.985 43.716Q625.959 43.158 625.324 42.387Q624.69 41.617 624.403 40.666Q624.116 39.715 624.116 38.658Q624.116 35.668 626.049 34.112Q627.982 32.557 631.365 32.557Q633.871 32.557 635.638 33.357Q637.405 34.158 638.492 35.607L636.378 37.721Q635.502 36.664 634.309 36.015Q633.116 35.366 631.365 35.366Q629.492 35.366 628.511 36.166Q627.529 36.966 627.529 38.507Q627.529 39.805 628.299 40.545Q629.069 41.285 631.033 41.617L633.267 42.01Q636.106 42.523 637.405 44.079Q638.704 45.634 638.704 47.869Q638.704 49.319 638.205 50.527Q637.707 51.735 636.726 52.581Q635.744 53.426 634.309 53.894Q632.875 54.362 631.033 54.362ZM651.872 54V32.919H659.754Q662.774 32.919 664.36 34.611Q665.946 36.302 665.946 39.262Q665.946 42.221 664.36 43.913Q662.774 45.604 659.754 45.604H655.254V54ZM655.254 42.795H659.241Q662.382 42.795 662.382 39.896V38.597Q662.382 35.728 659.241 35.728H655.254ZM690.469 54 688.869 48.383H682.164L680.563 54H677.12L683.281 32.919H687.902L694.063 54ZM685.637 36.332H685.395L682.798 45.574H688.234ZM714.449 35.758V54H711.067V35.758H704.453V32.919H721.064V35.758ZM733.476 54V32.919H746.674V35.758H736.859V41.889H746.312V44.728H736.859V51.161H746.674V54Z" fill="#5C5664"/></g></svg>
+    </a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#ziua">Ziua ta</a>
+      <a href="#usi">Trei uși</a>
+      <a href="#dece">Cine construiește</a>
+      <a href="#scor">Harta cabinetului</a>
+      <a href="#radiografia">Radiografia</a>
+      <a href="#jurnal">Jurnal</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="#scor" class="btn" style="min-height:46px;padding:0 22px;font-size:15px;background:var(--plum);color:var(--paper);border-color:var(--plum);gap:14px">Îmi aflu scorul <span aria-hidden="true" style="font-family:var(--text)">→</span></a>
+      <button id="menuBtn" type="button" class="menu-btn" aria-expanded="false" aria-controls="menuPanel" aria-label="Meniu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav id="menuPanel" class="menu-panel" aria-label="Meniu mobil" hidden>
+    <a href="#ziua">Ziua ta</a>
+    <a href="#usi">Trei uși închise</a>
+    <a href="#dece">Cine construiește</a>
+    <a href="#scor">Harta cabinetului</a>
+    <a href="#radiografia">Radiografia</a>
+    <a href="#jurnal">Jurnal</a>
+    <a href="#final">Harta pe email</a>
+  </nav>
+</header>
+
+<main id="top" style="position:relative">
+<div class="route" aria-hidden="true"></div>
+
+<!-- ===== 01 HERO ===== -->
+<section style="background:var(--paper);color:var(--ink)">
+  <div class="wrap" style="padding-block:36px 88px;display:flex;flex-direction:column;gap:36px">
+    <div role="group" aria-label="Alege profesia" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-bottom:20px;border-bottom:1px solid rgba(20,18,22,0.15)">
+      <span class="lead" style="margin-right:8px"><span class="wp">01</span><span class="mono" style="color:var(--muted);margin-left:12px">Lucrez ca</span></span>
+      <button class="pill" type="button" data-persona="psi" aria-pressed="true">Psiholog / psihoterapeut</button>
+      <button class="pill" type="button" data-persona="as" aria-pressed="false">Asistent social independent</button>
+      <button class="pill" type="button" data-persona="co" aria-pressed="false">Coach</button>
+    </div>
+    <div class="split split-7-5">
+      <div style="display:flex;flex-direction:column;gap:28px;min-width:0">
+        <h1 class="h1" style="color:var(--plum)">Relația e temelia.<br><span style="color:var(--plum-light)">Nu mai e <span class="ul">avantajul.</span></span></h1>
+        <p id="sub" aria-live="polite" style="font-size:20px;line-height:1.5;color:var(--muted);max-width:600px">În ședință, relația e totul. Până să ajungă omul în ședință, nu mai e suficientă. Între ședințe se adună restul: reprogramări la 22:40, același email despre prima întâlnire scris de la zero, un site care nu spune cu cine lucrezi.</p>
+        <p id="status" class="sr" aria-live="polite"></p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:4px">
+          <a href="#scor" class="btn btn-signal" style="min-height:58px;padding:0 28px;font-size:17px">Îmi aflu scorul <span class="mono" style="font-weight:400;opacity:0.7;text-transform:none;letter-spacing:0">· 4 min · 0 lei</span></a>
+          <a href="#ziua" class="btn btn-line">Vezi cum ar arăta ziua ta</a>
+        </div>
+        <div class="cred" style="display:flex;gap:24px;flex-wrap:wrap;padding-top:16px;border-top:1px solid rgba(20,18,22,0.15)">
+          <span class="mono" style="color:var(--muted)"><strong style="color:var(--ink)">Ionuț Neacșu</strong></span>
+          <span class="mono" style="color:var(--muted)"><strong style="color:var(--ink)">23 de ani</strong> · asistență socială</span>
+          <span class="mono" style="color:var(--muted)"><strong style="color:var(--ink)">Psihologie</strong> · absolvent UK, 2025</span>
+          <span class="mono" style="color:var(--muted)"><strong style="color:var(--ink)">Din 2022</strong> · zilnic cu AI</span>
+        </div>
+      </div>
+      <div class="scene">
+        <div class="scene-frame">
+          <img id="img-psi" src="img/psiholog.webp" width="1400" height="1735" fetchpriority="high" alt="Cabinet de psihoterapie: două fotolii față în față, o măsuță cu șervețele și un ceas, lumină de fereastră">
+          <img id="img-as" src="img/asistent.webp" width="1400" height="1735" loading="lazy" alt="Vizită la domiciliu: masă de bucătărie lângă fereastră, două căni, un dosar cu hârtii, un desen de copil pe frigider" hidden>
+          <img id="img-co" src="img/coach.webp" width="1400" height="1735" loading="lazy" alt="Spațiu de coaching: o tablă cu bilețele, un flipchart, două scaune înalte, lumină laterală" hidden>
+          <div class="scene-grad" aria-hidden="true"></div>
+          <span id="sceneLabel" class="mono" style="position:absolute;left:18px;bottom:16px;color:var(--signal)">Cabinet · imagine generată</span>
+        </div>
+        <div class="chips" aria-hidden="true">
+          <div class="chip" style="top:18px;left:-20px"><i></i><span id="chip1">Reprogramare · 22:40</span></div>
+          <div class="chip" style="top:118px;right:-24px"><i></i><span id="chip2">Factura din martie · neplătită</span></div>
+          <div class="chip" style="bottom:120px;left:-26px"><i></i><span id="chip3">„Lucrați și online?” · a 9-a oară</span></div>
+          <div class="chip" style="bottom:48px;right:-16px"><i></i><span id="chip4">Site · ultima actualizare 2023</span></div>
+        </div>
+        <ul id="chipList" class="chip-list" aria-label="Ce se adună între ședințe"><li><i></i>Reprogramare · 22:40</li><li><i></i>Factura din martie · neplătită</li><li><i></i>„Lucrați și online?” · a 9-a oară</li><li><i></i>Site · ultima actualizare 2023</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 02 ZIUA TA ===== -->
+<section id="ziua" style="padding-block:96px">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:40px">
+    <div class="sec-head"><span class="lead"><span class="wp">02</span><span class="mono">Ziua ta · marți, 22:40</span></span><span class="mono">Aceeași zi. Două seri.</span></div>
+    <div class="split split-7-5" style="align-items:center">
+      <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+        <h2 class="h2">Ziua cu oamenii se termină la 18:00. Seara ar trebui să fie a ta.</h2>
+        <p style="color:var(--muted);max-width:560px"><span class="hl" style="color:var(--ink)">Ședințele nu se ating.</span> Nici relația, nici judecata ta. Se schimbă doar ce se întâmplă în jurul lor: ce pleacă singur, ce te așteaptă doar pentru aprobare, ce nu mai ajunge la tine seara. Scenariul de mai jos e pentru <strong id="personaName0" style="color:var(--ink)">psihologi și psihoterapeuți</strong>; schimbă profesia sus ca să-l vezi pe al tău.</p>
+      </div>
+      <div class="phone-wrap">
+        <div class="phone" aria-label="Telefonul tău, marți seara">
+          <div class="island" aria-hidden="true"></div>
+          <div class="screen">
+            <div class="statusbar" aria-hidden="true"><span class="sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span><span class="bat"></span></div>
+            <div class="lock"><span class="mono">Marți, 10 octombrie</span><span class="phone-clock">22:40</span></div>
+            <span class="phone-badge" id="phoneBadge" aria-label="14 necitite">14</span>
+            <div id="phoneMsgs" class="phone-msgs"></div>
+            <p class="note phone-foot">Niciunul nu e urgent. Toate așteaptă un răspuns. De la tine.</p>
+            <div class="homebar" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) 92px minmax(0,1fr);gap:12px" class="day-head" aria-hidden="true">
+      <span class="mono" style="text-align:right;color:var(--muted)">Marți, azi</span><span></span><span class="mono" style="color:var(--muted)">Marți, cu sistem</span>
+    </div>
+    <div id="day" class="day"><div class="l"><span style="font-family:var(--display);font-weight:700;font-size:17px">Patru confirmări, scrise de mână</span><span style="font-size:14px;color:var(--muted)">Aceleași cuvinte, a patra oară săptămâna asta.</span></div><div class="t"><span class="mono">07:40</span></div><div class="r"><span class="mono">cu sistem</span><span style="font-family:var(--display);font-weight:700;font-size:17px">Confirmările au plecat singure</span><span style="font-size:14px;color:var(--muted-light)">La ora aleasă de tine, în tonul tău.</span></div><div class="band"><strong>09:00 · 13:00 · Timpul cu oamenii</strong><span class="mono" style="color:var(--muted)">Neatins. Aici nu intră niciun instrument.</span></div><div class="l"><span style="font-family:var(--display);font-weight:700;font-size:17px">O reprogramare, trei mesaje dus-întors</span><span style="font-size:14px;color:var(--muted)">Între două ședințe, cu telefonul sub masă.</span></div><div class="t"><span class="mono">13:10</span></div><div class="r"><span class="mono">cu sistem</span><span style="font-family:var(--display);font-weight:700;font-size:17px">Clientul și-a ales singur alt interval</span><span style="font-size:14px;color:var(--muted-light)">Din linkul tău, cu regulile tale de anulare.</span></div><div class="band"><strong>14:00 · 18:00 · Timpul cu oamenii</strong><span class="mono" style="color:var(--muted)">Tot neatins.</span></div><div class="l"><span style="font-family:var(--display);font-weight:700;font-size:17px">Postarea amânată</span><span style="font-size:14px;color:var(--muted)">Știi ce vrei să spui. Nu mai ai energie să o scrii.</span></div><div class="t"><span class="mono">20:30</span></div><div class="r"><span class="mono">cu sistem</span><span style="font-family:var(--display);font-weight:700;font-size:17px">Postarea te așteaptă pentru aprobare</span><span style="font-size:14px;color:var(--muted-light)">Pornită din notițele tale, trecută prin Filtrul deontologic.</span></div><div class="l"><span style="font-family:var(--display);font-weight:700;font-size:17px">„Cât costă prima ședință?”</span><span style="font-size:14px;color:var(--muted)">Răspunzi acum sau mâine? Dacă mâine, poate scrie altcuiva.</span></div><div class="t"><span class="mono">22:40</span></div><div class="r"><span class="mono">cu sistem</span><span style="font-family:var(--display);font-weight:700;font-size:17px">Răspuns automat la logistică</span><span style="font-size:14px;color:var(--muted-light)">Preț, program, cum arată prima întâlnire, scrise de tine dinainte. Niciun AI nu citește mesajul. Fiecare răspuns conține: „Dacă ești în pericol, sună acum la 112.” Tu primești notificarea.</span></div><div class="l"><span style="font-family:var(--display);font-weight:700;font-size:17px">Factura de luna trecută</span><span style="font-size:14px;color:var(--muted)">Și tabelul cu plățile.</span></div><div class="t"><span class="mono">23:10</span></div><div class="r"><span class="mono">cu sistem</span><span style="font-family:var(--display);font-weight:700;font-size:17px">Seara e a ta.</span><span style="font-size:14px;color:var(--muted-light)">Nimic de recuperat.</span></div></div>
+    <div class="g2" style="padding-top:12px">
+      <div class="card" style="border:1px solid var(--ink);padding:20px 22px;display:flex;flex-direction:column;gap:8px;background:var(--white)">
+        <span class="mono">Regula casei</span>
+        <p style="font-size:14px">Niciun nume, nicio notă de ședință, nicio informație despre un client <span class="hl">nu intră într-un instrument AI</span>. Lucrăm cu materialele tale publice și cu procesele cabinetului.</p>
+      </div>
+      <div class="card" style="border:1px solid var(--ink);padding:20px 22px;display:flex;flex-direction:column;gap:10px;background:var(--white)">
+        <span class="mono">Protocolul semafor · ce intră unde</span>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:14px">
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--ok);margin-right:8px"></span><strong>Verde.</strong> Materiale publice, texte proprii, idei de postări. Intră în instrumentele aprobate.</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--warn);margin-right:8px"></span><strong>Galben.</strong> Organizare fără date identificabile: program, șabloane, întrebări frecvente.</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--alert);margin-right:8px"></span><strong>Roșu.</strong> Orice dată de caz sau de sănătate. Nu intră în niciun instrument AI. Niciodată.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 03 UȘILE ÎNCHISE ===== -->
+<section id="usi" style="background:var(--white);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding-block:96px">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:40px">
+    <div class="sec-head"><span class="lead"><span class="wp">03</span><span class="mono">Trei uși închise</span></span><span class="mono">Apasă pe o ușă ca să o deschizi</span></div>
+    <div class="split split-5-7" style="align-items:end">
+      <h2 class="h2">Probleme pe care nu ți le-a numit nimeni.</h2>
+      <p style="color:var(--muted)">Fiecare ușă e o problemă reală din jurul cabinetului. Unele vin din norme, altele din 23 de ani de practică, altele sunt ipoteze pe care le verificăm pe cazul tău. Scrise pentru <strong id="personaName1" style="color:var(--ink)">psihologi și psihoterapeuți</strong>.</p>
+    </div>
+    <div id="doors" class="g3" style="gap:16px"><button type="button" class="door" data-door="0" aria-expanded="true"><div class="head"><span style="display:flex;align-items:flex-end;gap:12px"><svg class="door-mark dm" width="26" height="33" viewBox="0 0 48 60" aria-hidden="true"><rect x="3" y="3" width="42" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="3"></rect><path class="leaf" d="M9 5 L22 11 L22 49 L9 55 Z" fill="#D6FF55" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg><span class="num">01</span></span><span class="tag">Practică</span></div><h3>Omul care scrie la 22:00</h3><div class="body"><p style="font-family:var(--display);font-weight:700;font-size:16px;color:var(--ink)">Dacă un om îți scrie la 22:00, ce primește înapoi până mâine la 9?</p><p>Nu „ce îi răspunzi tu”. Ce primește el, singur, în timp ce tu dormi. Omul care scrie unui terapeut e adesea într-un moment fragil. Un răspuns clar la logistică poate decide dacă rămâne.</p></div><div class="foot">Ușa e deschisă</div></button><button type="button" class="door" data-door="1" aria-expanded="false"><div class="head"><span style="display:flex;align-items:flex-end;gap:12px"><svg class="door-mark dm" width="26" height="33" viewBox="0 0 48 60" aria-hidden="true"><rect x="3" y="3" width="42" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="3"></rect><path class="leaf" d="M9 5 L22 11 L22 49 L9 55 Z" fill="#D6FF55" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg><span class="num">02</span></span><span class="tag">Ipoteză</span></div><h3>Invizibil în răspunsurile AI</h3><div class="body"><p style="font-family:var(--display);font-weight:700;font-size:16px;color:var(--ink)">Dacă cineva întreabă ChatGPT „psihoterapeut pentru anxietate în orașul meu”, apari? Cu ce cuvinte?</p><p>Răspunsul vine din ce e scris despre tine, nu din cât ești de bun. Ipoteza: tot mai mulți oameni vor întreba un asistent AI ce terapeut să aleagă. O verificăm pe cabinetul tău, cu întrebări reale. Fără informație publică clară, riști să nu apari deloc.</p></div><div class="foot">Deschide ușa →</div></button><button type="button" class="door" data-door="2" aria-expanded="false"><div class="head"><span style="display:flex;align-items:flex-end;gap:12px"><svg class="door-mark dm" width="26" height="33" viewBox="0 0 48 60" aria-hidden="true"><rect x="3" y="3" width="42" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="3"></rect><path class="leaf" d="M9 5 L22 11 L22 49 L9 55 Z" fill="#D6FF55" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg><span class="num">03</span></span><span class="tag">Practică</span></div><h3>A doua tură</h3><div class="body"><p style="font-family:var(--display);font-weight:700;font-size:16px;color:var(--ink)">Câte ore pe săptămână nu sunt nici pe scaun, nici acasă?</p><p>Mesaje, postări, facturi, seara. Munca pe care nu o măsoară nimeni și pe care, de aceea, nu o reduce nimeni. Numără. Apoi înmulțește cu 48.</p></div><div class="foot">Deschide ușa →</div></button></div>
+    <p class="note" style="color:var(--muted)">Normă: din coduri deontologice sau legislație. Practică: din 23 de ani de experiență. Ipoteză: de verificat pe cazul tău.</p>
+  </div>
+</section>
+
+<!-- ===== 04 DE CE ===== -->
+<section id="dece" style="background:var(--plum);color:var(--paper);padding-block:104px">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:48px">
+    <div class="sec-head" style="color:var(--muted-light)"><span class="lead"><span class="wp">04</span><span class="mono">De ce există Room for People</span></span><span class="mono">Cine construiește, de ce, și trei fapte cu sursă</span></div>
+    <div class="split split-7-5" style="grid-template-columns:minmax(0,8fr) minmax(0,4fr)">
+      <div style="display:flex;flex-direction:column;gap:24px;min-width:0">
+        <h2 style="font-size:clamp(36px,4.5vw,56px);line-height:0.98;font-weight:800">Nu sunt o agenție AI care a descoperit <span id="personaWho">psihologii</span>. Vin din <span class="mk mk-dark">aceeași lume:</span> 23 de ani lângă oameni, apoi AI-ul.</h2>
+        <p style="font-size:18px;line-height:1.55;color:var(--muted-light)">Agențiile știu unelte. Tu știi oameni. Am lucrat destul în ambele lumi ca să pot traduce una pentru cealaltă: 23 de ani pe teren, cu oameni, în România și apoi în Marea Britanie. Din 2022, zilnic în atelierul cu AI. Știu ce nu se automatizează. De aceea construiesc doar ce nu atinge relația, în limbajul și după regulile profesiei tale. Eu am grijă de prag.</p>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:12px">
+          <svg class="map" viewBox="0 0 680 400" aria-labelledby="mapTitle" role="img">
+            <title id="mapTitle">Harta: în cameră, doi oameni stau de vorbă, relația rămâne la tine; între cameră și sistem e ușa Room for People; dincolo de ea construim împreună drumul până la tine, primul contact, administrarea și vocea</title>
+            <defs>
+              <filter id="hand" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.8" xChannelSelector="R" yChannelSelector="G"/></filter>
+            </defs>
+            <text class="lab" x="20" y="34">Camera · ce rămâne la tine</text>
+            <text class="lab" x="300" y="34" text-anchor="middle">Pragul</text>
+            <text class="lab" x="410" y="34">Sistemul · ce construim împreună</text>
+            <g filter="url(#hand)" class="ink">
+              <!-- two people, seated, facing each other: the one who listens and the one who speaks -->
+              <g class="person">
+                <circle cx="78" cy="150" r="13"/>
+                <path d="M78 163 C 70 180, 68 200, 70 222"/>
+                <path d="M70 222 H104 V252"/>
+                <path d="M76 182 C 88 190, 96 196, 102 206"/>
+                <path d="M62 222 V254 M62 232 H70"/>
+              </g>
+              <g class="person">
+                <circle cx="206" cy="150" r="13"/>
+                <path d="M206 163 C 214 180, 216 200, 214 222"/>
+                <path d="M214 222 H180 V252"/>
+                <path d="M208 182 C 196 190, 188 196, 182 206"/>
+                <path d="M222 222 V254 M222 232 H214"/>
+              </g>
+              <path class="floor" d="M40 254 H244"/>
+              <path class="talk" d="M100 146 C 120 128, 164 128, 184 146"/>
+              <!-- the door of Room for People -->
+              <g class="doorway" transform="translate(272,120)">
+                <rect x="0" y="0" width="56" height="70" rx="3"/>
+                <path class="leafp" d="M8 3 L27 10 L27 60 L8 67 Z"/>
+              </g>
+              <!-- the dotted path: room → door → system -->
+              <path class="route" d="M244 196 C 258 196, 262 160, 272 156"/>
+              <path class="route" d="M328 156 C 350 156, 356 110, 392 110"/>
+              <path class="route" d="M328 156 C 350 156, 356 186, 392 186"/>
+              <path class="route" d="M328 156 C 350 156, 356 262, 392 262"/>
+              <path class="route" d="M328 156 C 350 156, 356 338, 392 338"/>
+              <!-- the system: four hand-drawn cards -->
+              <path class="box" d="M392 84 H660 V138 H392 Z"/>
+              <path class="box" d="M392 160 H660 V214 H392 Z"/>
+              <path class="box" d="M392 236 H660 V290 H392 Z"/>
+              <path class="box" d="M392 312 H660 V366 H392 Z"/>
+            </g>
+            <rect x="44" y="286" width="90" height="14" fill="#D6FF55" transform="rotate(-1.4 89 293)"/>
+            <text class="big" x="48" y="298">Relația</text>
+            <text class="small" x="48" y="324">evaluarea · decizia · tăcerea potrivită</text>
+            <text class="small" x="48" y="342">datele oamenilor</text>
+            <text class="small dim" x="48" y="372">Aici nu intră niciun instrument.</text>
+            <text class="small prag-txt" x="300" y="214" text-anchor="middle">Room for People</text>
+            <g class="node"><circle cx="410" cy="108" r="4"/><text x="424" y="113">Drumul până la tine</text><text class="ex" x="424" y="131">site · Google · răspunsurile AI</text></g>
+            <g class="node"><circle cx="410" cy="184" r="4"/><text x="424" y="189">Primul contact</text><text class="ex" x="424" y="207">primele 10 minute după mesaj</text></g>
+            <g class="node"><circle cx="410" cy="260" r="4"/><text x="424" y="265">Administrarea</text><text class="ex" x="424" y="283">programări · facturi · materiale</text></g>
+            <g class="node"><circle cx="410" cy="336" r="4"/><text x="424" y="341">Vocea ta în lume</text><text class="ex" x="424" y="359">articole · postări · newsletter</text></g>
+            <text class="small dim" x="392" y="390">Tu aprobi. Sistemul duce.</text>
+          </svg>
+          <figcaption class="note" style="color:var(--muted-light)">Harta pe care o desenez la fiecare Radiografie: doi oameni într-o cameră, o ușă, și ce se construiește dincolo de ea.</figcaption>
+        </figure>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="arch" style="position:relative;aspect-ratio:4/5;max-width:340px;border:1px solid rgba(242,238,232,0.3);background:var(--ink)">
+          <img src="img/ionut.webp" width="1120" height="1400" loading="lazy" alt="Ionuț Neacșu, portret" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
+        </div>
+        <p style="font-family:var(--display);font-weight:700;font-size:20px">Ionuț Neacșu</p>
+        <p class="note" style="color:var(--muted-light)">Asistent social de 23 de ani: 12 în România, din 2015 în Marea Britanie, în protecția copilului. Absolvent de psihologie în Marea Britanie, 2025. Social Worker of the Year 2014, gala CNASR. Finalist la National Children &amp; Young People Awards 2026, categoria Children and Families Social Worker.</p>
+        <p class="note" style="color:var(--muted-light)">În România a condus Asociația Sprijin pentru Viață, a deschis primul centru de zi pentru copii romi din Argeș și un adăpost pentru oamenii străzii. În Marea Britanie a fondat FamiliaInUK, primul portal de sprijin pentru familiile românești care trec prin sistemul britanic de protecție a copilului. Nu vine din tehnologie spre voi. Vine dintre voi spre tehnologie.</p>
+        <p class="note" style="color:var(--dim);border-top:1px solid rgba(242,238,232,0.3);padding-top:12px">Ce urmează, 2027: Threshold Repair Method, o metodă în patru camere a felului în care oamenii trec prin schimbare. Întâi facem loc în cabinetul tău.</p>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(242,238,232,0.3);padding-top:32px;display:flex;flex-direction:column;gap:20px">
+      <span class="mono" style="color:var(--signal)">De ce acum · trei fapte, trei surse</span>
+      <div class="g3" style="gap:16px">
+        <div class="card" style="border:1px solid rgba(242,238,232,0.3);padding:22px;display:flex;flex-direction:column;gap:8px;min-width:0"><span style="font-family:var(--display);font-weight:800;font-size:40px;line-height:1">5,2%</span><p style="font-family:var(--display);font-weight:700;font-size:16px">Startul încă se poate lua.</p><p style="font-size:14px;color:var(--muted-light)">Atât dintre firmele din România cu cel puțin 10 angajați foloseau AI în 2025. Cea mai mică pondere din UE, unde media e 20%. Cabinetele mici nu sunt măsurate separat.</p><a class="mono" href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Use_of_artificial_intelligence_in_enterprises" target="_blank" rel="noopener" style="color:var(--dim)">Eurostat, decembrie 2025 →</a></div>
+        <div class="card" style="border:1px solid rgba(242,238,232,0.3);padding:22px;display:flex;flex-direction:column;gap:8px;min-width:0"><span style="font-family:var(--display);font-weight:800;font-size:40px;line-height:1">Art. 119</span><p style="font-family:var(--display);font-weight:700;font-size:16px">Agenția scrie, tu răspunzi.</p><p style="font-size:14px;color:var(--muted-light)">Psihologul care angajează pe cineva să îi creeze sau să îi difuzeze mesaje promoționale își păstrează responsabilitatea profesională pentru ele.</p><a class="mono" href="https://www.copsi.ro/images/Codul_Deontologic_HOT%C3%84--R%C3%83--RE_CN_nr._1_din_24_noiembrie_2018.pdf" target="_blank" rel="noopener" style="color:var(--dim)">Codul deontologic CPR, art. 119 a) →</a></div>
+        <div class="card" style="border:1px solid rgba(242,238,232,0.3);padding:22px;display:flex;flex-direction:column;gap:8px;min-width:0"><span style="font-family:var(--display);font-weight:800;font-size:40px;line-height:1">Art. 4</span><p style="font-family:var(--display);font-weight:700;font-size:16px">Alfabetizarea AI devine normă.</p><p style="font-size:14px;color:var(--muted-light)">Cine folosește AI în activitate ia măsuri de alfabetizare AI pentru cei care lucrează cu el. Se aplică din 2 februarie 2025.</p><a class="mono" href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener" style="color:var(--dim)">AI Act, Regulamentul UE 2024/1689, art. 4 →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05 SCORUL ===== -->
+<section id="scor" style="padding-block:104px">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:40px">
+    <div class="sec-head"><span class="lead"><span class="wp">05</span><span class="mono">Harta cabinetului · 8 întrebări, 4 direcții</span></span><span class="mono">Gratuit · rezultatul se vede pe loc · zero date despre clienți</span></div>
+    <div class="split split-5-7" style="align-items:end">
+      <h2 class="h2">Patru direcții. <span class="mk">O hartă</span> a cabinetului tău.</h2>
+      <p style="color:var(--muted)">Nu e un test de cunoștințe și nu există răspuns greșit. Opt întrebări, două pe fiecare direcție, despre cum arată azi drumul unui om până la tine și restul zilei tale. Harta se umple pe măsură ce răspunzi și îți spune unde ești, pe fiecare direcție.</p>
+    </div>
+    <div class="split split-7-5" style="align-items:stretch;gap:32px">
+      <div id="axes" style="min-width:0;align-content:space-between"><div class="ax"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="lead"><span class="wp" style="width:24px;height:24px;font-size:10px;background:var(--mist);border-color:var(--mist)">1</span><span class="mono" style="color:var(--muted);font-size:10px">Prezență · 1/2</span></span><span class="mono" style="color:var(--muted);font-size:10px">– / 13</span></div><h3>Un străin deschide site-ul tău. În 30 de secunde știe cui te adresezi și care e pasul următor?</h3><div class="g3" role="radiogroup" aria-label="Direcția 1 · Prezență" style="gap:8px"><button type="button" class="opt" role="radio" aria-checked="false" data-ax="0" data-opt="0"><span class="dot"></span>Nu am site, doar Facebook</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="0" data-opt="1"><span class="dot"></span>Am site, dar e vag și vechi</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="0" data-opt="2"><span class="dot"></span>Da, și apar și în căutările cu AI</button></div></div><div class="ax"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="lead"><span class="wp" style="width:24px;height:24px;font-size:10px;background:var(--mist);border-color:var(--mist)">2</span><span class="mono" style="color:var(--muted);font-size:10px">Prezență · 2/2</span></span><span class="mono" style="color:var(--muted);font-size:10px">– / 13</span></div><h3>Dacă cineva caută pe Google „psiholog în orașul tău” sau întreabă un asistent AI, ce găsește despre tine?</h3><div class="g3" role="radiogroup" aria-label="Direcția 1 · Prezență" style="gap:8px"><button type="button" class="opt" role="radio" aria-checked="false" data-ax="1" data-opt="0"><span class="dot"></span>Nimic, sau un profil vechi</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="1" data-opt="1"><span class="dot"></span>Profilul Google, fără site la zi</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="1" data-opt="2"><span class="dot"></span>Site, profil și recenzii, toate la zi</button></div></div><div class="ax"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="lead"><span class="wp" style="width:24px;height:24px;font-size:10px;background:var(--mist);border-color:var(--mist)">3</span><span class="mono" style="color:var(--muted);font-size:10px">Primul contact · 1/2</span></span><span class="mono" style="color:var(--muted);font-size:10px">– / 13</span></div><h3>Ce primește omul în primele 10 minute după ce îți scrie?</h3><div class="g3" role="radiogroup" aria-label="Direcția 2 · Primul contact" style="gap:8px"><button type="button" class="opt" role="radio" aria-checked="false" data-ax="2" data-opt="0"><span class="dot"></span>Nimic, răspund eu când pot</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="2" data-opt="1"><span class="dot"></span>Un răspuns automat generic</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="2" data-opt="2"><span class="dot"></span>O confirmare în tonul meu, cu pașii următori</button></div></div><div class="ax"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="lead"><span class="wp" style="width:24px;height:24px;font-size:10px;background:var(--mist);border-color:var(--mist)">4</span><span class="mono" style="color:var(--muted);font-size:10px">Primul contact · 2/2</span></span><span class="mono" style="color:var(--muted);font-size:10px">– / 13</span></div><h3>Când cineva întreabă „cât costă și cum începem?”, de unde vine răspunsul?</h3><div class="g3" role="radiogroup" aria-label="Direcția 2 · Primul contact" style="gap:8px"><button type="button" class="opt" role="radio" aria-checked="false" data-ax="3" data-opt="0"><span class="dot"></span>Îl scriu de fiecare dată de la zero</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="3" data-opt="1"><span class="dot"></span>Am un text pe care îl copiez</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="3" data-opt="2"><span class="dot"></span>O pagină sau un mesaj automat răspunde pentru mine</button></div></div><div class="ax"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="lead"><span class="wp" style="width:24px;height:24px;font-size:10px;background:var(--mist);border-color:var(--mist)">5</span><span class="mono" style="color:var(--muted);font-size:10px">Administrare · 1/2</span></span><span class="mono" style="color:var(--muted);font-size:10px">– / 13</span></div><h3>Câte ore pe săptămână pleacă pe reprogramări, facturi și materiale?</h3><div class="g3" role="radiogroup" aria-label="Direcția 3 · Administrare" style="gap:8px"><button type="button" class="opt" role="radio" aria-checked="false" data-ax="4" data-opt="0"><span class="dot"></span>Peste 6 ore</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="4" data-opt="1"><span class="dot"></span>Între 3 și 6 ore</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="4" data-opt="2"><span class="dot"></span>Sub 3, mare parte automat</button></div></div><div class="ax"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="lead"><span class="wp" style="width:24px;height:24px;font-size:10px;background:var(--mist);border-color:var(--mist)">6</span><span class="mono" style="color:var(--muted);font-size:10px">Administrare · 2/2</span></span><span class="mono" style="color:var(--muted);font-size:10px">– / 13</span></div><h3>O reprogramare: cum se întâmplă, de obicei?</h3><div class="g3" role="radiogroup" aria-label="Direcția 3 · Administrare" style="gap:8px"><button type="button" class="opt" role="radio" aria-checked="false" data-ax="5" data-opt="0"><span class="dot"></span>Mesaje dus-întors, le scriu eu</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="5" data-opt="1"><span class="dot"></span>Calendar online, dar tot eu confirm</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="5" data-opt="2"><span class="dot"></span>Omul își alege intervalul, confirmarea pleacă singură</button></div></div><div class="ax"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="lead"><span class="wp" style="width:24px;height:24px;font-size:10px;background:var(--mist);border-color:var(--mist)">7</span><span class="mono" style="color:var(--muted);font-size:10px">Pregătire pentru AI · 1/2</span></span><span class="mono" style="color:var(--muted);font-size:10px">– / 13</span></div><h3>Cum folosești AI în cabinet, azi?</h3><div class="g3" role="radiogroup" aria-label="Direcția 4 · Pregătire pentru AI" style="gap:8px"><button type="button" class="opt" role="radio" aria-checked="false" data-ax="6" data-opt="0"><span class="dot"></span>Deloc, sau mi-e teamă</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="6" data-opt="1"><span class="dot"></span>Ocazional, fără reguli</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="6" data-opt="2"><span class="dot"></span>Zilnic, cu regula: nimic despre clienți</button></div></div><div class="ax"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="lead"><span class="wp" style="width:24px;height:24px;font-size:10px;background:var(--mist);border-color:var(--mist)">8</span><span class="mono" style="color:var(--muted);font-size:10px">Pregătire pentru AI · 2/2</span></span><span class="mono" style="color:var(--muted);font-size:10px">– / 13</span></div><h3>Ai o regulă scrisă despre ce intră și ce nu intră într-un instrument AI?</h3><div class="g3" role="radiogroup" aria-label="Direcția 4 · Pregătire pentru AI" style="gap:8px"><button type="button" class="opt" role="radio" aria-checked="false" data-ax="7" data-opt="0"><span class="dot"></span>Nu m-am gândit la asta</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="7" data-opt="1"><span class="dot"></span>O am în cap, nu pe hârtie</button><button type="button" class="opt" role="radio" aria-checked="false" data-ax="7" data-opt="2"><span class="dot"></span>Da, scrisă, și o respect</button></div></div></div>
+      <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+        <aside aria-label="Rezultatul demonstrației" aria-live="polite" class="card" style="background:var(--plum);color:var(--paper);padding:28px;display:flex;flex-direction:column;gap:20px">
+          <svg id="compass" class="compass" viewBox="0 0 220 220" aria-hidden="true">
+            <circle class="grid" cx="110" cy="110" r="30"/><circle class="grid" cx="110" cy="110" r="60"/><circle class="grid" cx="110" cy="110" r="90"/>
+            <line class="spoke" x1="110" y1="20" x2="110" y2="200"/><line class="spoke" x1="20" y1="110" x2="200" y2="110"/>
+            <polygon id="shape" class="shape" points="110,110 110,110 110,110 110,110"/>
+            <circle id="p0" class="pt" cx="110" cy="110" r="4"/><circle id="p1" class="pt" cx="110" cy="110" r="4"/><circle id="p2" class="pt" cx="110" cy="110" r="4"/><circle id="p3" class="pt" cx="110" cy="110" r="4"/>
+            <text x="110" y="12" text-anchor="middle">Prezență</text><text x="212" y="114" text-anchor="end">Contact</text><text x="110" y="216" text-anchor="middle">Administrare</text><text x="8" y="114">AI</text>
+          </svg>
+          <div id="where" style="display:flex;flex-direction:column;gap:10px"></div>
+          <span class="mono" style="color:var(--muted-light)">Harta ta · exemplu · <span id="personaName2">psihologi și psihoterapeuți</span></span>
+          <div style="display:flex;align-items:flex-end;gap:14px">
+            <span id="score" style="font-family:var(--display);font-weight:800;font-size:72px;line-height:0.85;letter-spacing:-0.05em;font-variant-numeric:tabular-nums">–</span>
+            <span class="mono" style="color:var(--muted-light);padding-bottom:10px">/ 100</span>
+          </div>
+          <div style="height:8px;background:#3A3540;border-radius:999px;overflow:hidden"><div id="scoreBar" style="height:100%;width:0;transition:width .3s;border-radius:999px"></div></div>
+          <p id="verdict" style="font-family:var(--display);font-weight:700;font-size:22px;line-height:1.2">Opt întrebări, patru direcții.</p>
+          <p id="verdictNote" style="font-size:14px;color:var(--muted-light)">Răspunde în stânga și harta se umple aici. Nu se salvează nimic.</p>
+          <div class="rule" style="background:#3A3540"></div>
+          <a href="#final" class="btn btn-signal" style="width:fit-content">Primesc harta pe email · cu planul de 3 pași</a>
+          <p class="note" style="color:var(--muted-light)">Harta de aici nu se salvează; pleci cu ea și cu primii pași de mai sus. Pe email primești aceeași hartă, scrisă, cu planul de trei pași pentru direcția ta cea mai slabă.</p>
+        </aside>
+        <aside aria-label="Oglinda AI" style="margin-top:auto;border:1px solid var(--ink);background:var(--white);padding:22px;display:flex;flex-direction:column;gap:12px">
+          <span class="mono">Oglinda AI · cum te descrie un asistent</span>
+          <p id="mirrorQ" style="font-family:var(--mono);font-size:13px;padding:10px 12px;background:var(--paper);border:1px solid var(--mist)">› Recomandă-mi un psihoterapeut pentru anxietate în Cluj.</p>
+          <p id="mirrorA" style="font-size:14px;color:var(--muted);line-height:1.5">„Nu am găsit informații clare despre Cabinetul A.: site-ul nu menționează specializarea și nici orașul în text.” Așa arată invizibilitatea. Nu e o problemă de calitate, e o problemă de claritate.</p>
+          <p class="note" style="color:var(--muted)">Cabinet fictiv. Testul real îl facem pe al tău și îl repetăm după 30 de zile. Nu promit poziții în răspunsurile AI; fac informația clară.</p>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 06 RADIOGRAFIA ===== -->
+<section id="radiografia" style="background:var(--plum);color:var(--paper);padding-block:104px">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:48px">
+    <div class="sec-head" style="color:var(--muted-light)"><span class="lead"><span class="wp">06</span><span class="mono">Radiografia AI a cabinetului</span></span><span class="mono">Un diagnostic plătit, nu o discuție de vânzare</span></div>
+    <div class="split split-7-5" style="align-items:start">
+      <div style="display:flex;flex-direction:column;gap:28px;min-width:0">
+        <h2 style="font-size:clamp(36px,4.5vw,56px);line-height:0.98;font-weight:800">Ziua ta, radiografiată într-o săptămână.</h2>
+        <p style="font-size:18px;color:var(--muted-light)">Afli unde pierzi timp și clienți, ce poate prelua AI în siguranță și pleci din sesiune cu ceva care deja funcționează. Fiecare radiografie o citesc eu, nu un chestionar.</p>
+        <div class="g2" style="gap:12px">
+          <div class="card" style="border:1px solid rgba(242,238,232,0.3);padding:20px;display:flex;flex-direction:column;gap:6px"><span class="mono" style="color:var(--signal)">Zilele 1–5 · înainte</span><p style="font-family:var(--display);font-weight:700;font-size:17px">Jurnalul de 5 zile</p><p style="font-size:14px;color:var(--muted-light)">Două minute seara: ce faci în jurul ședințelor și cât durează. Fără date despre clienți.</p></div>
+          <div class="card" style="border:1px solid rgba(242,238,232,0.3);padding:20px;display:flex;flex-direction:column;gap:6px"><span class="mono" style="color:var(--signal)">Ziua 6 · 90 de minute</span><p style="font-family:var(--display);font-weight:700;font-size:17px">Sesiunea, live</p><p style="font-size:14px;color:var(--muted-light)">Harta zilei tale: unde se pierd orele, unde se pierd oamenii care îți scriu. Un câștig rapid implementat pe loc, de obicei răspunsul la primul contact.</p></div>
+          <div class="card" style="border:1px solid rgba(242,238,232,0.3);padding:20px;display:flex;flex-direction:column;gap:6px"><span class="mono" style="color:var(--signal)">În 3 zile lucrătoare · raportul</span><p style="font-family:var(--display);font-weight:700;font-size:17px">Planul de 30 de zile</p><p style="font-size:14px;color:var(--muted-light)">Primele trei automatizări după ore și efort. Filtrul deontologic. Oglinda AI. Protocolul semafor.</p></div>
+          <div class="card" style="border:1px solid rgba(242,238,232,0.3);padding:20px;display:flex;flex-direction:column;gap:6px"><span class="mono" style="color:var(--signal)">Garanția</span><p style="font-family:var(--display);font-weight:700;font-size:17px">Trei recomandări sau banii înapoi</p><p style="font-size:14px;color:var(--muted-light)">Dacă raportul nu conține cel puțin trei recomandări concrete, pe care le poți aplica singur sau cu mine, îți returnez banii. Condițiile exacte, în contract.</p></div>
+        </div>
+        <div class="card" style="border:1px solid rgba(242,238,232,0.3);padding:24px;display:flex;flex-direction:column;gap:14px">
+          <span class="mono" style="color:var(--signal)">Inclus · Filtrul deontologic · exemplu fictiv</span>
+          <p style="font-size:15px;line-height:1.7">„<span class="mark-bad">Scapă definitiv de anxietate în doar 5 ședințe.</span> Folosesc <span class="mark-bad">singura metodă care funcționează cu adevărat</span>. <span class="mark-bad">Nu mai amâna: fiecare zi de așteptare îți agravează problema.</span>”</p>
+          <p style="font-size:15px;line-height:1.7">„<span class="mark-ok" style="color:var(--ink)">Lucrăm împreună, în ritmul tău, cu obiective clare de la început.</span> <span class="mark-ok" style="color:var(--ink)">Lucrez în principal cu [abordarea ta], pe care ți-o explic la prima întâlnire.</span> <span class="mark-ok" style="color:var(--ink)">Când simți că e momentul, îmi poți scrie.</span>”</p>
+          <p class="note" style="color:var(--muted-light)">Roșu: așteptări nejustificate, metodă „exclusivă”, specularea fricii. Pentru psihologi, criteriile vin din art. 118 al Codului deontologic CPR; pentru asistenți sociali și coachi, din codurile profesiilor lor. Instrument de verificare a formulărilor, nu consultanță juridică.</p>
+        </div>
+      </div>
+      <aside class="card sticky-aside" style="background:var(--paper);color:var(--ink);padding:28px;display:flex;flex-direction:column;gap:18px">
+        <span class="mono" style="color:var(--muted)">Preț de fondator · primele 10 cabinete</span>
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--display);font-weight:800;font-size:72px;line-height:0.9;letter-spacing:-0.04em">690</span><span style="font-family:var(--display);font-weight:700;font-size:22px">lei</span></div>
+        <p style="font-size:14px;color:var(--muted)">Apoi 990 lei. Se scade integral din implementare, dacă începem în 30 de zile. Prețuri de lansare; se pot schimba după primele 10 cabinete.</p>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;font-size:15px">
+          <li style="padding:10px 0;border-top:1px solid var(--mist)">Jurnal ghidat de 5 zile</li>
+          <li style="padding:10px 0;border-top:1px solid var(--mist)">Sesiune online de 90 de minute</li>
+          <li style="padding:10px 0;border-top:1px solid var(--mist)">Un câștig rapid implementat live</li>
+          <li style="padding:10px 0;border-top:1px solid var(--mist)">Raport scris în 3 zile lucrătoare și plan de 30 de zile</li>
+          <li style="padding:10px 0;border-top:1px solid var(--mist);border-bottom:1px solid var(--mist)">Filtrul deontologic, Oglinda AI, Protocolul semafor</li>
+        </ul>
+        <a href="#final" class="btn btn-ink" style="width:100%;justify-content:center;min-height:58px">Cer Radiografia</a>
+        <p class="note" style="color:var(--muted)">Începi oricum cu scorul gratuit. Radiografia o ceri doar dacă scorul îți spune ceva.</p>
+      </aside>
+    </div>
+
+    <div style="border-top:1px solid rgba(242,238,232,0.3);padding-top:40px;display:flex;flex-direction:column;gap:24px">
+      <div class="split split-5-7" style="align-items:end">
+        <h3 style="font-size:30px;font-weight:800">După Radiografie: un singur drum la început.</h3>
+        <p style="color:var(--muted-light)">Raportul îți spune care. Preț fix, livrabile în scris, tu aprobi fiecare mesaj și pagină. La predare primești cheile: conturi, accese, explicații. Știi cum se pornește, cum se oprește, pe cine suni. Continuitate doar dacă apare o nevoie recurentă reală.</p>
+      </div>
+      <div class="g3 card" style="gap:0;border:1px solid rgba(242,238,232,0.3);overflow:hidden">
+        <article class="path" style="padding:26px;border-right:1px solid rgba(242,238,232,0.3);display:flex;flex-direction:column;gap:10px;min-width:0"><span class="mono" style="color:var(--muted-light)">Drumul 1</span><h3 style="font-size:28px;font-weight:800">Prezență</h3><p style="font-size:14px;color:var(--muted-light)">Site și identitate pe care le înțelege și omul, și căutarea cu AI.</p><p style="margin-top:auto;font-family:var(--mono);font-size:14px">de la 2.900 lei</p></article>
+        <article class="path" style="padding:26px;border-right:1px solid rgba(242,238,232,0.3);display:flex;flex-direction:column;gap:10px;min-width:0;background:var(--plum)"><span class="mono" style="color:var(--signal)">Drumul 2</span><h3 style="font-size:28px;font-weight:800">Sistem</h3><p style="font-size:14px;color:var(--muted-light)">Primul contact, programările și materialele, într-un flux pe care îl pornești și îl oprești tu.</p><p style="margin-top:auto;font-family:var(--mono);font-size:14px;color:var(--signal)">de la 3.400 lei</p></article>
+        <article class="path" style="padding:26px;display:flex;flex-direction:column;gap:10px;min-width:0"><span class="mono" style="color:var(--muted-light)">Drumul 3</span><h3 style="font-size:28px;font-weight:800">Voce</h3><p style="font-size:14px;color:var(--muted-light)">Din notițe, prezentări și ateliere: articole, postări, un podcast. AI la structură, tu la sens.</p><p style="margin-top:auto;font-family:var(--mono);font-size:14px">de la 2.400 lei</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 07 JURNAL ===== -->
+<section id="jurnal" style="padding-block:104px">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:40px">
+    <div class="sec-head"><span class="lead"><span class="wp">07</span><span class="mono">Jurnal</span></span><span class="mono">Idei pe care le poți folosi mâine dimineață</span></div>
+    <div class="split split-5-7" style="align-items:end">
+      <h2 class="h2" style="font-size:46px">Educație, nu promovare.</h2>
+      <p style="color:var(--muted)">Articole scrise pentru cabinetul tău: un detaliu, un exemplu, un pas pe care îl poți face singur. Fără jargon, fără „soluții”, fără date despre nimeni. Primele trei sunt în lucru; le primești pe email dacă îți iei testul complet.</p>
+    </div>
+    <div class="g3">
+      <div class="card-link">
+        <div class="card" style="aspect-ratio:3/2;max-width:100%;overflow:hidden;border:1px solid var(--ink);background:var(--mist)"><img src="img/blog1.webp" width="1200" height="800" loading="lazy" alt="Un telefon pe un birou, lângă un caiet și o cană de cafea" style="width:100%;height:100%;object-fit:cover"></div>
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span class="mono" style="color:var(--muted)">Primul contact · 4 min</span><span class="mono" style="color:var(--alert)">În lucru</span></div>
+        <h3 style="font-size:24px;line-height:1.15;font-weight:700">Omul care îți scrie la 22:00 și ce primește până la 9</h3>
+        <p style="font-size:15px;color:var(--muted)">Trei cabinete fictive, trei răspunsuri posibile. Ce se întâmplă în primele 10 minute și ce ai putea face diferit de mâine.</p>
+      </div>
+      <div class="card-link">
+        <div class="card" style="aspect-ratio:3/2;max-width:100%;overflow:hidden;border:1px solid var(--ink);background:var(--mist)"><img src="img/blog2.webp" width="1200" height="800" loading="lazy" alt="Un caiet deschis și un laptop, seara, la lumina unei lămpi de birou" style="width:100%;height:100%;object-fit:cover"></div>
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span class="mono" style="color:var(--muted)">AI, pas cu pas · 6 min</span><span class="mono" style="color:var(--alert)">În lucru</span></div>
+        <h3 style="font-size:24px;line-height:1.15;font-weight:700">Cum folosești AI pentru conținut fără să-ți pierzi vocea</h3>
+        <p style="font-size:15px;color:var(--muted)">Instrucțiunea exactă, textul inițial, ciorna AI și corecturile mele, una lângă alta. Plus lista de verificare pe care o folosesc.</p>
+      </div>
+      <div class="card-link">
+        <div class="card" style="aspect-ratio:3/2;max-width:100%;overflow:hidden;border:1px solid var(--ink);background:var(--mist)"><img src="img/blog3.webp" width="1200" height="800" loading="lazy" alt="Un microfon de podcast pe un braț, căști și o foaie cu trei puncte, pe o masă de lemn" style="width:100%;height:100%;object-fit:cover"></div>
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span class="mono" style="color:var(--muted)">Voce · 5 min</span><span class="mono" style="color:var(--alert)">În lucru</span></div>
+        <h3 style="font-size:24px;line-height:1.15;font-weight:700">Primul tău video poate începe cu o întrebare pe care o primești des</h3>
+        <p style="font-size:15px;color:var(--muted)">Trei repere, un microfon de 200 de lei și o explicație pe care o dai oricum de zece ori pe lună.</p>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card" style="border:1px solid var(--ink);padding:26px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;background:var(--white)">
+        <div style="display:flex;flex-direction:column;gap:6px;min-width:0"><span class="mono" style="color:var(--muted)">Gratuit · fișă de lucru</span><h3 style="font-size:22px;font-weight:700">Ce înțelege un om în 30 de secunde pe site-ul tău</h3><p style="font-size:14px;color:var(--muted)">O pagină, douăsprezece verificări, un creion.</p></div>
+        <a href="#final" class="btn btn-ink" style="min-height:46px;padding:0 18px;font-size:14px">Cer fișa</a>
+      </div>
+      <div class="card" style="border:1px solid var(--ink);padding:26px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;background:var(--white)">
+        <div style="display:flex;flex-direction:column;gap:6px;min-width:0"><span class="mono" style="color:var(--muted)">Video · 6–8 minute</span><h3 style="font-size:22px;font-weight:700">Demonstrații, nu discursuri</h3><p style="font-size:14px;color:var(--muted)">O întrebare, o pagină fictivă, o schimbare, pe ecran. Canalul se deschide odată cu site-ul.</p></div>
+        <span class="mono" style="color:var(--alert);padding:12px 0">În pregătire</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 08 PRIMUL PAS ===== -->
+<section id="final" style="background:var(--plum);color:var(--paper);padding-block:96px">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:32px">
+    <div class="sec-head"><span class="lead"><span class="wp">08</span><span class="mono">Primul pas</span></span><span class="mono">Harta pe email · planul de trei pași · 0 lei</span></div>
+    <div class="split split-5-7" style="align-items:start">
+      <div style="display:flex;flex-direction:column;gap:18px;min-width:0">
+        <h2 style="font-size:clamp(40px,5vw,64px);line-height:0.95;font-weight:800">Cât spațiu ai, de fapt, pentru oameni?</h2>
+        <p style="font-size:17px;max-width:480px">Primești pe email harta cabinetului tău pe cele patru direcții și un plan de trei pași pe care îi poți face singur. Zero întrebări despre clienți. Îți scriu eu, nu un sistem.</p>
+      </div>
+      <form id="leadForm" class="card" style="background:var(--paper);color:var(--ink);border:none;padding:32px;display:flex;flex-direction:column;gap:18px;min-width:0" novalidate>
+        <div class="g2" style="gap:14px">
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required placeholder="numele@cabinet.ro"></div>
+          <div class="field"><label for="f-prof">Lucrez ca</label><select id="f-prof" name="profesie"><option value="psi">Psiholog / psihoterapeut</option><option value="as">Asistent social independent</option><option value="co">Coach</option></select></div>
+        </div>
+        <label class="check"><input type="checkbox" name="radiografia"><span>Vreau și Radiografia AI a cabinetului · 690 lei, primele 10 cabinete. Îți scriu să stabilim săptămâna.</span></label>
+        <label class="check"><input type="checkbox" name="fisa"><span>Vreau și fișa gratuită „Ce înțelege un om în 30 de secunde pe site-ul tău”.</span></label>
+        <button type="submit" class="btn btn-signal" style="min-height:58px;justify-content:center">Primesc harta și planul</button>
+        <p id="formMsg" class="note" style="color:var(--muted)">Rețin doar emailul și profesia, ca să îți trimit harta. Le ștergi cu un reply „șterge”. <a href="#confidentialitate" style="color:inherit">Confidențialitate</a></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<a href="#top" class="to-top" aria-label="Înapoi sus">SUS</a>
+
+<footer style="background:var(--night);color:var(--paper);padding-block:72px 32px">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:40px">
+    <div class="g3" style="grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:48px" id="footgrid">
+      <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+        <div class="logo">
+          <svg class="door-mark lockup lockup-ftr" xmlns="http://www.w3.org/2000/svg" viewBox="0.000 -85.212 908.140 148.925" role="img" aria-label="Room for People · oameni în față, sistem în spate"><g transform="translate(0.000 -85.212) scale(2.48208)"><rect x="3" y="3" width="42" height="54" rx="3" fill="none" stroke="#F2EEE8" stroke-width="3"/><path class="leaf" d="M9 5 L22 11 L22 49 L9 55 Z" fill="#D6FF55" stroke="#F2EEE8" stroke-width="1.5" stroke-linejoin="round"/></g><g transform="translate(159.140 0.000)"><path d="M6.2 0V-24.5V-52.8H19.4L19.7 -34.9H21.7Q22.4 -41.9 24.35 -46.05Q26.3 -50.2 29.95 -52.1Q33.6 -54 39 -54Q39.8 -54 40.8 -53.95Q41.8 -53.9 43.1 -53.7L42.5 -36.5Q40.9 -37.3 39.05 -37.55Q37.2 -37.8 35.8 -37.8Q31.9 -37.8 29.05 -36.3Q26.2 -34.8 24.55 -31.7Q22.9 -28.6 22.4 -23.9V0ZM72.1 1.4Q64.1 1.4 57.95 -1.7Q51.8 -4.8 48.3 -11Q44.8 -17.2 44.8 -26.5Q44.8 -35.8 48.3 -41.95Q51.8 -48.1 58 -51.15Q64.2 -54.2 72.2 -54.2Q80.2 -54.2 86.4 -51.1Q92.6 -48 96.1 -41.85Q99.6 -35.7 99.6 -26.4Q99.6 -16.9 96 -10.7Q92.4 -4.5 86.15 -1.55Q79.9 1.4 72.1 1.4ZM72.6 -10.3Q76.2 -10.3 78.6 -11.95Q81 -13.6 82.2 -17Q83.4 -20.4 83.4 -25.4Q83.4 -30.7 82.1 -34.35Q80.8 -38 78.25 -39.95Q75.7 -41.9 71.7 -41.9Q68.3 -41.9 65.85 -40.25Q63.4 -38.6 62.2 -35.2Q61 -31.8 61 -26.7Q61 -18.5 64.05 -14.4Q67.1 -10.3 72.6 -10.3ZM130.3 1.4Q122.3 1.4 116.15 -1.7Q110 -4.8 106.5 -11Q103 -17.2 103 -26.5Q103 -35.8 106.5 -41.95Q110 -48.1 116.2 -51.15Q122.4 -54.2 130.4 -54.2Q138.4 -54.2 144.6 -51.1Q150.8 -48 154.3 -41.85Q157.8 -35.7 157.8 -26.4Q157.8 -16.9 154.2 -10.7Q150.6 -4.5 144.35 -1.55Q138.1 1.4 130.3 1.4ZM130.8 -10.3Q134.4 -10.3 136.8 -11.95Q139.2 -13.6 140.4 -17Q141.6 -20.4 141.6 -25.4Q141.6 -30.7 140.3 -34.35Q139 -38 136.45 -39.95Q133.9 -41.9 129.9 -41.9Q126.5 -41.9 124.05 -40.25Q121.6 -38.6 120.4 -35.2Q119.2 -31.8 119.2 -26.7Q119.2 -18.5 122.25 -14.4Q125.3 -10.3 130.8 -10.3ZM164.2 0V-34.1V-52.8H176.9L177.1 -37.3H179.1Q180.5 -43 182.8 -46.75Q185.1 -50.5 188.4 -52.35Q191.7 -54.2 196.1 -54.2Q200.7 -54.2 203.75 -52.25Q206.8 -50.3 208.6 -46.55Q210.4 -42.8 211 -37.3H212.7Q214.3 -43.2 216.9 -46.95Q219.5 -50.7 223.1 -52.45Q226.7 -54.2 230.9 -54.2Q235.4 -54.2 238.75 -52.45Q242.1 -50.7 244.35 -47.25Q246.6 -43.8 247.7 -38.65Q248.8 -33.5 248.8 -26.7V0H232.6V-24.7Q232.6 -30 231.75 -33.5Q230.9 -37 229.1 -38.75Q227.3 -40.5 224.5 -40.5Q221.3 -40.5 219.05 -38.4Q216.8 -36.3 215.6 -32.55Q214.4 -28.8 214.4 -24.1V0H198.6V-24.4Q198.6 -29.9 197.65 -33.4Q196.7 -36.9 194.85 -38.7Q193 -40.5 190.2 -40.5Q187 -40.5 184.8 -38.4Q182.6 -36.3 181.45 -32.55Q180.3 -28.8 180.3 -24.1V0ZM280.8 0V-32.7H272.7V-44.4L287.1 -43.8V-45.7Q283.3 -46.4 280.85 -48.25Q278.4 -50.1 277.3 -52.6Q276.2 -55.1 276.2 -58Q276.2 -62.4 278.5 -65.55Q280.8 -68.7 285 -70.4Q289.2 -72.1 294.8 -72.1Q299.7 -72.1 303.7 -70.95Q307.7 -69.8 310.1 -68.1L309.2 -53.6Q306.7 -55.3 303.55 -56.4Q300.4 -57.5 297.7 -57.5Q294.9 -57.5 293 -56.05Q291.1 -54.6 291.1 -51.3Q291.1 -48.7 292.25 -47.4Q293.4 -46.1 295.1 -45.65Q296.8 -45.2 298.5 -45.2H310.1V-32.7H296.5V0ZM338.9 1.4Q330.9 1.4 324.75 -1.7Q318.6 -4.8 315.1 -11Q311.6 -17.2 311.6 -26.5Q311.6 -35.8 315.1 -41.95Q318.6 -48.1 324.8 -51.15Q331 -54.2 339 -54.2Q347 -54.2 353.2 -51.1Q359.4 -48 362.9 -41.85Q366.4 -35.7 366.4 -26.4Q366.4 -16.9 362.8 -10.7Q359.2 -4.5 352.95 -1.55Q346.7 1.4 338.9 1.4ZM339.4 -10.3Q343 -10.3 345.4 -11.95Q347.8 -13.6 349 -17Q350.2 -20.4 350.2 -25.4Q350.2 -30.7 348.9 -34.35Q347.6 -38 345.05 -39.95Q342.5 -41.9 338.5 -41.9Q335.1 -41.9 332.65 -40.25Q330.2 -38.6 329 -35.2Q327.8 -31.8 327.8 -26.7Q327.8 -18.5 330.85 -14.4Q333.9 -10.3 339.4 -10.3ZM372.8 0V-24.5V-52.8H386L386.3 -34.9H388.3Q389 -41.9 390.95 -46.05Q392.9 -50.2 396.55 -52.1Q400.2 -54 405.6 -54Q406.4 -54 407.4 -53.95Q408.4 -53.9 409.7 -53.7L409.1 -36.5Q407.5 -37.3 405.65 -37.55Q403.8 -37.8 402.4 -37.8Q398.5 -37.8 395.65 -36.3Q392.8 -34.8 391.15 -31.7Q389.5 -28.6 389 -23.9V0ZM433.7 16.9V-25.8V-52.8H446.9L447.1 -37.8L448.9 -37.6Q449.8 -43.2 452.1 -46.9Q454.4 -50.6 458.05 -52.4Q461.7 -54.2 466.4 -54.2Q473.4 -54.2 478.45 -50.8Q483.5 -47.4 486.2 -41.1Q488.9 -34.8 488.9 -26Q488.9 -18.2 486.55 -12Q484.2 -5.8 479.45 -2.2Q474.7 1.4 467.4 1.4Q462.5 1.4 459.1 -0.35Q455.7 -2.1 453.35 -5.5Q451 -8.9 449.4 -14H447.5Q448.1 -11.3 448.6 -8.5Q449.1 -5.7 449.45 -3.1Q449.8 -0.5 449.8 1.9V16.9ZM461.5 -11.3Q464.8 -11.3 467.15 -13.1Q469.5 -14.9 470.8 -18.2Q472.1 -21.5 472.1 -25.9Q472.1 -30.6 470.75 -33.95Q469.4 -37.3 466.9 -39.15Q464.4 -41 461.1 -41Q458 -41 455.85 -39.65Q453.7 -38.3 452.35 -36.15Q451 -34 450.4 -31.6Q449.8 -29.2 449.8 -27.1V-24.9Q449.8 -23 450.3 -21.1Q450.8 -19.2 451.8 -17.45Q452.8 -15.7 454.2 -14.3Q455.6 -12.9 457.45 -12.1Q459.3 -11.3 461.5 -11.3ZM520.6 1.4Q514 1.4 508.8 -0.35Q503.6 -2.1 499.95 -5.5Q496.3 -8.9 494.4 -13.9Q492.5 -18.9 492.5 -25.4Q492.5 -31.7 494.35 -37Q496.2 -42.3 499.65 -46.15Q503.1 -50 508.15 -52.1Q513.2 -54.2 519.5 -54.2Q525.9 -54.2 530.75 -52.15Q535.6 -50.1 538.75 -46.1Q541.9 -42.1 543.4 -36.35Q544.9 -30.6 544.4 -23.2L503.1 -22.9V-31.3L535.2 -31.6L529.5 -27.7Q530.2 -32.7 528.9 -35.85Q527.6 -39 525.1 -40.45Q522.6 -41.9 519.7 -41.9Q516.2 -41.9 513.55 -40Q510.9 -38.1 509.4 -34.5Q507.9 -30.9 507.9 -25.7Q507.9 -17.5 511.45 -13.8Q515 -10.1 520.5 -10.1Q523.2 -10.1 525 -10.85Q526.8 -11.6 527.95 -12.75Q529.1 -13.9 529.75 -15.3Q530.4 -16.7 530.8 -18L544.8 -15Q544 -11.3 542.25 -8.3Q540.5 -5.3 537.55 -3.1Q534.6 -0.9 530.45 0.25Q526.3 1.4 520.6 1.4ZM575.5 1.4Q567.5 1.4 561.35 -1.7Q555.2 -4.8 551.7 -11Q548.2 -17.2 548.2 -26.5Q548.2 -35.8 551.7 -41.95Q555.2 -48.1 561.4 -51.15Q567.6 -54.2 575.6 -54.2Q583.6 -54.2 589.8 -51.1Q596 -48 599.5 -41.85Q603 -35.7 603 -26.4Q603 -16.9 599.4 -10.7Q595.8 -4.5 589.55 -1.55Q583.3 1.4 575.5 1.4ZM576 -10.3Q579.6 -10.3 582 -11.95Q584.4 -13.6 585.6 -17Q586.8 -20.4 586.8 -25.4Q586.8 -30.7 585.5 -34.35Q584.2 -38 581.65 -39.95Q579.1 -41.9 575.1 -41.9Q571.7 -41.9 569.25 -40.25Q566.8 -38.6 565.6 -35.2Q564.4 -31.8 564.4 -26.7Q564.4 -18.5 567.45 -14.4Q570.5 -10.3 576 -10.3ZM609.4 16.9V-25.8V-52.8H622.6L622.8 -37.8L624.6 -37.6Q625.5 -43.2 627.8 -46.9Q630.1 -50.6 633.75 -52.4Q637.4 -54.2 642.1 -54.2Q649.1 -54.2 654.15 -50.8Q659.2 -47.4 661.9 -41.1Q664.6 -34.8 664.6 -26Q664.6 -18.2 662.25 -12Q659.9 -5.8 655.15 -2.2Q650.4 1.4 643.1 1.4Q638.2 1.4 634.8 -0.35Q631.4 -2.1 629.05 -5.5Q626.7 -8.9 625.1 -14H623.2Q623.8 -11.3 624.3 -8.5Q624.8 -5.7 625.15 -3.1Q625.5 -0.5 625.5 1.9V16.9ZM637.2 -11.3Q640.5 -11.3 642.85 -13.1Q645.2 -14.9 646.5 -18.2Q647.8 -21.5 647.8 -25.9Q647.8 -30.6 646.45 -33.95Q645.1 -37.3 642.6 -39.15Q640.1 -41 636.8 -41Q633.7 -41 631.55 -39.65Q629.4 -38.3 628.05 -36.15Q626.7 -34 626.1 -31.6Q625.5 -29.2 625.5 -27.1V-24.9Q625.5 -23 626 -21.1Q626.5 -19.2 627.5 -17.45Q628.5 -15.7 629.9 -14.3Q631.3 -12.9 633.15 -12.1Q635 -11.3 637.2 -11.3ZM671.2 0V-72H687V0ZM721.6 1.4Q715 1.4 709.8 -0.35Q704.6 -2.1 700.95 -5.5Q697.3 -8.9 695.4 -13.9Q693.5 -18.9 693.5 -25.4Q693.5 -31.7 695.35 -37Q697.2 -42.3 700.65 -46.15Q704.1 -50 709.15 -52.1Q714.2 -54.2 720.5 -54.2Q726.9 -54.2 731.75 -52.15Q736.6 -50.1 739.75 -46.1Q742.9 -42.1 744.4 -36.35Q745.9 -30.6 745.4 -23.2L704.1 -22.9V-31.3L736.2 -31.6L730.5 -27.7Q731.2 -32.7 729.9 -35.85Q728.6 -39 726.1 -40.45Q723.6 -41.9 720.7 -41.9Q717.2 -41.9 714.55 -40Q711.9 -38.1 710.4 -34.5Q708.9 -30.9 708.9 -25.7Q708.9 -17.5 712.45 -13.8Q716 -10.1 721.5 -10.1Q724.2 -10.1 726 -10.85Q727.8 -11.6 728.95 -12.75Q730.1 -13.9 730.75 -15.3Q731.4 -16.7 731.8 -18L745.8 -15Q745 -11.3 743.25 -8.3Q741.5 -5.3 738.55 -3.1Q735.6 -0.9 731.45 0.25Q727.3 1.4 721.6 1.4Z" fill="#F2EEE8"/><path d="M9.06 54.362Q7.067 54.362 5.602 53.622Q4.138 52.883 3.186 51.493Q2.235 50.104 1.782 48.08Q1.329 46.057 1.329 43.46Q1.329 40.892 1.782 38.854Q2.235 36.815 3.186 35.426Q4.138 34.037 5.602 33.297Q7.067 32.557 9.06 32.557Q11.054 32.557 12.519 33.297Q13.983 34.037 14.935 35.426Q15.886 36.815 16.339 38.854Q16.792 40.892 16.792 43.46Q16.792 46.057 16.339 48.08Q15.886 50.104 14.935 51.493Q13.983 52.883 12.519 53.622Q11.054 54.362 9.06 54.362ZM9.06 51.554Q11.326 51.554 12.262 49.847Q13.198 48.141 13.198 45.211V41.678Q13.198 38.778 12.262 37.072Q11.326 35.366 9.06 35.366Q6.795 35.366 5.859 37.072Q4.923 38.778 4.923 41.678V45.242Q4.923 48.141 5.859 49.847Q6.795 51.554 9.06 51.554ZM41.135 54 39.534 48.383H32.829L31.228 54H27.785L33.947 32.919H38.567L44.729 54ZM36.302 36.332H36.061L33.463 45.574H38.9ZM67.803 43.913 67.893 37.57H67.652L63.423 48.413L59.195 37.57H58.954L59.044 43.913V54H56.054V32.919H60.192L63.423 41.285H63.635L66.897 32.919H70.793V54H67.803ZM84.142 54V32.919H97.34V35.758H87.524V41.889H96.977V44.728H87.524V51.161H97.34V54ZM114.132 37.782H113.86V54H110.9V32.919H115.249L121.441 49.138H121.713V32.919H124.672V54H120.323ZM138.323 54V51.433H143.276V35.486H138.323V32.919H151.612V35.486H146.659V51.433H151.612V54Z" fill="#CFC9D6"/><path d="M174.565 54V51.433H179.518V35.486H174.565V32.919H187.854V35.486H182.901V51.433H187.854V54ZM182.871 25.49 186.495 30.02 184.743 31.288 181.179 27.785 177.585 31.288 175.924 30.02 179.549 25.49ZM204.737 37.782H204.465V54H201.505V32.919H205.854L212.046 49.138H212.317V32.919H215.277V54H210.928Z" fill="#CFC9D6"/><path d="M238.17 54V32.919H251.73V35.758H241.553V41.889H250.794V44.728H241.553V54ZM276.707 54 275.106 48.383H268.402L266.801 54H263.358L269.519 32.919H274.14L280.301 54ZM271.875 36.332H271.633L269.036 45.574H274.472ZM297.093 55.782H300.989L298.573 61.822H296.368ZM300.687 35.758V54H297.305V35.758H290.691V32.919H307.301V35.758ZM331.07 54 329.469 48.383H322.765L321.164 54H317.721L323.882 32.919H328.503L334.664 54ZM326.238 36.332H325.996L323.399 45.574H328.835ZM326.177 31.198Q324.909 31.198 324.018 30.73Q323.127 30.262 322.508 29.552Q321.889 28.842 321.511 27.996Q321.134 27.151 320.892 26.426L322.855 25.49L323.489 26.486Q323.852 27.03 324.139 27.468Q324.426 27.906 324.713 28.193Q325 28.48 325.347 28.631Q325.694 28.782 326.177 28.782Q327.114 28.782 327.642 28.193Q328.171 27.604 328.865 26.486L329.5 25.49L331.463 26.426Q331.221 27.151 330.828 27.996Q330.436 28.842 329.832 29.552Q329.228 30.262 328.337 30.73Q327.446 31.198 326.177 31.198Z" fill="#CFC9D6"/><circle cx="360.909" cy="44.940" r="7.550" fill="#D6FF55"/><path d="M395.46 54.362Q392.712 54.362 390.839 53.396Q388.967 52.43 387.759 50.829L389.933 48.745Q391.141 50.195 392.5 50.874Q393.859 51.554 395.581 51.554Q397.574 51.554 398.646 50.648Q399.718 49.742 399.718 48.05Q399.718 46.691 398.933 45.951Q398.148 45.211 396.245 44.879L393.95 44.517Q392.44 44.275 391.413 43.716Q390.386 43.158 389.752 42.387Q389.118 41.617 388.831 40.666Q388.544 39.715 388.544 38.658Q388.544 35.668 390.477 34.112Q392.41 32.557 395.792 32.557Q398.299 32.557 400.066 33.357Q401.832 34.158 402.92 35.607L400.806 37.721Q399.93 36.664 398.737 36.015Q397.544 35.366 395.792 35.366Q393.92 35.366 392.938 36.166Q391.957 36.966 391.957 38.507Q391.957 39.805 392.727 40.545Q393.497 41.285 395.46 41.617L397.695 42.01Q400.534 42.523 401.832 44.079Q403.131 45.634 403.131 47.869Q403.131 49.319 402.633 50.527Q402.134 51.735 401.153 52.581Q400.171 53.426 398.737 53.894Q397.302 54.362 395.46 54.362ZM416.178 54V51.433H421.131V35.486H416.178V32.919H429.467V35.486H424.514V51.433H429.467V54ZM449.823 54.362Q447.074 54.362 445.202 53.396Q443.329 52.43 442.121 50.829L444.296 48.745Q445.504 50.195 446.863 50.874Q448.222 51.554 449.944 51.554Q451.937 51.554 453.009 50.648Q454.081 49.742 454.081 48.05Q454.081 46.691 453.296 45.951Q452.511 45.211 450.608 44.879L448.313 44.517Q446.803 44.275 445.776 43.716Q444.749 43.158 444.115 42.387Q443.48 41.617 443.194 40.666Q442.907 39.715 442.907 38.658Q442.907 35.668 444.84 34.112Q446.772 32.557 450.155 32.557Q452.662 32.557 454.429 33.357Q456.195 34.158 457.283 35.607L455.169 37.721Q454.293 36.664 453.1 36.015Q451.907 35.366 450.155 35.366Q448.283 35.366 447.301 36.166Q446.319 36.966 446.319 38.507Q446.319 39.805 447.09 40.545Q447.86 41.285 449.823 41.617L452.058 42.01Q454.897 42.523 456.195 44.079Q457.494 45.634 457.494 47.869Q457.494 49.319 456.996 50.527Q456.497 51.735 455.516 52.581Q454.534 53.426 453.1 53.894Q451.665 54.362 449.823 54.362ZM478.877 35.758V54H475.494V35.758H468.88V32.919H485.491V35.758ZM497.904 54V32.919H511.102V35.758H501.286V41.889H510.739V44.728H501.286V51.161H511.102V54ZM535.928 43.913 536.018 37.57H535.777L531.548 48.413L527.32 37.57H527.079L527.169 43.913V54H524.179V32.919H528.317L531.548 41.285H531.76L535.022 32.919H538.918V54H535.928Z" fill="#CFC9D6"/><path d="M561.146 54V51.433H566.099V35.486H561.146V32.919H574.435V35.486H569.482V51.433H574.435V54ZM569.451 25.49 573.076 30.02 571.324 31.288 567.76 27.785 564.166 31.288 562.505 30.02 566.129 25.49ZM591.317 37.782H591.046V54H588.086V32.919H592.435L598.626 49.138H598.898V32.919H601.858V54H597.509Z" fill="#CFC9D6"/><path d="M631.033 54.362Q628.284 54.362 626.412 53.396Q624.539 52.43 623.331 50.829L625.506 48.745Q626.714 50.195 628.073 50.874Q629.432 51.554 631.153 51.554Q633.147 51.554 634.219 50.648Q635.291 49.742 635.291 48.05Q635.291 46.691 634.506 45.951Q633.72 45.211 631.818 44.879L629.522 44.517Q628.012 44.275 626.985 43.716Q625.959 43.158 625.324 42.387Q624.69 41.617 624.403 40.666Q624.116 39.715 624.116 38.658Q624.116 35.668 626.049 34.112Q627.982 32.557 631.365 32.557Q633.871 32.557 635.638 33.357Q637.405 34.158 638.492 35.607L636.378 37.721Q635.502 36.664 634.309 36.015Q633.116 35.366 631.365 35.366Q629.492 35.366 628.511 36.166Q627.529 36.966 627.529 38.507Q627.529 39.805 628.299 40.545Q629.069 41.285 631.033 41.617L633.267 42.01Q636.106 42.523 637.405 44.079Q638.704 45.634 638.704 47.869Q638.704 49.319 638.205 50.527Q637.707 51.735 636.726 52.581Q635.744 53.426 634.309 53.894Q632.875 54.362 631.033 54.362ZM651.872 54V32.919H659.754Q662.774 32.919 664.36 34.611Q665.946 36.302 665.946 39.262Q665.946 42.221 664.36 43.913Q662.774 45.604 659.754 45.604H655.254V54ZM655.254 42.795H659.241Q662.382 42.795 662.382 39.896V38.597Q662.382 35.728 659.241 35.728H655.254ZM690.469 54 688.869 48.383H682.164L680.563 54H677.12L683.281 32.919H687.902L694.063 54ZM685.637 36.332H685.395L682.798 45.574H688.234ZM714.449 35.758V54H711.067V35.758H704.453V32.919H721.064V35.758ZM733.476 54V32.919H746.674V35.758H736.859V41.889H746.312V44.728H736.859V51.161H746.674V54Z" fill="#CFC9D6"/></g></svg>
+        </div>
+        <p style="font-size:15px;color:var(--muted-light);max-width:420px">AI cu discernământ pentru psihologi, psihoterapeuți, asistenți sociali independenți și coachi. Un proiect de Ionuț Neacșu.</p>
+        <a href="#final" class="btn btn-signal" style="width:fit-content;min-height:46px;padding:0 18px;font-size:15px">Primesc harta pe email</a>
+        <div id="confidentialitate" style="display:flex;flex-direction:column;gap:6px;padding-top:8px">
+          <span class="mono" style="color:var(--dim)">Confidențialitate</span>
+          <p class="note" style="color:var(--muted-light);max-width:420px">Pagina nu folosește cookie-uri de urmărire. Formularul reține emailul și profesia, doar ca să îți trimit testul și, dacă le-ai cerut, Radiografia sau fișa. Nu le dau nimănui și le ștergi cu un reply „șterge”. Operator: Ionuț Neacșu. Politica completă apare odată cu publicarea.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;min-width:0">
+        <span class="mono" style="color:var(--dim);padding-bottom:6px">Unde mă găsești</span>
+        <a href="https://www.linkedin.com/in/ionutneacsu" class="soc" target="_blank" rel="noopener" style="border-bottom:1px solid rgba(242,238,232,0.2)"><span style="font-family:var(--display);font-weight:700;font-size:18px">LinkedIn</span><span class="mono" style="color:var(--dim)">Ionuț Neacșu →</span></a>
+        <p class="note" style="color:var(--dim);padding-top:14px">Canalul YouTube și emailul pe domeniu apar odată cu publicarea. Până atunci, un singur loc, real.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span class="mono" style="color:var(--dim);padding-bottom:6px">Navigare</span>
+        <a href="#ziua" class="mono" style="color:var(--muted-light);text-decoration:none">02 Ziua ta</a>
+        <a href="#usi" class="mono" style="color:var(--muted-light);text-decoration:none">03 Ușile</a>
+        <a href="#dece" class="mono" style="color:var(--muted-light);text-decoration:none">04 De ce</a>
+        <a href="#scor" class="mono" style="color:var(--muted-light);text-decoration:none">05 Harta</a>
+        <a href="#radiografia" class="mono" style="color:var(--muted-light);text-decoration:none">06 Radiografia</a>
+        <a href="#jurnal" class="mono" style="color:var(--muted-light);text-decoration:none">07 Jurnal</a>
+        <a href="#final" class="mono" style="color:var(--muted-light);text-decoration:none">08 Primul pas</a>
+        <a href="#confidentialitate" class="mono" style="color:var(--muted-light);text-decoration:none">Confidențialitate</a>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(242,238,232,0.2)">
+      <span class="mono" style="color:var(--dim)">© 2026 Room for People · Ionuț Neacșu</span>
+      <span class="note" style="color:var(--dim)">Imaginile de atmosferă sunt generate; nicio persoană reală. Portretul fondatorului este real.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var personas = {
+    psi: { name:"psihologi și psihoterapeuți", who:"psihologii", sceneLabel:"Cabinet · imagine generată",
+      sub:"În ședință, relația e totul. Până să ajungă omul în ședință, nu mai e suficientă. Între ședințe se adună restul: reprogramări la 22:40, același email despre prima întâlnire scris de la zero, un site care nu spune cu cine lucrezi.",
+      chips:["Reprogramare · 22:40","Factura din martie · neplătită","„Lucrați și online?” · a 9-a oară","Site · ultima actualizare 2023"],
+      day:[
+        ["07:40","Patru confirmări, scrise de mână","Aceleași cuvinte, a patra oară săptămâna asta.","Confirmările au plecat singure","La ora aleasă de tine, în tonul tău."],
+        ["band","09:00 · 13:00 · Timpul cu oamenii","Neatins. Aici nu intră niciun instrument."],
+        ["13:10","O reprogramare, trei mesaje dus-întors","Între două ședințe, cu telefonul sub masă.","Clientul și-a ales singur alt interval","Din linkul tău, cu regulile tale de anulare."],
+        ["band","14:00 · 18:00 · Timpul cu oamenii","Tot neatins."],
+        ["20:30","Postarea amânată","Știi ce vrei să spui. Nu mai ai energie să o scrii.","Postarea te așteaptă pentru aprobare","Pornită din notițele tale, trecută prin Filtrul deontologic."],
+        ["22:40","„Cât costă prima ședință?”","Răspunzi acum sau mâine? Dacă mâine, poate scrie altcuiva.","Răspuns automat la logistică","Preț, program, cum arată prima întâlnire, scrise de tine dinainte. Niciun AI nu citește mesajul. Fiecare răspuns conține: „Dacă ești în pericol, sună acum la 112.” Tu primești notificarea."],
+        ["23:10","Factura de luna trecută","Și tabelul cu plățile.","Seara e a ta.","Nimic de recuperat."]
+      ],
+      doors:[
+        ["Practică","Omul care scrie la 22:00","Dacă un om îți scrie la 22:00, ce primește înapoi până mâine la 9?","Nu „ce îi răspunzi tu”. Ce primește el, singur, în timp ce tu dormi. Omul care scrie unui terapeut e adesea într-un moment fragil. Un răspuns clar la logistică poate decide dacă rămâne."],
+        ["Ipoteză","Invizibil în răspunsurile AI","Dacă cineva întreabă ChatGPT „psihoterapeut pentru anxietate în orașul meu”, apari? Cu ce cuvinte?","Răspunsul vine din ce e scris despre tine, nu din cât ești de bun. Ipoteza: tot mai mulți oameni vor întreba un asistent AI ce terapeut să aleagă. O verificăm pe cabinetul tău, cu întrebări reale. Fără informație publică clară, riști să nu apari deloc."],
+        ["Practică","A doua tură","Câte ore pe săptămână nu sunt nici pe scaun, nici acasă?","Mesaje, postări, facturi, seara. Munca pe care nu o măsoară nimeni și pe care, de aceea, nu o reduce nimeni. Numără. Apoi înmulțește cu 48."]
+      ],
+      phone:[["22:40","Bună seara, cât costă o ședință? Și dacă lucrați și online?"],["22:41","Scuze că scriu târziu. Pot muta joi la 18?"],["22:52","Sunt mama Ancăi, ne-ați fost recomandată. Mai primiți clienți noi?"],["23:04","Aveți factura pe luna trecută? Contabilul mă presează."]],
+      mirrorQ:"Recomandă-mi un psihoterapeut pentru anxietate în Cluj.",
+      mirrorA:"„Nu am găsit informații clare despre Cabinetul A.: site-ul nu menționează specializarea și nici orașul în text.” Așa arată invizibilitatea. Nu e o problemă de calitate, e o problemă de claritate."
+    },
+    as: { name:"asistenți sociali independenți", who:"asistenții sociali", sceneLabel:"Vizită la domiciliu · imagine generată",
+      sub:"În vizită, relația e totul. Până să ajungă familia la tine, nu mai e suficientă. Între vizite se adună restul: trimiteri pe trei canale, parteneri care nu înțeleg ce oferi, rapoarte scrise noaptea.",
+      chips:["Trimitere nouă · pe WhatsApp, iar","Partenerul întreabă: „ce faceți, concret?”","Raport · scris la 23:10","Fișa de servicii · versiunea din 2022"],
+      day:[
+        ["07:30","Trimiterea de aseară, recopiată din WhatsApp în dosar","A treia săptămâna asta. Fără confirmare către cine a trimis-o.","Trimiterea a intrat singură în registru","Cu confirmare către partener și cu pasul următor, în cuvintele tale."],
+        ["band","09:00 · 13:00 · Vizitele","Neatins. Aici nu intră niciun instrument."],
+        ["13:20","Școala sună să întrebe ce oferiți, concret","A patra explicație a aceleiași fișe de servicii.","Fișa de servicii a plecat singură, la zi","O pagină, cu publicul, aria de lucru și cum începe o colaborare."],
+        ["band","14:00 · 18:00 · Vizitele","Tot neatins."],
+        ["20:30","Raportul de scris","Structura, de la zero, cu ochii închiși.","Structura raportului te așteaptă","Pregătită din notele tale dictate, fără nicio dată de caz în vreun instrument AI."],
+        ["22:40","Un părinte scrie: „mă puteți ajuta?”","Răspunzi acum sau mâine? Mâine poate nu mai scrie.","Răspuns automat cu pașii și limitele serviciului","Ce oferi, cui, cum începe, scrise de tine dinainte. Niciun AI nu citește mesajul. Fiecare răspuns conține numărul 112 pentru urgențe. Tu primești notificarea."],
+        ["23:10","Facturile către două organizații","Și tabelul cu orele.","Seara e a ta.","Nimic de recuperat."]
+      ],
+      doors:[
+        ["Practică","Partenerul care nu înțelege ce oferi","Dacă o școală vrea să trimită o familie la tine, înțelege în 30 de secunde ce oferi și cum începe?","Partenerul nu caută empatie în pagina ta. Caută un traseu. O fișă de servicii de o pagină, ținută la zi, face mai mult decât o descriere lungă a competențelor."],
+        ["Normă","Trimiterea pe WhatsApp","Când sosește o trimitere pe WhatsApp, cine o vede, cine răspunde și unde ajunge?","Dacă răspunsul e „eu, eu și în telefon”, ai un singur punct de eșec: tu. Și o problemă de date: informații despre o familie, într-o aplicație de consum. Sunt date din categorii speciale, GDPR art. 9."],
+        ["Practică","Rapoartele de după 22:00","Câte rapoarte ai scris după ora 22:00 luna asta?","Nu e o întrebare despre hărnicie. E despre ce se poate pregăti singur, înainte să te așezi: structura, secțiunile, întrebările de completat."]
+      ],
+      phone:[["22:40","Bună seara, sunt de la școală. Avem o familie, puteți prelua? Ce acte trebuie?"],["22:46","Mă puteți ajuta? Nu știu cu cine să vorbesc."],["22:58","Raportul pentru primărie e gata? Îl trebuie mâine la 9."],["23:10","Vă trimit și pe WhatsApp dosarul, e mai simplu."]],
+      mirrorQ:"Caut un asistent social independent pentru o familie din Brașov. Pe cine recomanzi?",
+      mirrorA:"„Nu am găsit cabinete de asistență socială independentă cu informații publice clare în Brașov.” Dacă nu ești descris nicăieri în cuvinte simple, pentru asistenți nu exiști. Nici pentru școli."
+    },
+    co: { name:"coachi", who:"coachii", sceneLabel:"Atelier · imagine generată",
+      sub:"În sesiune, relația e totul. Până să ajungă omul în sesiune, nu mai e suficientă. Între sesiuni se adună restul: o pagină de program pe care nimeni nu o înțelege, materiale trimise manual, un newsletter început de trei ori.",
+      chips:["Pagina de program · 1.400 de cuvinte, zero cereri","Materialele sesiunii 3 · netrimise","Newsletter · draft din iunie","Calendly · nelegat de site"],
+      day:[
+        ["07:45","Materialele sesiunii 3, trimise manual","Pentru fiecare client, pe rând, din memorie.","Materialele au plecat singure","La ora stabilită, pentru fiecare etapă a programului."],
+        ["band","09:00 · 13:00 · Sesiunile","Neatins. Aici nu intră niciun instrument."],
+        ["13:15","„Ce include, concret, programul?”","Al treilea om săptămâna asta care nu a înțeles pagina.","Pagina de program a răspuns clar","Pentru cine, tema, formatul, primul pas. Omul și-a rezervat singur discuția."],
+        ["band","14:00 · 18:00 · Sesiunile","Tot neatins."],
+        ["20:30","Newsletterul început în iunie","Știi ce vrei să spui. Nu mai ai energie să o scrii.","Ciorna te așteaptă pentru aprobare","Din notițele tale după sesiuni, în vocea ta, fără nimic despre clienți."],
+        ["22:40","O cerere de discuție, fără context","Răspunzi acum sau mâine? Mâine poate scrie altcuiva.","Confirmare automată plus trei întrebări de pregătire","Scrise de tine dinainte; niciun AI nu citește mesajul. Omul vine la discuție știind ce explorați. Tu vii știind ce vrea."],
+        ["23:10","Factura și recapitularea","Pentru clientul de la 16:00.","Seara e a ta.","Nimic de recuperat."]
+      ],
+      doors:[
+        ["Practică","Pagina de program pe care nimeni nu o înțelege","Dacă un om citește pagina programului tău, poate spune în două propoziții ce cumpără?","Dacă nu poate, nu e „nepregătit”. E pagina. Cuvinte ca „transformare” și „potențial” capătă sens doar lângă o situație recognoscibilă."],
+        ["Ipoteză","Golul dintre sesiuni","Ce primește clientul tău între sesiunea 2 și sesiunea 3, fără să trimiți tu ceva manual?","Procesul tău trăiește între sesiuni. Acolo se vede dacă e proces sau sunt doar întâlniri. Și acolo e cel mai ușor de automatizat fără să atingi relația."],
+        ["Practică","Marketingul care nu există","Câți oameni au cerut o discuție luna asta fără să îi fi contactat tu primul?","Numărul ăsta e tot marketingul tău, într-o cifră. Dacă e zero, nu e o problemă de talent. E o problemă de sistem."]
+      ],
+      phone:[["22:40","Am văzut pagina programului. Ce include, mai exact?"],["22:43","Nu am primit materialele de la sesiunea 3."],["22:57","Putem vorbi 15 minute săptămâna asta? Nu știu dacă e pentru mine."],["23:08","Newsletterul din iunie l-ai mai trimis? Îl aștept."]],
+      mirrorQ:"Recomandă-mi un coach pentru o tranziție de carieră, în București.",
+      mirrorA:"„Am găsit mai mulți coachi, dar nu pot spune cu ce se ocupă fiecare, concret.” Când toți sună la fel, asistentul alege la întâmplare. Sau pe cel descris cel mai clar."
+    }
+  };
+  var dirsMeta = [
+    { name:"Prezență", stages:["Nu ești de găsit","Ești găsit, nu înțeles","Clar din prima"], tips:["Primul pas: o pagină cu trei propoziții: cu cine lucrezi, unde, cum începe. Azi, nu luna viitoare.","Primul pas: scrie specializarea și orașul în prima propoziție a site-ului. Asistenții AI citesc exact asta.","Ține-o la zi: o verificare pe lună în Google și într-un asistent AI, cu întrebarea reală a unui client."] },
+    { name:"Primul contact", stages:["Totul trece prin tine","Răspuns, dar generic","Răspuns în tonul tău"], tips:["Primul pas: un mesaj automat cu preț, program, cum arată prima întâlnire și numărul 112. Scris de tine, o singură dată.","Primul pas: rescrie răspunsul automat în vocea ta, cu pasul următor concret. Generic înseamnă „nu știu dacă m-a citit”.","Măsoară: câți dintre cei care scriu ajung la prima întâlnire. Cifra asta e tot marketingul tău."] },
+    { name:"Administrare", stages:["A doua tură, în fiecare seară","Pe jumătate automat","Pleacă singur"], tips:["Primul pas: un link de programare cu regulile tale de anulare. Reprogramările dus-întors dispar în prima săptămână.","Primul pas: confirmarea și reamintirea pleacă singure, la ora aleasă de tine. Tu doar aprobi excepțiile.","Verifică o dată pe trimestru ce se poate opri. Un sistem bun e unul pe care îl poți închide."] },
+    { name:"Pregătire pentru AI", stages:["Fără reguli, fără unelte","Ocazional, fără reguli","Zilnic, cu regula casei"], tips:["Primul pas: regula casei, scrisă, pe o foaie: nicio informație despre un client nu intră într-un instrument AI. Apoi primul instrument, pentru materiale publice.","Primul pas: scrie regula înainte de următoarea folosire. Protocolul semafor de mai sus e un început.","Următorul pas e vocea: articole, postări, un newsletter din notițele tale, cu AI la structură și tu la sens."] }
+  ];
+  var axes = [
+    { d:0, label:"Direcția 1 · Prezență", q:"Un străin deschide site-ul tău. În 30 de secunde știe cui te adresezi și care e pasul următor?", opts:[["Nu am site, doar Facebook",2],["Am site, dar e vag și vechi",7],["Da, și apar și în căutările cu AI",12]] },
+    { d:0, label:"Direcția 1 · Prezență", q:"Dacă cineva caută pe Google „psiholog în orașul tău” sau întreabă un asistent AI, ce găsește despre tine?", opts:[["Nimic, sau un profil vechi",2],["Profilul Google, fără site la zi",7],["Site, profil și recenzii, toate la zi",13]] },
+    { d:1, label:"Direcția 2 · Primul contact", q:"Ce primește omul în primele 10 minute după ce îți scrie?", opts:[["Nimic, răspund eu când pot",2],["Un răspuns automat generic",7],["O confirmare în tonul meu, cu pașii următori",12]] },
+    { d:1, label:"Direcția 2 · Primul contact", q:"Când cineva întreabă „cât costă și cum începem?”, de unde vine răspunsul?", opts:[["Îl scriu de fiecare dată de la zero",2],["Am un text pe care îl copiez",7],["O pagină sau un mesaj automat răspunde pentru mine",13]] },
+    { d:2, label:"Direcția 3 · Administrare", q:"Câte ore pe săptămână pleacă pe reprogramări, facturi și materiale?", opts:[["Peste 6 ore",2],["Între 3 și 6 ore",7],["Sub 3, mare parte automat",12]] },
+    { d:2, label:"Direcția 3 · Administrare", q:"O reprogramare: cum se întâmplă, de obicei?", opts:[["Mesaje dus-întors, le scriu eu",2],["Calendar online, dar tot eu confirm",7],["Omul își alege intervalul, confirmarea pleacă singură",13]] },
+    { d:3, label:"Direcția 4 · Pregătire pentru AI", q:"Cum folosești AI în cabinet, azi?", opts:[["Deloc, sau mi-e teamă",2],["Ocazional, fără reguli",7],["Zilnic, cu regula: nimic despre clienți",12]] },
+    { d:3, label:"Direcția 4 · Pregătire pentru AI", q:"Ai o regulă scrisă despre ce intră și ce nu intră într-un instrument AI?", opts:[["Nu m-am gândit la asta",2],["O am în cap, nu pe hârtie",7],["Da, scrisă, și o respect",13]] }
+  ];
+  var state = { persona:"psi", sel:[-1,-1,-1,-1,-1,-1,-1,-1], door:0 };
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+  function renderPersona(){
+    var d = personas[state.persona];
+    $("sub").textContent = d.sub;
+    $("sceneLabel").textContent = d.sceneLabel;
+    for (var i=1;i<=4;i++) $("chip"+i).textContent = d.chips[i-1];
+    ["personaName0","personaName1","personaName2"].forEach(function(id){ $(id).textContent = d.name; });
+    $("personaWho").textContent = d.who;
+    $("chipList").innerHTML = d.chips.map(function(c){ return '<li><i></i>'+esc(c)+'</li>'; }).join('');
+    $("status").textContent = "Profesia aleasă: " + d.name + ". Pagina s-a actualizat.";
+    ["psi","as","co"].forEach(function(k){ $("img-"+k).hidden = (k !== state.persona); });
+    document.querySelectorAll(".pill").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.persona === state.persona)); });
+    // day
+    var h = "";
+    d.day.forEach(function(r){
+      if (r[0] === "band") { h += '<div class="band"><strong>'+esc(r[1])+'</strong><span class="mono" style="color:var(--muted)">'+esc(r[2])+'</span></div>'; return; }
+      h += '<div class="l"><span style="font-family:var(--display);font-weight:700;font-size:17px">'+esc(r[1])+'</span><span style="font-size:14px;color:var(--muted)">'+esc(r[2])+'</span></div>'
+         + '<div class="t"><span class="mono">'+esc(r[0])+'</span></div>'
+         + '<div class="r"><span class="mono">cu sistem</span><span style="font-family:var(--display);font-weight:700;font-size:17px">'+esc(r[3])+'</span><span style="font-size:14px;color:var(--muted-light)">'+esc(r[4])+'</span></div>';
+    });
+    $("day").innerHTML = h;
+    // doors
+    var dh = "";
+    d.doors.forEach(function(dr, i){
+      var open = (i === state.door);
+      dh += '<button type="button" class="door" data-door="'+i+'" aria-expanded="'+open+'"><div class="head"><span style="display:flex;align-items:flex-end;gap:12px"><svg class="door-mark dm" width="26" height="33" viewBox="0 0 48 60" aria-hidden="true"><rect x="3" y="3" width="42" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path class="leaf" d="M9 5 L22 11 L22 49 L9 55 Z" fill="#D6FF55" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="num">0'+(i+1)+'</span></span><span class="tag">'+esc(dr[0])+'</span></div><h3>'+esc(dr[1])+'</h3><div class="body"><p style="font-family:var(--display);font-weight:700;font-size:16px;color:var(--ink)">'+esc(dr[2])+'</p><p>'+esc(dr[3])+'</p></div><div class="foot">'+(open ? "Ușa e deschisă" : "Deschide ușa →")+'</div></button>';
+    });
+    $("doors").innerHTML = dh;
+    $("phoneMsgs").innerHTML = d.phone.map(function(m, i){ return '<div class="msg"><span class="mono"><span class="app">'+(i%2?'WhatsApp':'Mesaje')+'</span><span>'+esc(m[0])+'</span></span><p>'+esc(m[1])+'</p></div>'; }).join('');
+    $("mirrorQ").textContent = "› " + d.mirrorQ;
+    $("mirrorA").textContent = d.mirrorA;
+  }
+
+  function renderAxes(){
+    var html = "";
+    axes.forEach(function(ax, ai){
+      var pts = state.sel[ai] < 0 ? "–" : ax.opts[state.sel[ai]][1]; var qn = (ai % 2) + 1;
+      html += '<div class="ax"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="lead"><span class="wp" style="width:24px;height:24px;font-size:10px;background:var(--mist);border-color:var(--mist)">'+(ai+1)+'</span><span class="mono" style="color:var(--muted);font-size:10px">'+esc(dirsMeta[ax.d].name)+' · '+qn+'/2</span></span><span class="mono" style="color:var(--muted);font-size:10px">'+pts+' / 13</span></div><h3>'+esc(ax.q)+'</h3><div class="g3" role="radiogroup" aria-label="'+esc(ax.label)+'" style="gap:8px">';
+      ax.opts.forEach(function(o, oi){
+        html += '<button type="button" class="opt" role="radio" aria-checked="'+(oi===state.sel[ai])+'" data-ax="'+ai+'" data-opt="'+oi+'"><span class="dot"></span>'+esc(o[0])+'</button>';
+      });
+      html += '</div></div>';
+    });
+    $("axes").innerHTML = html;
+    renderScore();
+  }
+
+  function renderScore(){
+    var score = 0, answered = 0, dir = [0,0,0,0], dirAns = [0,0,0,0];
+    axes.forEach(function(ax, ai){ if (state.sel[ai] >= 0) { var p = ax.opts[state.sel[ai]][1]; score += p; answered++; dir[ax.d] += p; dirAns[ax.d]++; } });
+    var dirs = [[0,-1],[1,0],[0,1],[-1,0]], poly = [];
+    dir.forEach(function(p, i){ var r = 8 + (p/25)*82; var x = 110 + dirs[i][0]*r, y = 110 + dirs[i][1]*r; poly.push(x+","+y); var c0 = $("p"+i); c0.setAttribute("cx", x); c0.setAttribute("cy", y); });
+    $("shape").setAttribute("points", poly.join(" "));
+    var rows = "";
+    dirsMeta.forEach(function(m, i){
+      var st = dirAns[i] < 2 ? (dirAns[i] === 0 ? "–" : "încă o întrebare") : m.stages[dir[i] < 10 ? 0 : dir[i] < 24 ? 1 : 2];
+      var col = dirAns[i] < 2 ? "#CFC9D6" : (dir[i] < 10 ? "#E4472B" : dir[i] < 24 ? "#F2EEE8" : "#D6FF55");
+      var tip = dirAns[i] < 2 ? "" : m.tips[dir[i] < 10 ? 0 : dir[i] < 24 ? 1 : 2];
+      rows += '<div class="where"><span class="mono" style="color:var(--muted-light)">'+esc(m.name)+'</span><span style="font-family:var(--display);font-weight:700;font-size:15px;color:'+col+'">'+esc(st)+'</span><span class="bar"><span style="width:'+(dir[i]/25*100)+'%;background:'+col+'"></span></span>'+(tip ? '<p class="note" style="grid-column:1 / -1;color:var(--muted-light);margin-top:2px">'+esc(tip)+'</p>' : '')+'</div>';
+    });
+    $("where").innerHTML = rows;
+    var v, n, c, total = axes.length;
+    if (answered < total) {
+      $("score").textContent = "–"; $("score").style.color = "#CFC9D6";
+      $("scoreBar").style.width = (answered/total*100) + "%"; $("scoreBar").style.background = "#CFC9D6";
+      $("verdict").textContent = answered === 0 ? "Opt întrebări, patru direcții." : answered + " din " + total + ". Harta se conturează.";
+      $("verdictNote").textContent = answered === 0 ? "Răspunde în stânga și harta se umple aici. Nu se salvează nimic." : "Încă " + (total-answered) + (total-answered === 1 ? " întrebare" : " întrebări") + " și vezi unde are cabinetul tău loc de respirat.";
+      return;
+    }
+    if (score < 40) { v="Cabinetul manual."; n="Aproape tot trece prin tine, inclusiv seara. Prima schimbare nu costă nimic: o confirmare automată cu trei informații practice, în tonul tău."; c="#E4472B"; }
+    else if (score < 70) { v="Cabinetul pe jumătate."; n="Ai bazele, dar omul care îți scrie face singur munca de a te înțelege, și o parte din seară e tot a cabinetului. Direcția cea mai roșie de mai sus e primul drum."; c="#D6FF55"; }
+    else { v="Cabinetul cu sistem."; n="Rar. Ce îți lipsește nu e un sistem, ci timpul să îl folosești. Vorbim despre voce, nu despre prezență."; c="#D6FF55"; }
+    $("score").textContent = score; $("score").style.color = c;
+    $("scoreBar").style.width = score + "%"; $("scoreBar").style.background = c;
+    $("verdict").textContent = v; $("verdictNote").textContent = n;
+  }
+
+  var menuBtn = $("menuBtn"), menuPanel = $("menuPanel");
+  menuBtn.addEventListener("click", function(){
+    var open = menuBtn.getAttribute("aria-expanded") === "true";
+    menuBtn.setAttribute("aria-expanded", String(!open));
+    menuPanel.hidden = open;
+  });
+  menuPanel.addEventListener("click", function(e){
+    if (e.target.closest("a")) { menuBtn.setAttribute("aria-expanded","false"); menuPanel.hidden = true; }
+  });
+  document.addEventListener("keydown", function(e){
+    var opt = e.target.closest && e.target.closest(".opt"); if (!opt) return;
+    var dir = (e.key === "ArrowRight" || e.key === "ArrowDown") ? 1 : (e.key === "ArrowLeft" || e.key === "ArrowUp") ? -1 : 0;
+    if (!dir) return;
+    e.preventDefault();
+    var ai = +opt.dataset.ax, oi = (+opt.dataset.opt + dir + 3) % 3;
+    state.sel[ai] = oi; renderAxes();
+    var next = document.querySelector('.opt[data-ax="'+ai+'"][data-opt="'+oi+'"]'); if (next) next.focus();
+  });
+  var toTop = document.querySelector(".to-top");
+  function onScroll(){ toTop.classList.toggle("show", window.scrollY > window.innerHeight * 0.9); }
+  window.addEventListener("scroll", onScroll, { passive:true }); onScroll();
+  var form = $("leadForm");
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var email = $("f-email");
+    if (!email.value || email.value.indexOf("@") < 1) { email.focus(); $("formMsg").textContent = "Am nevoie de un email valid ca să îți trimit testul."; return; }
+    $("formMsg").textContent = "Mulțumesc. Formularul se conectează la publicarea site-ului; până atunci, scrie-mi pe LinkedIn și îți trimit testul personal.";
+  });
+  document.addEventListener("click", function(e){
+    var pill = e.target.closest(".pill");
+    if (pill) { state.persona = pill.dataset.persona; state.door = 0; renderPersona(); return; }
+    var door = e.target.closest(".door");
+    if (door) { state.door = +door.dataset.door; renderPersona(); return; }
+    var opt = e.target.closest(".opt");
+    if (opt) { state.sel[+opt.dataset.ax] = +opt.dataset.opt; renderAxes(); }
+  });
+
+  renderPersona();
+  renderAxes();
+})();
+</script>

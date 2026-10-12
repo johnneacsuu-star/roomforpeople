@@ -1,5 +1,7 @@
 # Room for People · site
 
+Cunoașterea proiectului (reguli, decizii, întrebări deschise, istoric, servicii, surse): `CLAUDE.md` și `docs/README.md`. Chat-ul nu e memorie; ce contează se scrie acolo.
+
 Site static pe Astro, pentru roomforpeople.ro. Formularul trimite printr-o funcție Vercel (`api/contact.js`) prin Resend.
 
 ## Local
