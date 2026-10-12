@@ -15,7 +15,7 @@ node tests/shot.mjs  # capturi de ecran la 1400 și 390 px, în tests/shots
 1. Depozit pe GitHub, proiect Vercel legat de el (Framework: Astro). `vercel.json` e gata (cleanUrls, antete).
 2. Variabile de mediu (Settings → Environment Variables): `RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM`, `ALLOWED_ORIGIN`. Vezi `.env.example`. Fără ele formularul răspunde 503 și pagina spune cinstit că nu e configurat.
 3. Domeniul roomforpeople.ro: se adaugă în Vercel, se schimbă DNS-ul la registrar. Nu se face fără acordul lui Ionuț.
-4. Analytics: Vercel Web Analytics se activează din dashboard; scriptul e deja în pagină și se încarcă doar în build-urile de pe Vercel.
+4. Analytics: Vercel Web Analytics se activează din dashboard (Project → Analytics → Enable); scriptul e deja în pagină și se încarcă doar pe domeniul real (roomforpeople.ro), nu pe previzualizarea vercel.app.
 5. Resend: până e verificat roomforpeople.ro, `CONTACT_FROM` rămâne `onboarding@resend.dev`, care livrează doar către adresa contului Resend. După verificare: `salut@roomforpeople.ro` și, dacă se dorește, trimiterea Hărții către vizitator (`SITE.resultEmailToVisitor`).
 
 ## Preview (artifact claude.ai)

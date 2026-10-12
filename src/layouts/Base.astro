@@ -75,7 +75,7 @@ const previewNoindex = !!process.env.VERCEL && !onRealDomain;
     <slot />
   </main>
   <Footer path={path} />
-  {isProd && <script defer src="/_vercel/insights/script.js"></script>}
+  {isProd && onRealDomain && <script defer src="/_vercel/insights/script.js"></script>}
   <script>
     // Desenele se desenează pe rând când intră în ecran. Fără JavaScript sau cu reduced-motion sunt gata de la început.
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
