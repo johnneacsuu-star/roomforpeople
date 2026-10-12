@@ -169,6 +169,7 @@ html.draw .art.on .hw { opacity: 1; transition: opacity .5s ease; transition-del
 .portrait.small { max-width: 220px; }
 .portrait.small .frame { padding: 8px 8px 0; }
 .on-dark .portrait .frame, .on-night .portrait .frame { border-color: var(--paper); background: var(--night); }
+.on-dark .portrait .frame::after, .on-night .portrait .frame::after { mix-blend-mode: normal; }
 .on-dark .portrait figcaption b { color: var(--paper); }
 .on-dark .portrait figcaption span { color: var(--muted-light); }
 

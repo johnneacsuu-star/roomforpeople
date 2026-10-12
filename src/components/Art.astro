@@ -8,9 +8,16 @@ import harta from '../assets/art/harta.svg?raw';
 import usa1 from '../assets/art/usa-1.svg?raw';
 import usa2 from '../assets/art/usa-2.svg?raw';
 import usa3 from '../assets/art/usa-3.svg?raw';
-interface Props { name: 'plan' | 'flux' | 'harta' | 'usa-1' | 'usa-2' | 'usa-3'; class?: string }
+// Coperțile din Jurnal și desenele de pagină, generate din scripts/art.mjs cu aceeași peniță.
+import noapte from '../assets/art/noapte.svg?raw';
+import prag from '../assets/art/prag.svg?raw';
+import semn from '../assets/art/semn.svg?raw';
+import tura from '../assets/art/tura.svg?raw';
+import caiet from '../assets/art/caiet.svg?raw';
+export const ART_NAMES = ['plan', 'flux', 'harta', 'usa-1', 'usa-2', 'usa-3', 'noapte', 'prag', 'semn', 'tura', 'caiet'] as const;
+interface Props { name: (typeof ART_NAMES)[number]; class?: string }
 const { name, class: cls = '' } = Astro.props;
-const map: Record<string, string> = { plan, flux, harta, 'usa-1': usa1, 'usa-2': usa2, 'usa-3': usa3 };
+const map: Record<string, string> = { plan, flux, harta, 'usa-1': usa1, 'usa-2': usa2, 'usa-3': usa3, noapte, prag, semn, tura, caiet };
 const svg = map[name].replace('<svg class="art', `<svg class="art ${cls}`);
 ---
 <Fragment set:html={svg} />

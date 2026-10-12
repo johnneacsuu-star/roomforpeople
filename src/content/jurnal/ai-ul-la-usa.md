@@ -5,10 +5,7 @@ date: 2026-10-11
 pillar: "Pragul"
 profesii: ["psi", "as", "co"]
 draft: false
-art: "usa-1"
-image: "/img/jurnal/usa-lumina.webp"
-imageAlt: "O ușă întredeschisă, cu lumină caldă care intră pe lângă ea"
-credit: "Unsplash"
+art: "prag"
 order: 2
 sources:
   - { title: "Talkspace, 12 Best AI Tools for Therapists in 2026", url: "https://www.talkspace.com/blog/ai-tools-for-therapists/" }

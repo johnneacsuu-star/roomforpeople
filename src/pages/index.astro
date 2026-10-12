@@ -11,200 +11,93 @@ import { link, asset } from '../lib/links';
 import PostImage from '../components/PostImage.astro';
 import { publishedPosts, fmtDate } from '../lib/jurnal';
 
+// Pagina principală în șapte secțiuni, în ordinea ei, nu a ofertei:
+// 01 ea și tensiunea · 02 aceeași seară, de două ori · 03 Harta · 04 cine o ghidează și Regula casei ·
+// 05 trei drumuri și Radiografia · 06 Jurnal · 07 scrie-mi.
 const path = '/';
 const L = (p: string) => link(p, path);
 const posts = await publishedPosts();
 const showJournal = posts.length >= SITE.journalMinPublished;
 const lei = (n: number) => n.toLocaleString('ro-RO');
-const description = 'Site, primul contact, programări și materiale puse la lucru în cabinetul tău, ca seara să fie a ta. Pentru psihologi, psihoterapeuți, asistenți sociali și coachi. Construite de un asistent social cu 23 de ani lângă oameni.';
+const SEARA = ['20:30', '22:40', '23:10'];
+const description = 'E marți, 22:40, și trei mesaje așteaptă un răspuns de la tine. Site, primul contact, programări și materiale puse la lucru în cabinetul tău, ca seara să fie a ta. Pentru psihologi, psihoterapeuți, asistenți sociali și coachi.';
 ---
 <Base title="Room for People" description={description} path={path}>
 
-  <!-- 01 HERO -->
+  <!-- 01 EA ȘI TENSIUNEA -->
   <section class="hero section-tight" aria-labelledby="h-hero">
     <div class="wrap hero-grid">
-      <div class="hero-text">
-        <p class="label muted">Pentru psihologi, psihoterapeuți, asistenți sociali și coachi</p>
+      <div class="hero-top">
+        <div class="hero-prof" role="group" aria-label="Alege profesia ta">
+          <span class="label muted">Pentru</span>
+          {PROFESII.map((p, i) => <button type="button" class="pill pill-sm" data-profesie={p.id} aria-pressed={i === 0 ? 'true' : 'false'}>{p.scurt}</button>)}
+        </div>
         <h1 id="h-hero">Lucrezi cu oameni. <span class="mk">Restul</span> ar trebui să meargă singur.</h1>
-        <p class="lede">Site, primul contact, programări și materiale, puse la lucru în cabinetul tău, ca seara să fie a ta. Construite de un asistent social cu 23 de ani lângă oameni, care le-a folosit întâi pe el.</p>
+        <p class="lede">E marți, 22:40. Trei mesaje așteaptă un răspuns de la tine. Le scrii o singură dată, în cuvintele tale. De acolo pleacă singure.</p>
         <div class="hero-cta">
           <a class="btn btn-signal" href={L('/harta')}>Îmi fac Harta cabinetului</a>
           <p class="small muted">Gratuită · 4 minute · rezultatul pe loc, fără email</p>
         </div>
-        <ul class="hero-facts small muted">
-          <li>Prețuri la vedere</li><li>Nicio dată de client într-un AI</li><li>Răspunde Ionuț, personal</li>
-        </ul>
-        <p class="small"><a class="textlink" href="#drumuri">Vezi cele trei drumuri și prețurile</a></p>
+        <p class="small muted hero-sign">Construit de un asistent social, după 23 de ani lângă oameni.</p>
       </div>
       <figure class="hero-fig"><Art name="plan" /></figure>
+      <ul class="hero-facts small muted">
+        <li>Prețuri la vedere</li><li>AI la ușă, nu în cameră</li><li>Îți răspund eu, {SITE.founder.split(' ')[0]}</li>
+      </ul>
     </div>
   </section>
 
-  <!-- 02 CE IEI ACASĂ -->
-  <section class="section on-white" aria-labelledby="h-acasa">
+  <!-- 02 ACEEAȘI SEARĂ, DE DOUĂ ORI -->
+  <section class="section on-night" id="ziua" aria-labelledby="h-ziua">
     <div class="wrap">
-      <div class="sec-head"><span class="wp">02</span><span class="label">Ce iei acasă</span></div>
-      <h2 id="h-acasa" class="sr">Trei promisiuni</h2>
-      <div class="g-3 promises">
-        <div class="promise">
-          <h3>Seara e <span class="mk">a ta</span>.</h3>
-          <p>Confirmările, reprogramările și facturile pleacă singure, la ora aleasă de tine. Ce rămâne după 18:00 e doar ce vrei tu să rămână.</p>
-        </div>
-        <div class="promise">
-          <h3>Vocea e <span class="mk">a ta</span>.</h3>
-          <p>Fiecare mesaj automat, pagină și articol e scris din cuvintele tale și aprobat de tine. Nimic nu pleacă în numele tău fără să-l fi citit.</p>
-        </div>
-        <div class="promise">
-          <h3>Datele rămân <span class="mk">la tine</span>.</h3>
-          <p>Nicio informație despre un client nu intră într-un instrument AI. Lucrăm cu materialele tale publice și cu procesele cabinetului. Regula e scrisă și e aceeași pentru noi și pentru tine.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 03 ZIUA TA -->
-  <section class="section" id="ziua" aria-labelledby="h-ziua">
-    <div class="wrap">
-      <div class="sec-head"><span class="wp">03</span><span class="label">Ziua ta · marți, 22:40</span></div>
-      <div class="split" style="align-items:center">
+      <div class="sec-head"><span class="wp">02</span><span class="label">Aceeași seară, de două ori</span></div>
+      <div class="seara-grid">
         <div class="stack" style="gap:20px">
           <h2 id="h-ziua">Ziua cu oamenii se termină la 18:00. Seara ar trebui să fie a ta.</h2>
-          <p class="muted" style="max-width:56ch">Aceeași zi, două seri. Scenariul de mai jos e scris pentru cabinetul plin și pentru cel care vrea să crească: în ambele, ce pleacă singur e același lucru.</p>
-          <div class="pills" role="group" aria-label="Alege profesia">
-            {ZIUA.map((s, i) => <button type="button" class="pill" data-scenariu={s.id} aria-pressed={i === 0 ? 'true' : 'false'}>{s.label}</button>)}
-          </div>
-        </div>
-        <div class="phone-wrap">
-          <div class="phone" aria-label="Telefonul tău, marți seara">
-            <div class="island" aria-hidden="true"></div>
-            <div class="screen">
-              <div class="lock"><span class="label">Marți</span><span class="phone-clock">22:40</span></div>
-              {ZIUA.map((s, i) => (
-                <div class="phone-msgs" data-scenariu={s.id} hidden={i !== 0}>
-                  {s.phone.map((m, j) => <div class="msg"><span class="msg-head"><span class="app">{j % 2 ? 'WhatsApp' : 'Mesaje'}</span><span>{m[0]}</span></span><p>{m[1]}</p></div>)}
-                </div>
-              ))}
-              <p class="note phone-foot">Niciunul nu e urgent. Toate așteaptă un răspuns. De la tine.</p>
-              <div class="homebar" aria-hidden="true"></div>
+          <p class="muted">Ședințele rămân ale tale, cu totul. Se schimbă doar ce se întâmplă în jurul lor. Alături: cum arată seara de marți azi și cum arată cu un sistem în spate.</p>
+          {ZIUA.map((s, i) => (
+            <div class="day" data-scenariu={s.id} hidden={i !== 0}>
+              <ol class="day-list">
+                {s.momente.filter((m) => SEARA.includes(m.ora)).map((m) => (
+                  <li class={m.ora === '22:40' ? 'key' : ''}>
+                    <div class="d-ora"><span>{m.ora}</span></div>
+                    <div class="d-azi"><span class="label muted">azi</span><strong>{m.azi}</strong><span class="small muted">{m.aziNota}</span></div>
+                    <div class="d-sis"><span class="label">cu sistem</span><strong>{m.sistem}</strong><span class="small">{m.sistemNota}</span></div>
+                  </li>
+                ))}
+              </ol>
             </div>
-          </div>
+          ))}
+          <p class="note muted">Între 09:00 și 18:00, timpul cu oamenii rămâne neatins. Instrumentele stau la ușă.</p>
         </div>
-      </div>
-      {ZIUA.map((s, i) => (
-        <div class="day" data-scenariu={s.id} hidden={i !== 0}>
-          <p class="day-lead"><span class="hl">{s.lead}</span></p>
-          <div class="day-head" aria-hidden="true"><span class="label muted">Marți, azi</span><span></span><span class="label muted">Marți, cu sistem</span></div>
-          <ol class="day-list">
-            {s.momente.map((m) => (
-              <li class={m.ora === '22:40' ? 'key' : ''}>
-                <div class="d-azi"><strong>{m.azi}</strong><span class="small muted">{m.aziNota}</span></div>
-                <div class="d-ora"><span>{m.ora}</span></div>
-                <div class="d-sis"><strong>{m.sistem}</strong><span class="small">{m.sistemNota}</span></div>
-              </li>
-            ))}
-          </ol>
-          <p class="note muted day-band">Între 09:00 și 18:00, timpul cu oamenii. Neatins. Aici nu intră niciun instrument.</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- 04 TREI DRUMURI -->
-  <section class="section on-white" id="drumuri" aria-labelledby="h-drumuri">
-    <div class="wrap">
-      <div class="sec-head"><span class="wp">04</span><span class="label">Trei drumuri · preț de pornire la vedere</span></div>
-      <div class="split" style="align-items:end;margin-bottom:36px">
-        <h2 id="h-drumuri">Trei drumuri. Alegi unul, nu toate.</h2>
-        <p class="muted">Fiecare drum are livrabile scrise, un preț de pornire și o ușă pe care o deschizi singur. Prețurile sunt de lansare, pentru primele 10 cabinete, și se pot schimba după.</p>
-      </div>
-      <div class="g-3 drumuri">
-        {DRUMURI.map((d, i) => (
-          <article class="drum door">
-            <div class="door-art"><Art name={`usa-${i + 1}`} /></div>
-            <span class="label muted">Drumul {d.nr}</span>
-            <h3><a href={L(d.path)}>{d.name}</a></h3>
-            <p class="small muted">{d.pentru}</p>
-            <p class="small"><strong>Problema.</strong> {d.problema}</p>
-            <p class="label muted" style="margin-top:6px">Ce primești, concret</p>
-            <ul class="ticks small">{d.livrabile.map((l) => <li>{l}</li>)}</ul>
-            <p class="small"><strong>Rezultatul.</strong> {d.rezultat}</p>
-            <p class="drum-price"><span class="small muted">de la</span> {lei(d.price)} lei</p>
-            <a class="textlink" href={L(d.path)}>Vezi drumul {d.name} →</a>
-          </article>
-        ))}
-      </div>
-      <p class="note muted" style="margin-top:20px">Înainte de orice drum, <a class="textlink" href={L('/radiografia')}>Radiografia</a>: o săptămână de observație pe cabinetul tău, {lei(SITE.prices.radiografia)} lei, care îți spune care drum e primul.</p>
-    </div>
-  </section>
-
-  <!-- 05 CINE CONSTRUIEȘTE -->
-  <section class="section on-paper" id="cine" aria-labelledby="h-cine">
-    <div class="wrap">
-      <div class="sec-head"><span class="wp">05</span><span class="label">Cine construiește</span></div>
-      <div class="split" style="align-items:end;margin-bottom:40px">
-        <h2 id="h-cine">O echipă mică, dar <span class="mk">dedicată</span> cu totul.</h2>
-        <p class="muted">Doi oameni. Unul vine din aceeași lume ca tine și a stat 23 de ani în aceeași cameră. Celălalt construiește sistemul din spate și se asigură că merge singur.</p>
-      </div>
-      <div class="team-grid">
-        <div class="member">
-          <Portrait src={asset('/img/ionut.webp', path)} alt="Ionuț Neacșu, în sacou bleumarin și cămașă albă, privind spre cameră" name="Ionuț Neacșu" role="Oamenii, meseria și regulile" />
-          <div class="stack" style="gap:16px">
-            <p>Ionuț Neacșu lucrează de 23 de ani în asistență socială: pe stradă și într-un adăpost, la DGASPC Argeș, la conducerea Asociației „Sprijin pentru Viață” din Pitești, apoi, din 2015, în protecția copilului, în Anglia. E absolvent de psihologie în Marea Britanie, 2025, și folosește zilnic AI din 2022, întâi pe propria lui muncă. Ține partea de oameni: discuția, harta, textele, Regula casei. Și el îți răspunde.</p>
-            <dl class="facts">
-              <div><dt>2014</dt><dd>Premiul pentru asistentul social din domeniul persoanelor fără adăpost, la Gala Națională a Excelenței în Asistență Socială (CNASR). <a href="https://epitesti.ro/stiri/social/jos-palaria-cel-mai-bun-asistent-social-din-tara-este-un-pitestean" target="_blank" rel="noopener">ePitești</a></dd></div>
-              <div><dt>2013</dt><dd>Centrul de zi „PLATO School” din Călinești, primul de acest fel pentru copiii romi din județul Argeș. <a href="https://adevarul.ro/stiri-locale/pitesti/la-calinesti-se-va-infiinta-primul-centru-de-1458978.html" target="_blank" rel="noopener">Adevărul</a></dd></div>
-              <div><dt>2026</dt><dd>Finalist la National Children &amp; Young People Awards, categoria Children and Families Social Worker, Marea Britanie.</dd></div>
-            </dl>
-          </div>
-        </div>
-        <div class="member">
-          <Portrait src={asset('/img/andrei.webp', path)} alt="Andrei N., cu ochelari și sacou negru, cu mâna sub bărbie, privind în lateral" name="Andrei N." role="Partea tehnică și AI" />
-          <div class="stack" style="gap:16px">
-            <p>Andrei N. ține partea tehnică a AI-ului: sistemele, automatizările și legăturile dintre ele, de la formularul de pe site la confirmarea din calendar. E creatorul și omul din spatele <a class="textlink" href="https://blackstonerepair.co.uk" target="_blank" rel="noopener">Blackstone Repair</a>, un atelier din Marea Britanie care repară plăci video la nivel de componentă, cu programare și urmărire online a fiecărei reparații.</p>
-            <p class="small muted">Lucrează după aceeași regulă a casei: nicio dată despre clienții tăi în instrumente. Nu există departament de vânzări și nu există robot care răspunde în locul lor.</p>
-          </div>
-        </div>
-      </div>
-      <p class="small" style="margin-top:28px"><a class="textlink" href={L('/cine')}>Tot parcursul, valorile și limitele asumate →</a></p>
-    </div>
-  </section>
-
-  <!-- 06 REGULA CASEI -->
-  <section class="section on-dark" id="regula" aria-labelledby="h-regula">
-    <div class="wrap">
-      <div class="sec-head"><span class="wp">06</span><span class="label">Regula casei</span></div>
-      <div class="split" style="align-items:start">
-        <div class="stack" style="gap:20px">
-          <h2 id="h-regula">Nicio informație despre un client nu intră într-un instrument AI. <span class="mk mk-dark">Niciodată.</span></h2>
-          <p class="lede muted">Nu e o promisiune de marketing. E o limită pe care o respectăm noi și pe care o cerem și de la tine. Lucrăm cu materialele tale publice și cu procesele cabinetului: ce scrie pe site, cum răspunzi la primul mesaj, cum se confirmă o programare. Niciodată cu ce se spune în cameră.</p>
-          <div class="card">
-            <p class="label" style="color:var(--signal)">Profesionistul rămâne autorul</p>
-            <p>Nimic nu pleacă în numele tău fără să-l fi citit. Fiecare mesaj automat e scris de tine o singură dată. Fiecare articol trece pe la tine înainte să plece. Sistemul duce; tu decizi.</p>
-          </div>
-        </div>
-        <div class="card semafor">
-          <p class="label muted">Protocolul semafor · ce intră unde</p>
-          <ul class="stack" style="gap:12px;list-style:none;margin:0;padding:0">
-            <li><i style="background:var(--ok)"></i><span><strong>Verde.</strong> Materiale publice, texte proprii, idei de postări. Intră în instrumentele aprobate.</span></li>
-            <li><i style="background:var(--warn)"></i><span><strong>Galben.</strong> Organizare fără date identificabile: program, șabloane, întrebări frecvente.</span></li>
-            <li><i style="background:var(--alert)"></i><span><strong>Roșu.</strong> Orice dată de caz sau de sănătate. Nu intră în niciun instrument AI. Niciodată.</span></li>
-          </ul>
-          <p class="note muted">Semaforul e regula noastră de lucru, nu o clasificare juridică. Pentru psihologi, obligațiile vin din Codul deontologic CPR; pentru asistenți sociali, din codul CNASR; pentru coachi, din codul asociației lor. <a href={L('/resurse')}>Ia-l ca afiș pentru perete.</a></p>
+        <div class="thread-wrap">
+          {ZIUA.map((s, i) => (
+            <div class="thread" data-scenariu={s.id} hidden={i !== 0} aria-label="Firul de mesaje de marți seara, cu răspunsul scris o singură dată">
+              <p class="label muted thread-day">Marți · <span class="thread-clock">22:40</span></p>
+              {s.phone.map((m, j) => <div class="bubble in"><span class="b-meta"><span>{j % 2 ? 'WhatsApp' : 'Mesaje'}</span><span>{m[0]}</span></span><p>{m[1]}</p></div>)}
+              <div class="bubble out">
+                <span class="b-meta"><span>{s.raspuns.ora} · scris de tine, o singură dată</span></span>
+                <p>{s.raspuns.text}</p>
+              </div>
+              <p class="thread-fin"><span class="label muted">23:10</span> <span class="mk mk-dark">Seara e a ta.</span></p>
+              <p class="note muted">Exemplu cu un cabinet fictiv. Textul e scris de tine; sistemul doar îl trimite. Niciun AI nu citește ce a scris omul.</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 07 HARTA CABINETULUI -->
+  <!-- 03 HARTA CABINETULUI -->
   <section class="section harta-host" id="harta-sec" aria-labelledby="h-harta">
     <div class="wrap">
-      <div class="sec-head no-print"><span class="wp">07</span><span class="label">Harta cabinetului · gratuit · fără email</span></div>
+      <div class="sec-head no-print"><span class="wp">03</span><span class="label">Harta cabinetului · gratuit · fără email</span></div>
       <div class="harta-intro no-print">
         <figure class="harta-art"><Art name="harta" /></figure>
         <div class="stack" style="gap:18px">
-          <h2 id="h-harta">Patru direcții. <span class="mk">O hartă</span> a cabinetului tău.</h2>
-          <p class="muted">Opt întrebări, două pe ecran, despre ce se întâmplă în jurul ședințelor. Vezi pe loc unde pierzi timp și oameni, pe patru direcții: prezența, primul contact, programările și vocea.</p>
-          <ul class="ticks small"><li>Patru minute, două întrebări pe ecran</li><li>Nicio întrebare despre clienții tăi</li><li>Rezultatul îl vezi imediat; emailul e opțional</li></ul>
+          <h2 id="h-harta">Patru locuri. <span class="mk">O hartă</span> a cabinetului tău.</h2>
+          <p class="muted">Opt întrebări, două pe ecran, despre drumul unui om până la tine: afară, la ușă, înăuntru și pe raft. Vezi pe loc unde se oprește și care e primul pas, pe care îl poți face singur.</p>
+          <ul class="ticks small"><li>Patru minute, două întrebări pe ecran</li><li>Întrebările sunt despre cabinet, nu despre clienții tăi</li><li>Rezultatul îl vezi imediat; emailul e opțional</li></ul>
           <p><a class="btn btn-ink" href="#harta">Încep harta <span class="small" style="font-family:var(--mono);font-weight:500;margin-left:6px">4 min · 0 lei</span></a></p>
         </div>
       </div>
@@ -212,41 +105,92 @@ const description = 'Site, primul contact, programări și materiale puse la luc
     </div>
   </section>
 
-  <!-- 08 RADIOGRAFIA -->
-  <section class="section on-white" id="radiografia" aria-labelledby="h-rad">
+  <!-- 04 CINE O GHIDEAZĂ ȘI REGULA CASEI -->
+  <section class="section on-dark" id="regula" aria-labelledby="h-regula">
     <div class="wrap">
-      <div class="sec-head"><span class="wp">08</span><span class="label">Radiografia · după Hartă, înainte de orice drum</span></div>
+      <div class="sec-head"><span class="wp">04</span><span class="label">Regula casei</span></div>
       <div class="split" style="align-items:start">
-        <div class="stack" style="gap:18px">
-          <h2 id="h-rad">Ziua ta, radiografiată într-o săptămână.</h2>
-          <p class="lede muted">Harta îți arată direcția. Radiografia îți spune, pe cabinetul tău și cu cifre măsurate, unde pierzi timp și oameni, ce poate pleca singur în siguranță și care drum e primul. O citește Ionuț, nu un chestionar.</p>
-          <ul class="small facts">
-            <li><strong>Zilele 1–5.</strong> Un jurnal ghidat de două minute pe seară: ce faci în jurul ședințelor și cât durează. Fără date despre clienți.</li>
-            <li><strong>Ziua 6.</strong> O sesiune online de 90 de minute, cu un câștig rapid pus la lucru pe loc, de obicei răspunsul la primul contact.</li>
-            <li><strong>În 3 zile lucrătoare.</strong> Raportul scris: primele trei automatizări, după ore și efort, Filtrul deontologic pe textele tale publice, Protocolul semafor, planul de 30 de zile.</li>
-          </ul>
-          <a class="btn btn-ink" href={L('/radiografia')}>Vezi cum se desfășoară</a>
+        <div class="stack" style="gap:20px">
+          <h2 id="h-regula">Toată industria pune AI-ul în ședință. <span class="mk mk-dark">Eu îl țin la ușă.</span></h2>
+          <p class="lede muted">Nicio informație despre un client nu intră într-un instrument AI. Lucrăm cu materialele tale publice și cu procesele cabinetului: ce scrie pe site, cum răspunzi la primul mesaj, cum se confirmă o programare. Ce se spune în cameră rămâne în cameră.</p>
+          <p class="muted">Tu rămâi autorul. Fiecare mesaj automat e scris de tine o singură dată. Fiecare articol trece pe la tine înainte să plece. Sistemul duce; tu decizi.</p>
         </div>
-        <aside class="card card-paper rad-card">
-          <p class="label muted">Preț de lansare · primele 10 cabinete</p>
-          <p class="rad-price"><span>{lei(SITE.prices.radiografia)}</span> lei</p>
-          <p class="small muted">Apoi {lei(SITE.prices.radiografiaDupa)} lei. Se scade integral din primul drum, dacă începem în 30 de zile.</p>
-          <p class="small"><strong>Garanția.</strong> Dacă raportul nu conține cel puțin trei recomandări concrete, pe care le poți aplica singur sau cu noi, primești banii înapoi. Condițiile exacte, în contract.</p>
-          <a class="btn btn-signal" href={L('/contact') + '?tip=radiografia'}>Cer Radiografia</a>
-          <p class="note muted">Începi oricum cu Harta, gratuit. Radiografia o ceri doar dacă harta îți spune ceva.</p>
-        </aside>
+        <div class="card semafor">
+          <p class="label muted">Ce intră unde</p>
+          <ul class="stack" style="gap:12px;list-style:none;margin:0;padding:0">
+            <li><i style="background:var(--ok)"></i><span><strong>Verde.</strong> Materiale publice, texte proprii, idei de postări. Intră în instrumentele aprobate.</span></li>
+            <li><i style="background:var(--warn)"></i><span><strong>Galben.</strong> Organizare fără date identificabile: program, șabloane, întrebări frecvente.</span></li>
+            <li><i style="background:var(--alert)"></i><span><strong>Roșu.</strong> Orice dată de caz sau de sănătate. Rămâne la tine, în cameră.</span></li>
+          </ul>
+          <p class="note muted">E regula noastră de lucru, nu o clasificare juridică. Pentru psihologi, obligațiile vin din Codul deontologic CPR; pentru asistenți sociali, din codul CNASR; pentru coachi, din codul asociației lor. <a href={L('/resurse')}>Ia-o ca afiș pentru perete.</a></p>
+        </div>
+      </div>
+
+      <div class="team-grid">
+        <div class="member">
+          <Portrait src={asset('/img/ionut.webp', path)} alt="Ionuț Neacșu, în sacou bleumarin și cămașă albă, privind spre cameră" name="Ionuț Neacșu" role="Oamenii, meseria și regulile" />
+          <div class="stack" style="gap:12px">
+            <p>Sunt Ionuț. Lucrez de 23 de ani în asistență socială: pe stradă și într-un adăpost, la DGASPC Argeș, la conducerea unei asociații din Pitești, apoi, din 2015, în protecția copilului, în Anglia. Am terminat psihologia în Marea Britanie în 2025 și folosesc AI zilnic din 2022, întâi pe propria mea muncă. Țin partea de oameni: discuția, harta, textele, Regula casei. Și tot eu îți răspund.</p>
+            <p class="small muted">Premiul CNASR pentru asistentul social din domeniul persoanelor fără adăpost, 2014. Finalist la National Children &amp; Young People Awards 2026, Marea Britanie. <a class="textlink" href={L('/cine')}>Tot parcursul, cu surse →</a></p>
+          </div>
+        </div>
+        <div class="member">
+          <Portrait src={asset('/img/andrei.webp', path)} alt="Andrei N., cu ochelari și sacou negru, cu mâna sub bărbie, privind în lateral" name="Andrei N." role="Partea tehnică și AI" />
+          <div class="stack" style="gap:12px">
+            <p>Andrei N. ține partea tehnică a AI-ului: sistemele, automatizările și legăturile dintre ele, de la formularul de pe site la confirmarea din calendar. E creatorul și omul din spatele <a class="textlink" href="https://blackstonerepair.co.uk" target="_blank" rel="noopener">Blackstone Repair</a>, un atelier din Marea Britanie care repară plăci video la nivel de componentă, cu programare și urmărire online a fiecărei reparații.</p>
+            <p class="small muted">Suntem doi oameni, o echipă mică și dedicată cu totul. Lucrăm amândoi după aceeași regulă a casei.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 09 DIN JURNAL (apare doar de la trei articole publicate) -->
+  <!-- 05 TREI DRUMURI ȘI RADIOGRAFIA -->
+  <section class="section on-white" id="drumuri" aria-labelledby="h-drumuri">
+    <div class="wrap">
+      <div class="sec-head"><span class="wp">05</span><span class="label">Trei drumuri · preț de pornire la vedere</span></div>
+      <div class="split" style="align-items:end;margin-bottom:36px">
+        <h2 id="h-drumuri">Trei drumuri. Alegi unul, nu toate.</h2>
+        <p class="muted">Fiecare drum are livrabile scrise pe pagina lui, un preț de pornire și o ușă pe care o deschizi singur. Prețurile sunt de lansare, pentru primele 10 cabinete.</p>
+      </div>
+      <div class="g-3 drumuri">
+        {DRUMURI.map((d, i) => (
+          <article class="drum door">
+            <div class="door-art"><Art name={`usa-${i + 1}`} /></div>
+            <span class="label muted">Drumul {d.nr} · {d.locuri}</span>
+            <h3><a href={L(d.path)}>{d.name}</a></h3>
+            <p class="small muted">{d.pentru}</p>
+            <p class="small rezultat">{d.rezultat}</p>
+            <p class="drum-price"><span class="small muted">de la</span> {lei(d.price)} lei</p>
+            <a class="textlink" href={L(d.path)}>Vezi drumul {d.name} →</a>
+          </article>
+        ))}
+      </div>
+
+      <div class="rad-band" id="radiografia">
+        <div class="rad-art"><Art name="tura" /></div>
+        <div class="stack" style="gap:12px">
+          <p class="label muted">Înainte de orice drum · Radiografia</p>
+          <h3>Ziua ta, radiografiată într-o săptămână.</h3>
+          <p class="muted">Harta îți arată locul. Radiografia îți spune, pe cabinetul tău și cu cifre măsurate, unde pierzi timp și oameni, ce poate pleca singur în siguranță și care drum e primul. O citesc eu, nu un chestionar. Cinci seri de jurnal de două minute, o sesiune de 90 de minute, raportul scris în trei zile lucrătoare.</p>
+        </div>
+        <div class="rad-buy">
+          <p class="rad-price"><span>{lei(SITE.prices.radiografia)}</span> lei</p>
+          <p class="small muted">Preț de lansare, primele 10 cabinete; apoi {lei(SITE.prices.radiografiaDupa)} lei. Se scade integral din primul drum, dacă începem în 30 de zile.</p>
+          <a class="btn btn-ink" href={L('/radiografia')}>Vezi cum se desfășoară</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 DIN JURNAL (apare doar de la trei articole publicate) -->
   {showJournal && (
     <section class="section" id="jurnal" aria-labelledby="h-jurnal">
       <div class="wrap">
-        <div class="sec-head"><span class="wp">09</span><span class="label">Din Jurnal</span></div>
+        <div class="sec-head"><span class="wp">06</span><span class="label">Din Jurnal</span></div>
         <div class="split" style="align-items:end;margin-bottom:32px">
           <h2 id="h-jurnal">Educație, nu promovare.</h2>
-          <p class="muted">Articole scrise pentru cabinetul tău: un detaliu, un exemplu, un pas pe care îl poți face singur. Fără jargon, fără date despre nimeni.</p>
+          <p class="muted">Articole scrise pentru cabinetul tău: un detaliu, un exemplu, un pas pe care îl poți face singur. Exemplele sunt compuse și se spune că sunt compuse.</p>
         </div>
         <div class="g-3">
           {posts.slice(0, 3).map((p) => (
@@ -263,28 +207,18 @@ const description = 'Site, primul contact, programări și materiale puse la luc
     </section>
   )}
 
-  <!-- 10 UN OM, NU UN SISTEM -->
-  <section class="section-tight on-paper" id="om" aria-labelledby="h-om">
-    <div class="wrap om-grid">
-      <Portrait class="small" src={asset('/img/ionut.webp', path)} alt="Ionuț Neacșu" />
-      <div class="stack" style="gap:14px">
-        <div class="sec-head" style="margin-bottom:6px"><span class="wp">10</span><span class="label">Un om, nu un sistem</span></div>
-        <h2 id="h-om" style="font-size:clamp(26px,3.4vw,40px)">Răspunde Ionuț, <span class="mk">personal</span>.</h2>
-        <p class="muted">Ionuț și Andrei N., o echipă mică și dedicată cu totul. Nu există departament de vânzări, nu există robot care răspunde în locul lor. Îi poți scrie direct lui Ionuț; {SITE.responseTime} primești un răspuns de pe adresa lui. Dacă vrei să vorbiți 30 de minute, spune-i în mesaj și îți propune două intervale.</p>
-        <p><a class="textlink" href={`mailto:${SITE.email}`}>{SITE.email}</a> · <a class="textlink" href={SITE.linkedin} target="_blank" rel="me noopener">LinkedIn</a> · <a class="textlink" href={L('/contact')}>Formularul de contact</a></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 11 PRIMUL PAS -->
+  <!-- 07 SCRIE-MI -->
   <section class="section on-dark" id="primul-pas" aria-labelledby="h-pas">
     <div class="wrap">
-      <div class="sec-head"><span class="wp">11</span><span class="label">Primul pas</span></div>
+      <div class="sec-head"><span class="wp">{showJournal ? '07' : '06'}</span><span class="label">Scrie-mi</span></div>
       <div class="split" style="align-items:start">
         <div class="stack" style="gap:18px">
           <h2 id="h-pas">Cât spațiu ai, de fapt, pentru oameni?</h2>
-          <p class="lede muted">Scrie-i lui Ionuț două rânduri despre cabinetul tău. Primești un răspuns personal cu un prim pas pe care îl poți face singur, {SITE.responseTime}. Fără ofertă nesolicitată, fără listă de emailuri.</p>
-          <p class="small muted"><strong>Ce se întâmplă după ce apeși „Trimite”.</strong> Mesajul ajunge în căsuța lui de email și nicăieri altundeva. Îți răspunde el. Dacă ai bifat Radiografia, discutați întâi dacă are sens; nimic nu se plătește pe site.</p>
+          <p class="lede muted">Scrie-mi două rânduri despre cabinetul tău. Îți răspund eu, {SITE.responseTime}, cu un prim pas pe care îl poți face singur.</p>
+          <div class="om-row">
+            <Portrait class="small" src={asset('/img/ionut.webp', path)} alt="Ionuț Neacșu" />
+            <p class="small muted">Mesajul ajunge în căsuța mea de email și nicăieri altundeva. Dacă ai bifat Radiografia, discutăm întâi dacă are sens; pe site nu se plătește nimic. Dacă vrei să vorbim 30 de minute, spune-mi în mesaj și îți propun două intervale.<br /><a class="textlink" href={`mailto:${SITE.email}`}>{SITE.email}</a> · <a class="textlink" href={SITE.linkedin} target="_blank" rel="me noopener">LinkedIn</a></p>
+          </div>
         </div>
         <div class="card card-paper" style="color:var(--ink)">
           <ContactForm tip="primul-pas" path={path} showRadiografia showNewsletter showMessage showName submitLabel="Trimite primul pas" id="f-primul-pas" />
@@ -295,99 +229,118 @@ const description = 'Site, primul contact, programări și materiale puse la luc
 
 </Base>
 <style>
-  .hero { padding-top: clamp(40px, 6vw, 72px); }
-  .hero-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
-  .hero-text { display: flex; flex-direction: column; gap: 22px; }
-  .hero-text h1 { max-width: 12ch; }
+  /* 01 */
+  .hero { padding-top: clamp(32px, 5vw, 64px); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); grid-template-rows: auto auto; gap: 24px clamp(28px, 5vw, 64px); align-items: center; }
+  .hero-top { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; gap: 22px; }
+  .hero-fig { grid-column: 2; grid-row: 1 / 3; margin: 0; max-width: 520px; justify-self: center; width: 100%; }
+  .hero-facts { grid-column: 1; grid-row: 2; list-style: none; margin: 0; padding: 14px 0 0; border-top: 1px solid rgba(20, 18, 22, .15); display: flex; gap: 8px 22px; flex-wrap: wrap; }
+  .hero-facts li::before { content: "•"; margin-right: 8px; color: var(--plum); }
+  .hero-top h1 { max-width: 12ch; }
+  .hero-prof { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .pill-sm { min-height: 36px; padding: 0 14px; font-size: 14px; }
   .hero-cta { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
   .hero-cta .btn { min-height: 60px; padding: 0 32px; font-size: 18px; }
-  .hero-fig { margin: 0; max-width: 520px; justify-self: center; width: 100%; }
-  .hero-facts { list-style: none; margin: 0; padding: 14px 0 0; border-top: 1px solid rgba(20, 18, 22, .15); display: flex; gap: 8px 22px; flex-wrap: wrap; }
-  .hero-facts li::before { content: "•"; margin-right: 8px; color: var(--plum); }
-  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .hero-text h1 { max-width: none; } }
-
-  .promises .promise { display: flex; flex-direction: column; gap: 12px; padding-top: 18px; border-top: 2px solid var(--ink); }
-  .promises h3 { font-size: clamp(24px, 2.6vw, 32px); }
-
-  .pills { display: flex; gap: 8px; flex-wrap: wrap; }
-  .phone-wrap { display: flex; justify-content: center; padding: 10px 0; }
-  .phone { width: 300px; max-width: 100%; aspect-ratio: 9 / 17.2; background: #0B0A0D; border-radius: 46px; padding: 12px; box-shadow: 0 0 0 2px #2A2630, 0 40px 70px rgba(53, 34, 79, .3), inset 0 0 0 1px rgba(255, 255, 255, .06); transform: rotate(-4deg); position: relative; color: var(--ink); }
-  .phone::before { content: ""; position: absolute; left: -3px; top: 120px; width: 3px; height: 34px; background: #2A2630; border-radius: 2px 0 0 2px; box-shadow: 0 52px 0 #2A2630; }
-  .phone::after { content: ""; position: absolute; right: -3px; top: 160px; width: 3px; height: 60px; background: #2A2630; border-radius: 0 2px 2px 0; }
-  .screen { position: absolute; inset: 12px; border-radius: 36px; overflow: hidden; background: linear-gradient(180deg, #F2EEE8 0%, #E6E0EC 100%); display: flex; flex-direction: column; }
-  .island { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 96px; height: 28px; background: #0B0A0D; border-radius: 14px; z-index: 2; }
-  .lock { display: flex; flex-direction: column; align-items: center; padding: 52px 0 10px; }
-  .phone-clock { font-family: var(--display); font-weight: 600; font-size: 60px; line-height: 1; letter-spacing: -0.04em; color: var(--plum); }
-  .phone-msgs { padding: 6px 10px 0; display: flex; flex-direction: column; gap: 7px; flex: 1; }
-  .msg { background: rgba(255, 255, 255, .8); border-radius: 16px; padding: 10px 12px 10px 44px; display: flex; flex-direction: column; gap: 2px; position: relative; }
-  .msg::before { content: ""; position: absolute; left: 12px; top: 11px; width: 24px; height: 24px; border-radius: 6px; background: var(--plum); }
-  .msg-head { display: flex; justify-content: space-between; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
-  .msg-head .app { font-family: var(--text); font-weight: 600; color: var(--ink); }
-  .msg p { font-size: 13px; line-height: 1.3; }
-  .phone-foot { padding: 6px 18px 10px; color: var(--muted); text-align: center; }
-  .homebar { width: 110px; height: 5px; background: var(--ink); border-radius: 3px; margin: 0 auto 10px; opacity: .7; }
-  @media (max-width: 900px) { .phone { transform: none; width: 280px; } }
-
-  .day { display: flex; flex-direction: column; gap: 14px; margin-top: 36px; }
-  .day-lead { font-size: 17px; }
-  .day-head { display: grid; grid-template-columns: minmax(0, 1fr) 84px minmax(0, 1fr); gap: 12px; }
-  .day-head span:first-child { text-align: right; }
-  .day-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-  .day-list li { display: grid; grid-template-columns: minmax(0, 1fr) 84px minmax(0, 1fr); gap: 12px; align-items: stretch; }
-  .d-azi, .d-sis { display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; border-radius: var(--r); }
-  .d-azi { background: var(--white); border: 1px solid var(--mist); text-align: right; align-items: flex-end; }
-  .d-sis { background: var(--plum); color: var(--paper); }
-  .d-sis .small { color: var(--muted-light); }
-  .d-ora { display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; }
-  .day-list li.key .d-sis { outline: 3px solid var(--signal); outline-offset: -3px; }
-  .day-band { text-align: center; padding: 10px; border: 1px dotted var(--ink); border-radius: var(--r); }
-  @media (max-width: 760px) {
-    .day-head { display: none; }
-    .day-list li { grid-template-columns: 1fr; gap: 6px; }
-    .d-azi { text-align: left; align-items: flex-start; }
-    .d-ora { justify-content: flex-start; padding-top: 6px; }
+  .hero-sign { margin-top: -6px; }
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+    .hero-top, .hero-fig, .hero-facts { grid-column: 1; grid-row: auto; }
+    .hero-top h1 { max-width: none; }
+    .hero-fig { max-width: 420px; }
   }
 
-  .drum { display: flex; flex-direction: column; gap: 10px; border: 1.5px solid var(--plum); border-radius: var(--r); padding: 28px 28px 22px; background: #F7F4EF; min-width: 0; }
-  .door-art { max-width: 200px; margin: -6px auto 14px; width: 100%; }
-  .drum h3 { font-size: clamp(26px, 2.6vw, 32px); }
-  .drum h3 a { text-decoration: none; color: inherit; display: inline-block; padding: 6px 0; margin: -6px 0; }
-  .drum h3 a:hover { text-decoration: underline; text-decoration-color: var(--signal); text-decoration-thickness: 5px; }
-  .drum-price { font-family: var(--display); font-weight: 800; font-size: 26px; margin-top: auto; padding-top: 12px; display: flex; align-items: baseline; gap: 8px; }
-  .drum .textlink { align-self: flex-start; }
-  .team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px); }
-  .member { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 22px; align-items: start; }
-  .facts { margin: 0; display: grid; gap: 10px; }
-  .facts div { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; border-top: 1px solid var(--mist); padding-top: 10px; font-size: var(--fs-small); }
-  .facts dt { font-family: var(--mono); font-weight: 500; color: var(--plum); }
-  .facts dd { margin: 0; color: var(--muted); }
-  .facts dd a { color: var(--ink); display: inline-block; padding: 12px 2px; margin: -12px -2px; }
-  @media (max-width: 960px) { .team-grid { grid-template-columns: 1fr; } }
-  @media (max-width: 560px) { .member { grid-template-columns: 1fr; } .member :global(.portrait) { max-width: 240px; } }
+  /* 02 */
+  .seara-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
+  .day-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .day-list li { display: grid; grid-template-columns: 56px minmax(0, 1fr) minmax(0, 1fr); gap: 10px; align-items: stretch; }
+  .d-ora { font-family: var(--mono); font-size: 13px; padding-top: 16px; color: var(--muted-light); }
+  .d-azi, .d-sis { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border-radius: var(--r); }
+  .d-azi { border: 1px dashed rgba(242, 238, 232, .35); }
+  .d-sis { background: var(--paper); color: var(--ink); }
+  .d-sis .small { color: var(--muted); }
+  .d-sis .label { color: var(--plum); }
+  .day-list li.key .d-sis { outline: 3px solid var(--signal); outline-offset: -3px; }
+  .thread-wrap { display: flex; flex-direction: column; }
+  .thread { display: flex; flex-direction: column; gap: 10px; }
+  .thread-day { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .thread-clock { font-family: var(--display); font-weight: 700; font-size: 34px; letter-spacing: -0.03em; color: var(--paper); line-height: 1; }
+  .bubble { border-radius: 16px; padding: 10px 14px; max-width: 92%; display: flex; flex-direction: column; gap: 4px; }
+  .bubble p { font-size: 15px; line-height: 1.45; }
+  .bubble.in { background: rgba(242, 238, 232, .1); border: 1px solid rgba(242, 238, 232, .25); align-self: flex-start; }
+  .bubble.out { background: var(--paper); color: var(--ink); align-self: flex-end; border: 3px solid var(--signal); }
+  .b-meta { display: flex; justify-content: space-between; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--muted-light); }
+  .bubble.out .b-meta { color: var(--plum); font-weight: 500; }
+  .thread-fin { display: flex; align-items: baseline; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 22px; margin-top: 6px; }
+  @media (max-width: 900px) { .seara-grid { grid-template-columns: 1fr; } .thread-wrap { order: -1; } }
+  @media (max-width: 600px) {
+    /* Pe telefon, lista serii e compactă: ora, ce e azi, ce e cu sistem; notele rămân pe desktop. */
+    .day-list li { grid-template-columns: 1fr; gap: 4px; }
+    .d-ora { padding-top: 0; }
+    .d-azi, .d-sis { padding: 10px 12px; }
+    .d-azi .small, .d-sis .small { display: none; }
+  }
+
+  /* 03 */
   .harta-intro { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 5vw, 64px); align-items: center; margin-bottom: clamp(32px, 5vw, 56px); }
   .harta-art { margin: 0; max-width: 440px; width: 100%; }
   @media (max-width: 900px) { .harta-intro { grid-template-columns: 1fr; } .harta-art { max-width: 360px; } }
 
+  /* 04 */
   .semafor li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; }
   .semafor li i { width: 12px; height: 12px; border-radius: 50%; flex: none; margin-top: 6px; }
   .semafor .note a { color: inherit; }
+  .team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px); margin-top: clamp(40px, 6vw, 72px); padding-top: clamp(28px, 4vw, 48px); border-top: 1px solid rgba(242, 238, 232, .25); }
+  .member { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 22px; align-items: start; }
+  .member p { font-size: var(--fs-small); }
+  .member .textlink { color: inherit; }
+  @media (max-width: 960px) { .team-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .member { grid-template-columns: 1fr; } .member :global(.portrait) { max-width: 220px; } }
 
-  .rad-card { gap: 12px; position: sticky; top: 92px; }
-  .rad-price { display: flex; align-items: baseline; gap: 8px; font-family: var(--display); font-weight: 700; font-size: 22px; }
-  .rad-price span { font-size: 72px; font-weight: 800; line-height: .9; letter-spacing: -0.04em; }
+  /* 05 */
+  .drum { display: flex; flex-direction: column; gap: 10px; border: 1.5px solid var(--plum); border-radius: var(--r); padding: 24px 24px 20px; background: #F7F4EF; min-width: 0; }
+  .door-art { max-width: 170px; margin: -6px auto 10px; width: 100%; }
+  @media (max-width: 600px) {
+    /* Pe telefon, ușa stă în stânga și textul în dreapta: cardul rămâne pe un singur ecran. */
+    .drum { display: grid; grid-template-columns: 92px minmax(0, 1fr); column-gap: 14px; row-gap: 6px; padding: 18px 18px 16px; }
+    .door-art { grid-column: 1; grid-row: 1 / span 6; max-width: 92px; margin: 0; align-self: start; }
+    .drum > :not(.door-art) { grid-column: 2; }
+    .drum .rezultat { display: none; }
+    .drum-price { margin-top: 4px; padding-top: 4px; }
+  }
+  .drum h3 { font-size: clamp(26px, 2.6vw, 32px); }
+  .drum h3 a { text-decoration: none; color: inherit; display: inline-block; padding: 6px 0; margin: -6px 0; }
+  .drum h3 a:hover { text-decoration: underline; text-decoration-color: var(--signal); text-decoration-thickness: 5px; }
+  .drum-price { font-family: var(--display); font-weight: 800; font-size: 26px; margin-top: auto; padding-top: 10px; display: flex; align-items: baseline; gap: 8px; }
+  .drum .textlink { align-self: flex-start; }
+  .rad-band { margin-top: clamp(28px, 4vw, 48px); display: grid; grid-template-columns: 220px minmax(0, 1fr) 260px; gap: clamp(20px, 3vw, 40px); align-items: center; border: 1px solid var(--ink); border-radius: var(--r); padding: clamp(20px, 3vw, 32px); background: var(--paper); }
+  .rad-art { max-width: 220px; }
+  .rad-band h3 { font-size: clamp(24px, 2.6vw, 30px); }
+  .rad-buy { display: flex; flex-direction: column; gap: 10px; }
+  .rad-price { display: flex; align-items: baseline; gap: 8px; font-family: var(--display); font-weight: 700; font-size: 20px; }
+  .rad-price span { font-size: 56px; font-weight: 800; line-height: .9; letter-spacing: -0.04em; }
+  @media (max-width: 960px) { .rad-band { grid-template-columns: 1fr; } .rad-art { max-width: 200px; } }
+
+  /* 06 */
   .post-card { text-decoration: none; }
   .post-card-art { margin: -4px 0 6px; border-radius: var(--r); overflow: hidden; }
   .post-card:hover h3 { text-decoration: underline; text-decoration-color: var(--signal); }
 
-  .om-grid { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px; align-items: center; }
-  @media (max-width: 640px) { .om-grid { grid-template-columns: 1fr; } }
+  /* 07 */
+  .om-row { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 18px; align-items: center; }
+  .om-row .textlink { color: inherit; }
+  @media (max-width: 560px) { .om-row { grid-template-columns: 1fr; } .om-row :global(.portrait) { max-width: 160px; } }
 </style>
 <script>
-  // Scenariul pe profesie: trei variante pre-randate; butoanele doar le arată și le ascund.
-  const pills = document.querySelectorAll('.pill[data-scenariu]');
-  pills.forEach((p) => p.addEventListener('click', () => {
-    const id = p.dataset.scenariu;
-    pills.forEach((x) => x.setAttribute('aria-pressed', String(x === p)));
-    document.querySelectorAll('[data-scenariu]:not(.pill)').forEach((el) => { el.hidden = el.dataset.scenariu !== id; });
-  }));
+  // Profesia se alege o dată, sus, și se ține minte: schimbă scenariul serii, firul de mesaje și câmpul „Lucrez ca” din formulare.
+  const KEY = 'rfp-profesie';
+  const pills = [...document.querySelectorAll('.pill[data-profesie]')];
+  function apply(id) {
+    pills.forEach((p) => p.setAttribute('aria-pressed', String(p.dataset.profesie === id)));
+    document.querySelectorAll('[data-scenariu]').forEach((el) => { el.hidden = el.dataset.scenariu !== id; });
+    document.querySelectorAll('select[name="profesie"]').forEach((s) => { if ([...s.options].some((o) => o.value === id)) s.value = id; });
+  }
+  pills.forEach((p) => p.addEventListener('click', () => { apply(p.dataset.profesie); try { localStorage.setItem(KEY, p.dataset.profesie); } catch {} }));
+  let saved = null; try { saved = localStorage.getItem(KEY); } catch {}
+  if (saved && pills.some((p) => p.dataset.profesie === saved)) apply(saved);
+  document.querySelectorAll('select[name="profesie"]').forEach((s) => s.addEventListener('change', () => { if (pills.some((p) => p.dataset.profesie === s.value)) { apply(s.value); try { localStorage.setItem(KEY, s.value); } catch {} } }));
 </script>

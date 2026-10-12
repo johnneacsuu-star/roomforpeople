@@ -85,7 +85,7 @@ export default async function handler(req, res) {
 
   if (harta) {
     lines.push('\nHarta cabinetului:');
-    for (const d of ['Prezență', 'Primul contact', 'Administrare', 'Pregătire pentru AI']) {
+    for (const d of ['Prezență', 'Primul contact', 'Programări', 'Voce']) {
       if (harta[d]) lines.push(`  ${d}: ${clean(String(harta[d].stage), 60)} (${clean(String(harta[d].score), 10)}/25)`);
     }
     if (Array.isArray(harta.raspunsuri)) {

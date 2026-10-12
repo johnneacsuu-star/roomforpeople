@@ -5,7 +5,7 @@ date: 2026-10-11
 pillar: "A doua tură"
 profesii: ["psi", "as", "co"]
 draft: false
-art: "plan"
+art: "tura"
 order: 4
 ---
 

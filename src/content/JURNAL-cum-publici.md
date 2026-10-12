@@ -5,4 +5,6 @@
 3. `draft: true` ține articolul nepublicat; nici nu se construiește. Când e verificat, pui `draft: false`.
 4. Site-ul se reconstruiește singur la fiecare modificare în depozit. Pagina principală arată secțiunea „Din Jurnal” doar când sunt cel puțin 3 articole publicate.
 
+5. Imaginea: `art` alege una din coperțile desenate (noapte, prag, semn, tura, caiet, plan, flux, harta, usa-1, usa-2, usa-3). Pentru un obiect nou, se adaugă în `scripts/art.mjs` și se rulează `node scripts/art.mjs`. Regula imaginilor: linie desenată pentru idei; fotografie doar pentru oameni și locuri reale (`image`, `imageAlt`, `credit`). Fără fotografii de stoc.
+
 Regula casei se aplică și aici: nicio informație despre un client, nici anonimizată. Exemplele sunt compuse și se spune că sunt compuse.

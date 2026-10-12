@@ -5,13 +5,13 @@ import Harta from '../components/Harta.astro';
 import Art from '../components/Art.astro';
 const path = '/harta';
 ---
-<Base title="Harta cabinetului · gratuită, 4 minute" description="Opt întrebări, patru direcții, rezultatul pe loc. Afli unde pierzi timp și oameni în jurul cabinetului și care e primul pas pe fiecare direcție. Fără email, fără date despre clienți." path={path} bodyClass="harta-page">
-  <PageHead label="Harta cabinetului · gratuit · fără email" lede="Opt întrebări, două pe ecran, despre cum arată drumul unui om până la tine și restul zilei tale. Rezultatul se vede pe loc, cu un prim pas pe fiecare direcție. Îl poți descărca. Nu îți cerem emailul pentru el.">
-    <Fragment slot="title">Patru direcții. <span class="mk">O hartă</span> a cabinetului tău.</Fragment>
+<Base title="Harta cabinetului · gratuită, 4 minute" description="Opt întrebări, patru locuri din cabinet, rezultatul pe loc. Afli unde se oprește omul care te caută și care e primul pas pe fiecare loc. Fără email, fără date despre clienți." path={path} bodyClass="harta-page">
+  <PageHead label="Harta cabinetului · gratuit · fără email" lede="Opt întrebări, două pe ecran, despre cum arată drumul unui om până la tine și restul zilei tale. Rezultatul se vede pe loc, cu un prim pas pe fiecare loc din cabinet. Îl poți descărca. Emailul rămâne al tău.">
+    <Fragment slot="title">Patru locuri. <span class="mk">O hartă</span> a cabinetului tău.</Fragment>
   </PageHead>
   <section class="section-tight harta-host">
     <div class="wrap harta-grid">
-      <aside class="harta-side no-print"><Art name="harta" /><p class="note muted">Harta cabinetului, desenată ca un plan de casă: afară, prezența; la ușă, primul contact; înăuntru, programările și vocea. Cabinetul rămâne doar al oamenilor.</p></aside>
+      <aside class="harta-side no-print"><Art name="harta" /><p class="note muted">Harta cabinetului, desenată ca un plan de casă: afară, prezența; la ușă, primul contact; înăuntru, programările; pe raft, vocea. Camera rămâne doar a oamenilor.</p></aside>
       <div><Harta path={path} standalone /></div>
     </div>
   </section>

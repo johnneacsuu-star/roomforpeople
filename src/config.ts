@@ -18,7 +18,7 @@ export const SITE = {
 };
 
 export const PROFESII = [
-  { id: 'psi', label: 'Psiholog / psihoterapeut', plural: 'psihologi și psihoterapeuți' },
-  { id: 'as', label: 'Asistent social independent', plural: 'asistenți sociali independenți' },
-  { id: 'co', label: 'Coach', plural: 'coachi' },
+  { id: 'psi', label: 'Psiholog / psihoterapeut', scurt: 'Psiholog / psihoterapeut', plural: 'psihologi și psihoterapeuți' },
+  { id: 'as', label: 'Asistent social independent', scurt: 'Asistent social', plural: 'asistenți sociali independenți' },
+  { id: 'co', label: 'Coach', scurt: 'Coach', plural: 'coachi' },
 ] as const;

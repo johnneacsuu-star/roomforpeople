@@ -5,10 +5,7 @@ date: 2026-10-11
 pillar: "Cum te vede lumea"
 profesii: ["psi", "as", "co"]
 draft: false
-art: "harta"
-image: "/img/jurnal/strada-apus.webp"
-imageAlt: "O stradă de oraș la apus, cu un semafor și oameni care merg pe trotuar"
-credit: "Unsplash"
+art: "semn"
 order: 3
 sources:
   - { title: "Eurostat, Use of artificial intelligence in enterprises", url: "https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Use_of_artificial_intelligence_in_enterprises" }

@@ -90,10 +90,13 @@ for (let step = 0; step < 4; step++) {
 }
 await page.waitForSelector('#harta-rezultat:not([hidden])');
 const lead = await page.textContent('#rez-lead');
-ok('Harta: rezultatul apare pe loc, fără email', /din 100/.test(lead) && (await page.locator('#rez-list li').count()) === 4);
-ok('Harta: direcția cea mai slabă e marcată (Administrare)', (await page.locator('#rez-list li.weak .r-name').textContent()).includes('Administrare'));
-const pts = await page.getAttribute('#compass-shape', 'points'); ok('Harta: busola se desenează', pts && !pts.includes('120,120 120,120 120,120 120,120'));
-await page.click('#harta-send-toggle'); ok('Harta: formularul de trimitere apare și poartă harta', !(await page.isHidden('#harta-send')) && (await page.getAttribute('#f-harta', 'data-harta')).includes('Administrare'));
+ok('Harta: rezultatul apare pe loc, fără email, și vorbește despre loc, nu despre om', /Calendarul se ține încă de mână/.test(lead) && !/din 100/.test(lead) && (await page.locator('#rez-list li').count()) === 4);
+const barH = await page.evaluate(() => Math.round(document.querySelector('#rez-list .r-bar').getBoundingClientRect().height));
+ok('Harta: lista rezultatului are stil (barele au înălțime)', barH >= 4, String(barH));
+ok('Harta: cifrele stau în „vezi detaliile”', /din 100/.test(await page.textContent('#rez-cifre')));
+ok('Harta: locul cel mai slab e marcat (Programări)', (await page.locator('#rez-list li.weak .r-name').textContent()).includes('Programări'));
+const pts = await page.getAttribute('#compass-shape', 'points'); ok('Harta: busola se desenează', pts && !pts.includes('160,131 160,131 160,131 160,131'));
+await page.click('#harta-send-toggle'); ok('Harta: formularul de trimitere apare și poartă harta', !(await page.isHidden('#harta-send')) && (await page.getAttribute('#f-harta', 'data-harta')).includes('Programări'));
 ok('Harta: butonul de PDF există', (await page.locator('#harta-print').count()) === 1);
 await page.reload({ waitUntil: 'networkidle' }); await page.waitForSelector('#harta-rezultat:not([hidden])');
 ok('Harta: rezultatul se păstrează la reîncărcare (localStorage)', true);
@@ -108,7 +111,7 @@ ok('Calculator: 10×6/60+2 = 3 ore/săpt; ×40 = 120; ×200 = 24.000', oreSapt =
 
 // Scenariile pe profesie (pagina principală)
 await page.goto(base + '/', { waitUntil: 'networkidle' });
-await page.click('.pill[data-scenariu="as"]');
+await page.click('.pill[data-profesie="as"]');
 ok('Ziua ta: schimbarea profesiei arată scenariul potrivit', !(await page.isHidden('.day[data-scenariu="as"]')) && (await page.isHidden('.day[data-scenariu="psi"]')));
 ok('Pagina principală: „Din Jurnal” apare cu ≥3 articole', (await page.locator('#jurnal .post-card').count()) === 3);
 

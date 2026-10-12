@@ -1,6 +1,7 @@
 // Ziua ta: cinci momente, aceeași zi, două seri. Un scenariu pe profesie. Fără dramă; recunoaștere.
 export type Moment = { ora: string; azi: string; aziNota: string; sistem: string; sistemNota: string };
-export type Scenariu = { id: 'psi' | 'as' | 'co'; label: string; lead: string; momente: Moment[]; phone: [string, string][] };
+export type Scenariu = { id: 'psi' | 'as' | 'co'; label: string; lead: string; momente: Moment[]; phone: [string, string][]; raspuns: { ora: string; text: string } };
+// `raspuns` e produsul: răspunsul scris o singură dată de profesionist, care pleacă singur seara. Exemple cu cabinete fictive.
 
 export const ZIUA: Scenariu[] = [
   {
@@ -14,6 +15,7 @@ export const ZIUA: Scenariu[] = [
       { ora: '23:10', azi: 'Factura de luna trecută', aziNota: 'Și tabelul cu plățile.', sistem: 'Seara e a ta', sistemNota: 'Nimic de recuperat.' },
     ],
     phone: [['22:40', 'Bună seara, cât costă o ședință? Și dacă lucrați și online?'], ['22:41', 'Scuze că scriu târziu. Pot muta joi la 18?'], ['22:52', 'Ne-ați fost recomandată. Mai primiți clienți noi?']],
+    raspuns: { ora: '22:41', text: 'Bună seara. Sunt Andreea P., psihoterapeut. Îți mulțumesc că mi-ai scris. O ședință durează 50 de minute și costă 250 de lei. Lucrez în Cluj și online. Prima întâlnire e o discuție de 30 de minute, în care vedem dacă ne potrivim. Îți poți alege ora din linkul de mai jos. Citesc mesajul tău mâine, la 9:00. Dacă ești în pericol, sună acum la 112.' },
   },
   {
     id: 'as', label: 'Asistent social independent',
@@ -26,6 +28,7 @@ export const ZIUA: Scenariu[] = [
       { ora: '23:10', azi: 'Facturile către două organizații', aziNota: 'Și tabelul cu orele.', sistem: 'Seara e a ta', sistemNota: 'Nimic de recuperat.' },
     ],
     phone: [['22:40', 'Bună seara, sunt de la școală. Avem o familie, puteți prelua? Ce acte trebuie?'], ['22:46', 'Mă puteți ajuta? Nu știu cu cine să vorbesc.'], ['22:58', 'Raportul pentru primărie e gata? Îl trebuie mâine la 9.']],
+    raspuns: { ora: '22:41', text: 'Bună seara. Sunt Mihai D., asistent social. Mulțumesc pentru mesaj. Lucrez cu familii și cu școli din județul Argeș. Primul pas e o discuție de 20 de minute, pe care o puteți alege din linkul de mai jos; apoi vă trimit fișa de servicii și acordul. Vă rog să nu scrieți aici nume sau detalii despre familie. Citesc mesajul mâine, la 9:00. Dacă un copil e în pericol acum, sunați la 112.' },
   },
   {
     id: 'co', label: 'Coach',
@@ -38,5 +41,6 @@ export const ZIUA: Scenariu[] = [
       { ora: '23:10', azi: 'Factura și recapitularea', aziNota: 'Pentru clientul de la 16:00.', sistem: 'Seara e a ta', sistemNota: 'Nimic de recuperat.' },
     ],
     phone: [['22:40', 'Am văzut pagina programului. Ce include, mai exact?'], ['22:43', 'Nu am primit materialele de la sesiunea 3.'], ['22:57', 'Putem vorbi 15 minute săptămâna asta? Nu știu dacă e pentru mine.']],
+    raspuns: { ora: '22:41', text: 'Bună seara. Sunt Ioana R., coach. Mulțumesc că mi-ai scris. Programul are șase sesiuni de 60 de minute, online, și costă 1.800 de lei. Începem cu o discuție de 30 de minute, fără cost, ca să vedem dacă e pentru tine. Îți alegi ora din linkul de mai jos. Citesc mesajul tău mâine, la 9:00. Dacă ești în pericol, sună acum la 112.' },
   },
 ];

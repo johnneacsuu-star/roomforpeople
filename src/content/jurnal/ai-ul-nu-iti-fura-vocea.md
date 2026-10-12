@@ -5,7 +5,7 @@ date: 2026-10-11
 pillar: "Atelierul"
 profesii: ["psi", "as", "co"]
 draft: false
-art: "usa-2"
+art: "caiet"
 order: 5
 sources:
   - { title: "Codul deontologic CPR, 2018", url: "https://www.copsi.ro/images/Codul_Deontologic_HOT%C3%84--R%C3%83--RE_CN_nr._1_din_24_noiembrie_2018.pdf" }
