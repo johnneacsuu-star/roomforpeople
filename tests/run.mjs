@@ -64,7 +64,7 @@ await page.evaluate(() => { document.querySelector('#f-contact input[name=t]').v
 const [req] = await Promise.all([page.waitForRequest('**/api/contact'), page.click('#f-contact button[type=submit]')]);
 const payload = JSON.parse(req.postData());
 await page.waitForFunction(() => !document.querySelector('#f-contact .form-msg').hidden);
-ok('Formular: 200 → mesaj de succes', (await page.textContent('#f-contact .form-msg')).includes('a ajuns la Ionuț'));
+ok('Formular: 200 → mesaj de succes', (await page.textContent('#f-contact .form-msg')).includes('a ajuns la mine'));
 ok('Formular: payload corect (tip, email, mesaj, t)', payload.tip === 'contact' && payload.email === 'test@exemplu.ro' && payload.mesaj === 'Un mesaj de probă.' && typeof payload.t === 'number');
 ok('Formular: câmpurile se golesc după succes', (await page.inputValue('#f-contact input[name=email]')) === '');
 apiMode = 503; await page.fill('#f-contact input[name=email]', 'test@exemplu.ro'); await page.click('#f-contact button[type=submit]');

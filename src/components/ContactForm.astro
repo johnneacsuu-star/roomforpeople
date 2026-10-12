@@ -75,7 +75,7 @@ const {
         const r = await fetch(form.dataset.api, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
         let data = {}; try { data = await r.json(); } catch {}
         if (r.ok && data.ok) {
-          show('ok', `Mulțumesc. Mesajul a ajuns la Ionuț. Îți răspunde personal, ${responseTime}, de pe adresa lui, nu de la un sistem.`);
+          show('ok', `Mulțumesc. Mesajul a ajuns la mine, Ionuț. Îți răspund personal, ${responseTime}, de pe adresa mea, nu de la un sistem.`);
           form.querySelectorAll('input:not([type=hidden]):not([name=website]), textarea').forEach((i) => { if (i.type === 'checkbox') i.checked = false; else i.value = ''; });
         } else if (r.status === 503) {
           show('error', `Formularul nu e încă legat la email. Scrie-mi direct la <a href="mailto:${emailSite()}">${emailSite()}</a> și îți răspund eu.`);

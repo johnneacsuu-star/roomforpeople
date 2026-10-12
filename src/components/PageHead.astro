@@ -2,16 +2,23 @@
 // Capul paginilor interioare: etichetă, titlu, lede, și opțional un rând de acțiuni.
 interface Props { label?: string; lede?: string; dark?: boolean }
 const { label, lede, dark = false } = Astro.props;
+const hasArt = Astro.slots.has('art');
 ---
 <section class={`phead section-tight ${dark ? 'on-dark' : ''}`}>
-  <div class="wrap stack" style="gap:18px">
-    {label && <p class="label muted">{label}</p>}
-    <h1><slot name="title" /></h1>
-    {lede && <p class="lede muted" style="max-width:62ch">{lede}</p>}
-    <slot />
+  <div class={`wrap ${hasArt ? 'phead-grid' : 'stack'}`} style="gap:18px">
+    <div class="stack" style="gap:18px">
+      {label && <p class="label muted">{label}</p>}
+      <h1><slot name="title" /></h1>
+      {lede && <p class="lede muted" style="max-width:62ch">{lede}</p>}
+      <slot />
+    </div>
+    {hasArt && <figure class="phead-art"><slot name="art" /></figure>}
   </div>
 </section>
 <style>
   .phead { padding-top: clamp(40px, 6vw, 72px); }
   .phead h1 { max-width: 20ch; font-size: clamp(34px, 5vw, 60px); }
+  .phead-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+  .phead-art { margin: 0; width: 100%; max-width: 460px; justify-self: center; }
+  @media (max-width: 900px) { .phead-grid { grid-template-columns: 1fr; } .phead-art { max-width: 380px; } }
 </style>

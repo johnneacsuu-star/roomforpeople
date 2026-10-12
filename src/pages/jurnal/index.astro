@@ -10,7 +10,7 @@ const posts = await publishedPosts();
 const pillars = [...new Set(posts.map((p) => p.data.pillar))];
 ---
 <Base title="Jurnal" description="Articole scrise pentru cabinetul tău: un detaliu, un exemplu, un pas pe care îl poți face singur. Fără jargon, fără date despre nimeni." path={path} noindex={posts.length === 0}>
-  <PageHead label="Jurnal · educație, nu promovare" lede="Un articol de fond pe săptămână și o notă scurtă, din înregistrările lui Ionuț. Fiecare lasă cititorul cu un lucru pe care îl face mâine dimineață. Fără jargon, fără date despre nimeni.">
+  <PageHead label="Jurnal · educație, nu promovare" lede="Un articol de fond pe săptămână și o notă scurtă, din înregistrările mele. Fiecare lasă cititorul cu un lucru pe care îl face mâine dimineață. Fără jargon, fără date despre nimeni.">
     <Fragment slot="title">Idei pe care le poți folosi <span class="mk">mâine dimineață</span>.</Fragment>
   </PageHead>
   <section class="section on-white">
@@ -18,7 +18,7 @@ const pillars = [...new Set(posts.map((p) => p.data.pillar))];
       {posts.length === 0 ? (
         <div class="stack" style="gap:16px;max-width:60ch">
           <h2>Primele articole se publică în curând.</h2>
-          <p class="muted">Jurnalul se deschide cu trei articole, nu cu unul. Până atunci, poți primi ideile pe email, la două săptămâni, sau poți citi ce scrie Ionuț pe <a class="textlink" href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a>.</p>
+          <p class="muted">Jurnalul se deschide cu trei articole, nu cu unul. Până atunci, poți primi ideile pe email, la două săptămâni, sau poți citi ce scriu pe <a class="textlink" href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a>.</p>
           <p><a class="btn btn-ink" href={L('/contact')}>Vreau emailul la două săptămâni</a></p>
         </div>
       ) : (

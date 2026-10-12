@@ -5,6 +5,7 @@ import PostImage from '../../components/PostImage.astro';
 import { publishedPosts, fmtDate } from '../../lib/jurnal';
 import { link } from '../../lib/links';
 import { SITE } from '../../config';
+import { existsSync } from 'node:fs';
 export async function getStaticPaths() {
   const posts = await publishedPosts();
   return posts.map((post, i) => ({ params: { slug: post.id }, props: { post, prev: posts[i + 1] ?? null, next: posts[i - 1] ?? null } }));
@@ -12,9 +13,11 @@ export async function getStaticPaths() {
 const { post, prev, next } = Astro.props;
 const { Content } = await render(post);
 const path = `/jurnal/${post.id}`; const L = (p: string) => link(p, path);
+// Cardul de distribuire al articolului, dacă a fost generat (node scripts/og.mjs); altfel, cel al site-ului.
+const ogImage = existsSync(`public/og/jurnal-${post.id}.png`) ? `/og/jurnal-${post.id}.png` : '/og.png';
 const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: post.data.title, description: post.data.description, datePublished: post.data.date.toISOString(), author: { '@type': 'Person', name: SITE.founder }, publisher: { '@type': 'Organization', name: SITE.name }, inLanguage: 'ro', mainEntityOfPage: new URL(path, SITE.url).toString() };
 ---
-<Base title={post.data.title} description={post.data.description} path={path} jsonLd={jsonLd}>
+<Base title={post.data.title} description={post.data.description} path={path} jsonLd={jsonLd} ogImage={ogImage}>
   <article class="section-tight">
     <div class="wrap stack" style="gap:22px">
       <p class="label muted"><a href={L('/jurnal')} style="text-decoration:none">Jurnal</a> · {post.data.pillar} · {fmtDate(post.data.date)}</p>

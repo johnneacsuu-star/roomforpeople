@@ -31,3 +31,8 @@ node scripts/preview.mjs           # rescrie căile absolute și pregătește fr
 - `src/lib/ziua.ts`: scenariile „Ziua ta” pe profesie. `src/lib/drumuri.ts`: cele trei drumuri.
 - `src/pages/confidentialitate.astro`: textul are marcaje „de confirmat”; `confirmat = true` scoate bannerul și noindex-ul.
 - `drafts/`: materiale nepublicate (consimțământul). `BACKLOG.md`: ce rămâne pentru Fazele 3 și 4.
+
+
+## Cardurile de distribuire
+
+`node scripts/og.mjs` generează `public/og.png` (site) și `public/og/jurnal-<slug>.png` pentru fiecare articol publicat, din aceeași matriță: titlu cu marker, desenul casei, sigla. Se rulează după ce apare un articol nou. Desenele se generează cu `node scripts/art.mjs` (vezi `src/content/JURNAL-cum-publici.md`).

@@ -9,7 +9,7 @@ const path = '/cine'; const L = (p: string) => link(p, path);
 const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: SITE.founder, jobTitle: 'Asistent social', worksFor: { '@type': 'Organization', name: SITE.name }, sameAs: [SITE.linkedin], url: new URL(path, SITE.url).toString() };
 ---
 <Base title="Cine construiește · Ionuț Neacșu și de ce există Room for People" description="Room for People e atelierul lui Ionuț Neacșu, asistent social de 23 de ani în România și Marea Britanie, absolvent de psihologie. De ce există, ce valori are, cu cine lucrează și ce limite își asumă." path={path} jsonLd={jsonLd}>
-  <PageHead label="Cine construiește" lede="Room for People există pentru un singur motiv: oamenii care și-au ales meseria pentru oameni pierd serile cu lucruri care nu cer un om. Și pentru că cel care le pune sistemele la lucru a stat, 23 de ani, în aceeași cameră cu ei.">
+  <PageHead label="Cine construiește" lede="Room for People există pentru un singur motiv: oamenii care și-au ales meseria pentru oameni pierd serile cu lucruri care nu cer un om. Și pentru că eu, cel care le pune sistemele la lucru, am stat 23 de ani în aceeași cameră cu ei.">
     <Fragment slot="title">Nu din tehnologie spre voi. <span class="mk">Dintre voi</span> spre tehnologie.</Fragment>
   </PageHead>
 
@@ -28,15 +28,15 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: SITE
       </div>
       <div class="prose">
         <h2 style="margin-top:0">De ce există</h2>
-        <p>Ionuț Neacșu a petrecut 23 de ani lângă oameni vulnerabili: copii, familii în criză, adulți care nu mai aveau pe nimeni. Întâi în România, pe stradă și într-un adăpost, apoi în Marea Britanie, în protecția copilului. În toți anii ăștia a văzut același lucru la colegii lui, și la el: ziua cu oamenii se termină la 18:00, și apoi începe a doua tură. Rapoarte, confirmări, mesaje, facturi. Munca pe care nu o măsoară nimeni și pe care, de aceea, nu o reduce nimeni.</p>
-        <p>Din 2022 lucrează zilnic cu instrumente AI, întâi pe propria lui muncă. A pus sisteme la lucru pentru el, apoi a ajutat colegi să le folosească, și a învățat pe pielea lui ce se automatizează și ce nu. Room for People e locul unde pune ce a învățat la dispoziția celor din aceeași breaslă: psihologi, psihoterapeuți, asistenți sociali, coachi.</p>
+        <p>Am petrecut 23 de ani lângă oameni vulnerabili: copii, familii în criză, adulți care nu mai aveau pe nimeni. Întâi în România, pe stradă și într-un adăpost, apoi în Marea Britanie, în protecția copilului. În toți anii ăștia am văzut același lucru la colegii mei, și la mine: ziua cu oamenii se termină la 18:00, și apoi începe a doua tură. Rapoarte, confirmări, mesaje, facturi. Munca pe care nu o măsoară nimeni și pe care, de aceea, nu o reduce nimeni.</p>
+        <p>Din 2022 lucrez zilnic cu instrumente AI, întâi pe propria mea muncă. Am pus sisteme la lucru pentru mine, apoi am ajutat colegi să le folosească, și am învățat pe pielea mea ce se automatizează și ce nu. Room for People e locul unde pun ce am învățat la dispoziția celor din aceeași breaslă: psihologi, psihoterapeuți, asistenți sociali, coachi.</p>
         <h2>Ce valori are</h2>
         <p><strong>Oamenii în față, sistemul în spate.</strong> Tehnologia e infrastructură, nu erou. Eroul e practicianul, și relația lui cu omul din fața lui e scopul. Tot ce construim stă în spatele ei, niciodată în locul ei.</p>
         <p><strong>Regula casei.</strong> Nicio informație despre un client nu intră într-un instrument AI. Nu e un slogan; e limita care decide ce construim și ce refuzăm.</p>
         <p><strong>Pragurile la vedere.</strong> Prețuri, limite, ce nu facem, ce nu garantăm. În meseriile astea, claritatea e dovada de competență.</p>
         <p><strong>Profesionistul rămâne autorul.</strong> Nimic nu pleacă în numele tău fără să-l fi citit. Codul tău deontologic te face responsabil pentru fiecare cuvânt public; noi construim ca tu să poți răspunde pentru el.</p>
         <h2>De ce doar cu cei care lucrează cu oameni</h2>
-        <p>Pentru că asta știe. Nu știe restaurante, nu știe magazine online. Știe cum arată un mesaj la 22:00 de la cineva fragil, ce înseamnă confidențialitatea când e scrisă într-un cod și ce se întâmplă când un profesionist pierde încrederea strânsă în zece ani dintr-o singură greșeală. Un sistem pus prost într-un cabinet de psihologie costă altceva decât un sistem pus prost într-un magazin. De aceea lucrează numai aici.</p>
+        <p>Pentru că asta știu. Restaurante și magazine online, nu. Știu cum arată un mesaj la 22:00 de la cineva fragil, ce înseamnă confidențialitatea când e scrisă într-un cod și ce se întâmplă când un profesionist pierde încrederea strânsă în zece ani dintr-o singură greșeală. Un sistem pus prost într-un cabinet de psihologie costă altceva decât un sistem pus prost într-un magazin. De aceea lucrez numai aici.</p>
         <h2>Echipa: doi oameni, dedicați cu totul</h2>
         <div class="team-cards">
           {SITE.team.map((m) => (
@@ -50,19 +50,19 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: SITE
             </div>
           ))}
         </div>
-        <p>Ionuț duce partea cu oamenii: discuția, harta, raportul, textele, răspunsul la email. Andrei N. duce partea tehnică: sistemele care rămân în spate, legarea uneltelor, verificarea că totul merge singur și se poate opri din două clickuri. Pentru fotografie și pentru alte nevoi punctuale lucrează cu colaboratori. Atât. Nu există departament de vânzări și nu există robot care răspunde în locul lor.</p>
-        <h2>Ce limite își asumă</h2>
+        <p>Eu duc partea cu oamenii: discuția, harta, raportul, textele, răspunsul la email. Andrei N. duce partea tehnică: sistemele care rămân în spate, legarea uneltelor, verificarea că totul merge singur și se poate opri din două clickuri. Pentru fotografie și pentru alte nevoi punctuale lucrăm cu colaboratori. Atât. Suntem doi oameni; vânzările și răspunsurile le facem tot noi.</p>
+        <h2>Ce limite ne asumăm</h2>
         <ul>
-          <li>Ionuț e asistent social și absolvent de psihologie. Nu e psiholog atestat și nu oferă servicii psihologice. Room for People nu oferă consultanță juridică; unde citează un cod sau o lege, dă linkul și te trimite la sursă.</li>
-          <li>Nu construiesc și nu recomandă instrumente care citesc ce se spune în cameră sau care răspund clienților tăi despre ce simt.</li>
-          <li>Nu garantează clienți, rezultate sau cifre pe care nu le-au măsurat. Cifrele de timp vin din jurnalul tău, nu din media pieței.</li>
-          <li>Sunt doi oameni. Livrează cam două drumuri pe lună. Dacă e plin, spun, și te programează.</li>
+          <li>Sunt asistent social și absolvent de psihologie, nu psiholog atestat, și nu ofer servicii psihologice. Room for People nu oferă consultanță juridică; unde cităm un cod sau o lege, dăm linkul și te trimitem la sursă.</li>
+          <li>Nu construim și nu recomandăm instrumente care citesc ce se spune în cameră sau care răspund clienților tăi despre ce simt.</li>
+          <li>Nu garantăm clienți, rezultate sau cifre pe care nu le-am măsurat. Cifrele de timp vin din jurnalul tău, nu din media pieței.</li>
+          <li>Suntem doi oameni. Livrăm cam două drumuri pe lună. Dacă e plin, spunem, și te programăm.</li>
         </ul>
-        <h2>Harta pe care o desenează la fiecare Radiografie</h2>
+        <h2>Harta pe care o desenez la fiecare Radiografie</h2>
       </div>
     </div>
     <div class="wrap" style="margin-top:28px">
-      <figure class="map-fig"><Art name="harta" /><figcaption class="note muted">Harta cabinetului, desenată ca un plan de casă: afară, prezența; la ușă, primul contact; înăuntru, programările și vocea. Cabinetul rămâne doar al oamenilor.</figcaption></figure>
+      <figure class="map-fig"><Art name="harta" /><figcaption class="note muted">Harta cabinetului, desenată ca un plan de casă: afară, prezența; la ușă, primul contact; înăuntru, programările; pe raft, vocea. Camera rămâne doar a oamenilor.</figcaption></figure>
     </div>
   </section>
 
@@ -74,7 +74,7 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: SITE
         <div class="card"><p class="big-num">Art. 119</p><p><strong>Agenția scrie, tu răspunzi.</strong></p><p class="small muted">Psihologul care angajează pe cineva să îi creeze sau să îi difuzeze mesaje promoționale își păstrează responsabilitatea profesională pentru ele.</p><a class="small textlink" href="https://www.copsi.ro/images/Codul_Deontologic_HOT%C3%84--R%C3%83--RE_CN_nr._1_din_24_noiembrie_2018.pdf" target="_blank" rel="noopener">Codul deontologic CPR, art. 119</a></div>
         <div class="card"><p class="big-num">Art. 4</p><p><strong>Alfabetizarea AI devine normă.</strong></p><p class="small muted">Cine folosește AI în activitate ia măsuri de alfabetizare AI pentru cei care lucrează cu el. Se aplică din 2 februarie 2025.</p><a class="small textlink" href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">AI Act, Regulamentul UE 2024/1689, art. 4</a></div>
       </div>
-      <p class="small" style="margin-top:12px">Vrei să vorbim? <a class="textlink" href={L('/contact')}>Scrie-i lui Ionuț</a>, îți răspunde el.</p>
+      <p class="small" style="margin-top:12px">Vrei să vorbim? <a class="textlink" href={L('/contact')}>Scrie-mi</a>, îți răspund eu.</p>
     </div>
   </section>
 </Base>

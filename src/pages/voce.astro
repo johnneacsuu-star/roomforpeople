@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
+import Art from '../components/Art.astro';
 import ContactForm from '../components/ContactForm.astro';
 import ServiceFaq from '../components/ServiceFaq.astro';
 import { SITE } from '../config';
@@ -12,6 +13,7 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'Service', name: 'Vo
 <Base title="Voce · articole, newsletter și postări în vocea ta" description={`Două înregistrări pe lună cu tine; din ele, articole, un newsletter și postări, în vocea ta, aprobate de tine. Nimic despre clienți. De la ${price} lei.`} path={path} jsonLd={jsonLd}>
   <PageHead label="Drumul 3 · Voce" lede="Știi ce ai de spus. Ai spus-o de o sută de ori în cabinet. Seara nu mai ai energie să o scrii. Vorbești 20 de minute de două ori pe lună; restul se face din ce ai spus, și pleacă doar după ce l-ai citit.">
     <Fragment slot="title">Ești citit în <span class="mk">vocea ta</span>, nu în vocea unui model.</Fragment>
+    <Art name="caiet" slot="art" />
     <div class="actions">
       <a class="btn btn-signal" href="#contact">Scrie-mi despre Voce</a>
       <p class="small muted">de la <strong>{price} lei</strong> pentru prima lună · preț de lansare · continuarea se stabilește împreună</p>

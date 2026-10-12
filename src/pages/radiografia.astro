@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
+import Art from '../components/Art.astro';
 import ContactForm from '../components/ContactForm.astro';
 import ServiceFaq from '../components/ServiceFaq.astro';
 import { SITE } from '../config';
@@ -10,8 +11,9 @@ const lei = (n: number) => n.toLocaleString('ro-RO');
 const jsonLd = { '@context': 'https://schema.org', '@type': 'Service', name: 'Radiografia cabinetului', provider: { '@type': 'ProfessionalService', name: SITE.name, url: SITE.url }, areaServed: 'RO', description: 'O săptămână de observație pe cabinetul unui practician, o sesiune de 90 de minute și un raport scris cu primele trei automatizări, Filtrul deontologic și un plan de 30 de zile.', offers: { '@type': 'Offer', priceCurrency: 'RON', price: SITE.prices.radiografia } };
 ---
 <Base title="Radiografia · ziua ta, radiografiată într-o săptămână" description={`O săptămână de observație pe cabinetul tău, o sesiune de 90 de minute și un raport scris cu primele trei automatizări, Filtrul deontologic și planul de 30 de zile. ${lei(SITE.prices.radiografia)} lei, primele 10 cabinete.`} path={path} jsonLd={jsonLd}>
-  <PageHead label="Radiografia · după Hartă, înainte de orice drum" lede="Harta îți arată direcția, gratuit. Radiografia îți spune, pe cabinetul tău și cu cifre măsurate, unde pierzi timp și oameni, ce poate pleca singur în siguranță și care drum e primul. O citește Ionuț, nu un chestionar.">
+  <PageHead label="Radiografia · după Hartă, înainte de orice drum" lede="Harta îți arată direcția, gratuit. Radiografia îți spune, pe cabinetul tău și cu cifre măsurate, unde pierzi timp și oameni, ce poate pleca singur în siguranță și care drum e primul. O citesc eu, nu un chestionar.">
     <Fragment slot="title">Ziua ta, <span class="mk">radiografiată</span> într-o săptămână.</Fragment>
+    <Art name="plan" slot="art" />
     <div class="actions">
       <a class="btn btn-signal" href="#contact">Cer Radiografia</a>
       <p class="small muted"><strong>{lei(SITE.prices.radiografia)} lei</strong>, preț de lansare pentru primele 10 cabinete, apoi {lei(SITE.prices.radiografiaDupa)} lei · se scade integral din primul drum, dacă începem în 30 de zile</p>

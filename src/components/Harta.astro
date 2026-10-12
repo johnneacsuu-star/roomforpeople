@@ -73,11 +73,11 @@ const data = { d: DIRECTII.map((d) => ({ name: d.name, loc: d.loc, stages: d.sta
     </div>
     <div class="rez-actions no-print">
       <button type="button" class="btn btn-signal" id="harta-print">Descarcă harta (PDF)</button>
-      <button type="button" class="btn btn-line" id="harta-send-toggle" aria-expanded="false" aria-controls="harta-send">Trimite-i harta lui Ionuț</button>
+      <button type="button" class="btn btn-line" id="harta-send-toggle" aria-expanded="false" aria-controls="harta-send">Trimite-mi harta</button>
       <button type="button" class="textlink" id="harta-reset" style="background:none;border:0;cursor:pointer;padding:0">Reia de la început</button>
     </div>
     <div class="rez-send no-print" id="harta-send" hidden>
-      <p class="small">Dacă vrei un răspuns personal pe harta asta, lasă emailul. Harta pleacă la {SITE.founder} împreună cu răspunsurile tale; nimic altceva. Nu e obligatoriu: rezultatul de mai sus e al tău oricum.</p>
+      <p class="small">Dacă vrei un răspuns personal pe harta asta, lasă emailul. Harta ajunge la mine, {SITE.founder}, împreună cu răspunsurile tale; nimic altceva. Rezultatul de mai sus e al tău oricum.</p>
       <ContactForm tip="harta" path={path} showMessage={false} showName={true} submitLabel="Trimite harta" compact id="f-harta" />
     </div>
     <p class="note muted">Harta de aici nu se salvează pe niciun server. Rămâne în browserul tău până o reiei. Rezultatul e o orientare, nu o evaluare profesională.</p>
